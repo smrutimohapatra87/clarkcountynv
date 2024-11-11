@@ -34,3 +34,33 @@
   src: url('../fonts/roboto-regular.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+@font-face {
+  font-family: Oswald;
+  src: url("../fonts/Oswald-VariableFont_wght.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'open sans';
+  src: url("../fonts/OpenSans-VariableFont_wdth,wght.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../fonts/NeueMontreal-Bold.woff2') format('woff2'),
+       url('../fonts/NeueMontreal-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../fonts/NeueMontreal-Regular.woff2') format('woff2'),
+       url('../fonts/NeueMontreal-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
