@@ -390,7 +390,3 @@ body > main > div:nth-child(1) > div picture > img {
   transform: scale(1.18);
   width: 100%;
 }
-
-body > main .uwaw {
-  right: unset;
-}
