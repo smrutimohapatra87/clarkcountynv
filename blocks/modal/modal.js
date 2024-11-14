@@ -49,21 +49,20 @@ export async function createModal(contentNodes) {
   // Add CSS classes for li items and a tags - move to socialN.js, socialN.css
   dialog.querySelectorAll('li').forEach((li) => {
     // li.classList.add('nav-item');
-    console.log(li);
     li.querySelectorAll('span.icon').forEach((icon) => {
-      console.log('icon ', icon);
-      console.log('icon.className', icon.className);
-      console.log('icon.classList', icon.classList);
-      console.log('icon.parentElement', icon.parentElement);
-    /*
-      if (icon.parentElement.contains('facebook')) {
-        console.log('facebook here');
-      } else if (icon.parentElement.className('twitter')) {
-        console.log('twitter here');
-      } else if (icon.parentElement.className('reddit')) {
-        console.log('reddit here');
+      if (icon.className.includes('facebook')) {
+        icon.addEventListener('click', () => {
+          window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.clarkcountynv.gov/', 'facebook ', 'width=500,height=500');
+        });
+      } else if (icon.className.includes('twitter')) {
+        icon.addEventListener('click', () => {
+          window.open('https://www.twitter.com/intent/tweet?url=http://www.clarkcountynv.gov/', 'twitter ', 'width=500,height=500');
+        });
+      } else if (icon.className.includes('reddit')) {
+        icon.addEventListener('click', () => {
+          window.open('https://www.reddit.com/submit?url=http://www.clarkcountynv.gov/', 'redit ', 'width=500,height=500');
+        });
       }
-        */
     });
   });
 

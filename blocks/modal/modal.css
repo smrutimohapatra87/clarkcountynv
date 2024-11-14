@@ -83,3 +83,21 @@ body.modal-open {
 .modal dialog .section {
   padding: 0;
 }
+
+.icon.icon-facebook-1 {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.icon.icon-twitter-1 {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.icon.icon-reddit-1 {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
