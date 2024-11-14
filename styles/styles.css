@@ -72,6 +72,14 @@ body {
   display: none;
 }
 
+.desktop {
+  display: none;
+}
+
+.mobile {
+  display: block;
+}
+
 body.appear {
   display: block;
 }
@@ -262,39 +270,30 @@ main > div.section > .default-content-wrapper > p {
   margin: 0;
 }
 
-/*
-@media (width >= 600px) {
-  main .section {
-    padding: 64px 32px;
-  }
-}
- */
-
-@media (width >= 900px) {
-  .section > div {
-    /* max-width: 1200px; */
-    margin: auto;
-  }
-
-  main > div img {
-    height: auto;
-  }
+body > main > div:nth-child(1) > div picture > img {
+  opacity: 0.75;
+  transform-origin: bottom center;
+  transform: scale(1.18);
+  width: 100%;
+  height: 100%;
 }
 
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
+main > div.section.desktop img {
+  width: 100%;
+  height: 667px;
 }
 
-/*
-body > main > div.section.updates {
-  background: none;
-  position: relative;
-  padding: 0 0 18px 0;
+main > div::before {
+  content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: #000;
+    opacity: 0.1;
 }
-*/
-
 
 .section-top-wrapper {
   background: url('../images/section-top-bg.png') left bottom/cover no-repeat;
@@ -333,6 +332,34 @@ body > main > div.section.updates.section-top-container.column-container.cards-c
   margin-bottom: 8px;
 }
 
+body > main > div.section.newsletter > div > p > a {
+  display: inline-block;
+  color: #000;
+  border: none;
+  background-color: inherit;
+  padding: 1.5% 0;
+  margin: 0;
+  text-decoration: underline;
+  font: 350 17px 'open sans',sans-serif;
+}
+
+body > main > div.section.newsletter > div > p {
+  margin: 0;
+}
+
+body > main > div.section.newsletter > div h2 {
+  font: 350 25px 'open sans', sans-serif;
+  color: var(--orange);
+  margin-top: 1.5%;
+  margin-bottom: 8px;
+}
+
+/* section metadata */
+main .section.light,
+main .section.highlight {
+  background-color: var(--light-color);
+}
+
 @media only screen and (width <= 991px) {
   body > main > div.section.updates.section-top-container.column-container.cards-container > div.section-top-wrapper > div > div > div:nth-child(1) > p {
     margin: 0;
@@ -362,31 +389,21 @@ body > main > div.section.updates.section-top-container.column-container.cards-c
   box-sizing: border-box;
 }
 
-body > main > div.section.newsletter > div > p > a {
-  display: inline-block;
-  color: #000;
-  border: none;
-  background-color: inherit;
-  padding: 1.5% 0;
-  margin: 0;
-  text-decoration: underline;
-  font: 350 17px 'open sans',sans-serif;
-}
+@media (width >= 900px) {
+  .desktop {
+    display: block;
+  }
+  
+  .mobile {
+    display: none;
+  }
 
-body > main > div.section.newsletter > div > p {
-  margin: 0;
-}
+  .section > div {
+    /* max-width: 1200px; */
+    margin: auto;
+  }
 
-body > main > div.section.newsletter > div h2 {
-  font: 350 25px 'open sans', sans-serif;
-  color: var(--orange);
-  margin-top: 1.5%;
-  margin-bottom: 8px;
-}
-
-body > main > div:nth-child(1) > div picture > img {
-  opacity: 0.75;
-  transform-origin: bottom center;
-  transform: scale(1.18);
-  width: 100%;
+  main > div img {
+    height: auto;
+  }
 }

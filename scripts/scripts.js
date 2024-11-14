@@ -11,7 +11,46 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  createOptimizedPicture,
 } from './aem.js';
+
+import { getViewPort } from './utils.js';
+
+function decorateSectionsWithBackgrounds(element) {
+  const sections = element.querySelectorAll(`.section[data-bg-image],
+  .section[data-bg-image-desktop],
+  .section[data-bg-image-mobile],
+  .section[data-bg-image-tablet]`);
+  sections.forEach((section) => {
+    const bgImage = section.getAttribute('data-bg-image');
+    const bgImageDesktop = section.getAttribute('data-bg-image-desktop');
+    const bgImageMobile = section.getAttribute('data-bg-image-mobile');
+    const bgImageTablet = section.getAttribute('data-bg-image-tablet');
+    const viewPort = getViewPort();
+    let background;
+    switch (viewPort) {
+      case 'Mobile':
+        background = bgImageMobile || bgImageTablet || bgImageDesktop || bgImage;
+        break;
+      case 'Tablet':
+        background = bgImageTablet || bgImageDesktop || bgImage || bgImageMobile;
+        break;
+      default:
+        background = bgImageDesktop || bgImage || bgImageTablet || bgImageMobile;
+        break;
+    }
+    if (background) {
+      if (section.classList.contains('with-static-background-image')) {
+        section.classList.add('with-static-background-image');
+      } else {
+        section.classList.add('with-background-image');
+      }
+      const backgroundPic = createOptimizedPicture(background);
+      backgroundPic.classList.add('background-image');
+      section.append(backgroundPic);
+    }
+  });
+}
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -65,6 +104,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionsWithBackgrounds(main);
 }
 
 /**

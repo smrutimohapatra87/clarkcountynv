@@ -138,7 +138,7 @@ header .nav-search {
   font: 600 18px 'open sans',sans-serif;
   padding-right: 4vw;
   justify-content: flex-end;
-  background-color: var(--orange);
+  background-color: var(--dark-orange);
 }
 
 header .nav-search span {
@@ -236,7 +236,7 @@ header nav .nav-sections ul > li > ul {
 
 header nav .nav-sections:has(details) .default-content-wrapper {
   width: 100%;
-  background-color: var(--orange);
+  background-color: var(--dark-orange);
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details ul {
@@ -244,12 +244,12 @@ header nav .nav-sections:has(details) .default-content-wrapper details ul {
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor2 {
-  background: #a7381a;
+  background-color: rgba(0 0 0 / 15%);
   font-family: 'Neue Montreal', sans-serif;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor3 {
-  background: #8c280e;
+  background-color: rgba(0 0 0 / 30%);
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -290,12 +290,12 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
   list-style: none;
   overflow: auto;
   transition: background-color 0.3s;
-  border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details a:any-link {
   color: var(--white);
 }
+
 
 header nav .nav-sections:has(details) .default-content-wrapper details:not(:has(ul)) summary > div {
   padding: 7px 60px 15px 0;
@@ -308,6 +308,11 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
 
 header nav .nav-sections:has(details) .default-content-wrapper details summary.itemcolor3 a {
   font-size: 12px;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details summary:not(.itemcolor3):has(+ ul) a:any-link {
+  border-bottom: 1px solid rgba(0 0 0 / 15%);
+  flex-grow: 1;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary::-webkit-details-marker {
@@ -324,7 +329,8 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
   position: relative;
   width: 45px;
   margin-left: auto;
-  background-color: #8c280e;
+  background-color: rgba(0 0 0 / 15%);
+  border-bottom: 1px solid rgba(0 0 0 / 30%);
 }
 
 
@@ -339,6 +345,10 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
   border-right: 5px solid transparent;
   border-top: 6px solid var(--white);
   transition: transform .3s;
+}
+
+header nav .nav-sections:has(details) .default-content-wrapper details > summary:not(:has(+ ul)) {
+  border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary:not(:has(+ ul)) div.markerdiv {

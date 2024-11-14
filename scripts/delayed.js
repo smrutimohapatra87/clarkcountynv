@@ -17,10 +17,10 @@ if (isDesktop.matches) {
 function resizeAction() {
   if (!isDesktop.matches) {
     const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    div.style.setProperty('display', 'none');
+    if (div) div.style.setProperty('display', 'none');
   } else {
     const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    div.style.setProperty('display', 'block');
+    if (div) div.style.setProperty('display', 'block');
   }
 }
 
