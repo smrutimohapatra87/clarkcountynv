@@ -46,6 +46,40 @@ export async function createModal(contentNodes) {
     block.remove();
   });
 
+  // Add CSS classes for li items and a tags - move to socialN.js, socialN.css
+  dialog.querySelectorAll('li').forEach((li) => {
+    // li.classList.add('nav-item');
+    console.log(li);
+    li.querySelectorAll('span.icon').forEach((icon) => {
+      console.log('icon ', icon);
+      console.log('icon.className', icon.className);
+      console.log('icon.classList', icon.classList);
+      console.log('icon.parentElement', icon.parentElement);
+    /*
+      if (icon.parentElement.contains('facebook')) {
+        console.log('facebook here');
+      } else if (icon.parentElement.className('twitter')) {
+        console.log('twitter here');
+      } else if (icon.parentElement.className('reddit')) {
+        console.log('reddit here');
+      }
+        */
+    });
+  });
+
+  // check to see if we have close button
+  const buttons = dialog.querySelectorAll('.button-container');
+  buttons.forEach((button) => {
+    const a = button.querySelector('a');
+    if (a && a.title.includes('Close')) {
+      // TODO: see if we need to reset the url to window.location.href
+      a.setAttribute('href', '#');
+      a.addEventListener('click', () => {
+        dialog.close();
+      });
+    }
+  });
+
   block.innerHTML = '';
   block.append(dialog);
 
@@ -64,7 +98,6 @@ export async function openModal(fragmentUrl) {
   const path = fragmentUrl.startsWith('http')
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
-
   const fragment = await loadFragment(path);
   const { showModal } = await createModal(fragment.childNodes);
   showModal();
