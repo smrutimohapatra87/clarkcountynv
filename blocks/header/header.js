@@ -6,8 +6,122 @@ import {
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+const tracker = [];
+class Accordion {
+  constructor(el) {
+    // Store the <details> element
+    this.el = el;
+    // Store the <summary> element
+    this.summary = el.querySelector('summary');
+    // Store the parent <details> element
+    this.parent = el.parentElement.parentElement;
+    // Store the <div class="content"> element
+    this.content = el.querySelector('.content');
 
-function handleNavTools(navWrapper) {
+    // Store the animation object (so we can cancel it if needed)
+    this.animation = null;
+    // Store if the element is closing
+    this.isClosing = false;
+    // Store if the element is expanding
+    this.isExpanding = false;
+    // Detect user clicks on the summary element
+    this.summary.addEventListener('click', (e) => this.onClick(e));
+  }
+
+  onClick(e) {
+    // Stop default behaviour from the browser
+    e.preventDefault();
+    // Add an overflow on the <details> to avoid content overflowing
+    this.el.style.overflow = 'hidden';
+    // Check if the element is being closed or is already closed
+    if (this.isClosing || !this.el.open) {
+      this.open();
+    // Check if the element is being openned or is already open
+    } else if (this.isExpanding || this.el.open) {
+      this.shrink();
+    }
+  }
+
+  shrink() {
+    // Set the element as "being closed"
+    this.isClosing = true;
+    // Store the current height of the element
+    const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the height of the summary
+    const endHeight = `${this.summary.offsetHeight}px`;
+    // If there is already an animation running
+    if (this.animation) {
+      // Cancel the current animation
+      this.animation.cancel();
+    }
+    // Start a WAAPI animation
+    this.animation = this.el.animate({
+      // Set the keyframes from the startHeight to endHeight
+      height: [startHeight, endHeight],
+    }, {
+      duration: 500,
+      easing: 'ease-out',
+    });
+    // When the animation is complete, call onAnimationFinish()
+    this.animation.onfinish = () => this.onAnimationFinish(false);
+    // If the animation is cancelled, isClosing variable is set to false
+    // eslint-disable-next-line no-return-assign
+    this.animation.oncancel = () => this.isClosing = false;
+  }
+
+  open() {
+    // Apply a fixed height on the element
+    this.el.style.height = `${this.el.offsetHeight}px`;
+    // Force the [open] attribute on the details element
+    this.el.open = true;
+    // Wait for the next frame to call the expand function
+    window.requestAnimationFrame(() => this.expand());
+  }
+
+  expand() {
+    // Set the element as "being expanding"
+    this.isExpanding = true;
+    // Get the current fixed height of the element
+    const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the open height of the element (summary height + content height)
+    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
+
+    // If there is already an animation running
+    if (this.animation) {
+      // Cancel the current animation
+      this.animation.cancel();
+    }
+
+    // Start a WAAPI animation
+    this.animation = this.el.animate({
+      // Set the keyframes from the startHeight to endHeight
+      height: [startHeight, endHeight],
+    }, {
+      duration: 500,
+      easing: 'ease-out',
+    });
+    // When the animation is complete, call onAnimationFinish()
+    this.animation.onfinish = () => this.onAnimationFinish(true);
+    // If the animation is cancelled, isExpanding variable is set to false
+    // eslint-disable-next-line no-return-assign
+    this.animation.oncancel = () => this.isExpanding = false;
+  }
+
+  onAnimationFinish(open) {
+    // Set the open attribute based on the parameter
+    this.el.open = open;
+    // Clear the stored animation
+    this.animation = null;
+    // Reset isClosing & isExpanding
+    this.isClosing = false;
+    this.isExpanding = false;
+    // Remove the overflow hidden and the fixed height
+    this.el.style.height = '';
+    this.el.style.overflow = '';
+  }
+}
+
+function handleNavTools(navWrapper, expandElement) {
   const tools = navWrapper.querySelectorAll('.nav-tools .default-content-wrapper p');
   if (tools && tools.length === 2) {
     const searchTool = tools[0];
@@ -31,7 +145,8 @@ function handleNavTools(navWrapper) {
     const navToolsDiv = div({ class: 'nav-tools' });
     navToolsDiv.appendChild(searchDiv);
     navToolsDiv.appendChild(languageDiv);
-    nav.appendChild(navToolsDiv);
+    expandElement.appendChild(navToolsDiv);
+    nav.appendChild(expandElement);
     navWrapper.querySelector('nav .nav-tools').remove();
   }
 }
@@ -119,6 +234,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 function decorateNavItemMobile(mainUL) {
+  mainUL.classList.add('content');
   const header = document.querySelector('header');
   header.classList.add('mobile');
   const mainLIs = mainUL.children;
@@ -278,6 +394,8 @@ function buildNavSections(navSections) {
             const value = findLevel(event.target);
             event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
               ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
+              ele.querySelector('summary').classList.add(`child${value + 1}`);
+              ele.classList.add(`parent${value + 1}`);
             });
             details.parentElement.querySelectorAll('details').forEach((ele) => {
               if (ele !== event.target) {
@@ -322,7 +440,6 @@ export default async function decorate(block) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
   }
-
   let navSections = nav.querySelector('.nav-sections');
   const navSectionsBackUp = navSections.cloneNode(true);
 
@@ -330,7 +447,7 @@ export default async function decorate(block) {
 
   // Logic for resizing nav sections
 
-  function resizeNavSections(navSec, navSecBackUp) {
+  function resizeNavSections(navSec, navSecBackUp, expandElement) {
     if (navSecBackUp) {
       const navSectionSearchItem = navSecBackUp.children[0]?.children[1];
       if (isDesktop.matches && navSec.querySelector('details')) {
@@ -357,7 +474,8 @@ export default async function decorate(block) {
             }
           });
         });
-        navBrand.after(navSections);
+        expandElement.prepend(navSections);
+        navBrand.after(expandElement);
       }
       if (!isDesktop.matches && navSec.querySelector('li') && navSec.querySelector('li').classList.contains('nav-drop')) {
         const header = document.querySelector('header');
@@ -384,7 +502,21 @@ export default async function decorate(block) {
             }
           });
         });
-        navBrand.after(navSections);
+        expandElement.prepend(navSections);
+        navBrand.after(expandElement);
+        document.querySelectorAll('details').forEach((el) => {
+          const detailObject = new Accordion(el);
+          tracker.push(detailObject);
+        });
+        tracker.forEach((t) => {
+          t.el.addEventListener('click', () => {
+            tracker.forEach((t2) => {
+              if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
+                t2.shrink();
+              }
+            });
+          });
+        });
       }
       if (navSectionSearchItem) {
         navSectionSearchItem.remove();
@@ -392,8 +524,13 @@ export default async function decorate(block) {
     }
   }
 
+  // expand element for nav-sections & nav-tools
+  const expandElement = div({ class: 'expanddiv' });
+  expandElement.appendChild(navSections);
+  nav.appendChild(expandElement);
+
   function resizeFunction() {
-    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true));
+    resizeNavSections(navSections, navSectionsBackUp.cloneNode(true), expandElement);
   }
 
   window.addEventListener('resize', resizeFunction);
@@ -426,9 +563,23 @@ export default async function decorate(block) {
       header.classList.remove('scrolled');
     }
   });
-  handleNavTools(navWrapper);
+  handleNavTools(navWrapper, expandElement);
   // improve accessibility
   document.querySelectorAll('#nav > div.section.nav-sections > div > ul > li').forEach((li) => {
     li.removeAttribute('role');
+  });
+
+  document.querySelectorAll('details').forEach((el) => {
+    const detailObject = new Accordion(el);
+    tracker.push(detailObject);
+  });
+  tracker.forEach((t) => {
+    t.el.addEventListener('click', () => {
+      tracker.forEach((t2) => {
+        if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
+          t2.shrink();
+        }
+      });
+    });
   });
 }

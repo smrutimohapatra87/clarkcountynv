@@ -20,7 +20,11 @@ function resizeAction() {
     if (div) div.style.setProperty('display', 'none');
   } else {
     const div = document.querySelector('.userway_buttons_wrapper .uai.userway_dark');
-    if (div) div.style.setProperty('display', 'block');
+    if (div) {
+      div.style.setProperty('display', 'block');
+    } else {
+      loadWidget();
+    }
   }
 }
 
