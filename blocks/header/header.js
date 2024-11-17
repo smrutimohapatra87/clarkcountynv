@@ -201,6 +201,9 @@ function toggleAllNavSections(sections, expanded = false) {
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
  */
 function toggleMenu(nav, navSections, forceExpanded = null) {
+  navSections.querySelectorAll('details[open]').forEach((detail) => {
+    detail.removeAttribute('open');
+  });
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
   // document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
