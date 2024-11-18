@@ -174,11 +174,6 @@ main img {
   -webkit-font-smoothing: antialiased;
 }
 
-main > div img {
-  object-fit: cover;
-  height: 700px;
-}
-
 .icon {
   display: inline-block;
   height: 24px;
@@ -261,6 +256,11 @@ main > div.section.desktop img {
   height: 667px;
   transform-origin: bottom center;
   transform: scale(1.18);
+}
+
+main > div.section.mobile.with-background-image img {
+  object-fit: cover;
+  height: 700px;
 }
 
 main > div::before {
