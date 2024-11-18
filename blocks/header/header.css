@@ -10,11 +10,11 @@ header {
 }
 
 header.mobile {
-  position: relative;
+  position: absolute;
 }
 
 header.mobile + main {
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
