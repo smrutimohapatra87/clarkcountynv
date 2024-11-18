@@ -16,5 +16,15 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // add class to footer-contact
+  const paragraphs = footer.querySelectorAll('.footer-middle p');
+  paragraphs.forEach((p) => {
+    if (p.textContent.startsWith('Phone')) {
+      p.classList.add('contact-data');
+    } else if (p.textContent.startsWith('Address')) {
+      p.classList.add('address-data');
+    }
+  });
+
   block.append(footer);
 }
