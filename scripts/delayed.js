@@ -6,6 +6,21 @@ sampleRUM('cwv');
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+function googleTranslate() {
+  const s1 = document.createElement('script');
+  s1.setAttribute('src', 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
+  (document.body || document.head).appendChild(s1);
+  const s2 = document.createElement('script');
+  s2.text = `
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  `;
+  (document.body || document.head).appendChild(s2);
+}
+
+googleTranslate();
+
 async function loadWidget() {
   await loadScript('/widgets/accessibility/accessibility.js');
 }
