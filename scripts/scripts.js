@@ -11,7 +11,46 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  createOptimizedPicture,
 } from './aem.js';
+
+import { getViewPort } from './utils.js';
+
+function decorateSectionsWithBackgrounds(element) {
+  const sections = element.querySelectorAll(`.section[data-bg-image],
+  .section[data-bg-image-desktop],
+  .section[data-bg-image-mobile],
+  .section[data-bg-image-tablet]`);
+  sections.forEach((section) => {
+    const bgImage = section.getAttribute('data-bg-image');
+    const bgImageDesktop = section.getAttribute('data-bg-image-desktop');
+    const bgImageMobile = section.getAttribute('data-bg-image-mobile');
+    const bgImageTablet = section.getAttribute('data-bg-image-tablet');
+    const viewPort = getViewPort();
+    let background;
+    switch (viewPort) {
+      case 'Mobile':
+        background = bgImageMobile || bgImageTablet || bgImageDesktop || bgImage;
+        break;
+      case 'Tablet':
+        background = bgImageTablet || bgImageDesktop || bgImage || bgImageMobile;
+        break;
+      default:
+        background = bgImageDesktop || bgImage || bgImageTablet || bgImageMobile;
+        break;
+    }
+    if (background) {
+      if (section.classList.contains('with-static-background-image')) {
+        section.classList.add('with-static-background-image');
+      } else {
+        section.classList.add('with-background-image');
+      }
+      const backgroundPic = createOptimizedPicture(background);
+      backgroundPic.classList.add('background-image');
+      section.append(backgroundPic);
+    }
+  });
+}
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -40,6 +79,18 @@ async function loadFonts() {
   }
 }
 
+function autolinkModals(element) {
+  element.addEventListener('click', async (e) => {
+    const origin = e.target.closest('a');
+
+    if (origin && origin.href && origin.href.includes('/modals/')) {
+      e.preventDefault();
+      const { openModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
+      openModal(origin.href);
+    }
+  });
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -65,6 +116,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionsWithBackgrounds(main);
 }
 
 /**
@@ -96,6 +148,8 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  autolinkModals(doc);
+
   const main = doc.querySelector('main');
   await loadSections(main);
 
