@@ -25,8 +25,13 @@ async function loadWidget() {
   await loadScript('/widgets/accessibility/accessibility.js');
 }
 
+async function loadShareWidget() {
+  await loadScript('/widgets/share-button/share-button.js');
+}
+
 if (isDesktop.matches) {
   loadWidget();
+  loadShareWidget();
 }
 
 function resizeAction() {

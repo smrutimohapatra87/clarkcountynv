@@ -390,4 +390,33 @@ main .section.highlight {
   main > div::before {
       height: 667px;
   }
+
+  /* widget for share */
+  .floating-share-btn {
+    position:fixed;
+    z-index:99999;
+    top:40%;
+    right:0;
+    width:53px;
+    border-radius:0;
+    border:0;
+    background:#0094C3!important;
+    color:#fff!important;
+    padding:7px 8px;
+    box-shadow:0 0 10px rgba(0 0 0 0.3);
+    text-align:center;
+    line-height:1.5;
+  }
+  
+  .floating-share-btn span {
+    width: 18px;
+    display:block;
+    text-transform:uppercase;
+    font-size:12px;
+    line-height:1;
+  }
+  
+  .share-float{
+    margin-top:12px;
+  }
 }
