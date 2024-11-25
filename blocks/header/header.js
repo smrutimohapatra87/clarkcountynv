@@ -556,7 +556,7 @@ export default async function decorate(block) {
         });
         expandElement.prepend(navSections);
         navBrand.after(expandElement);
-        document.querySelectorAll('details').forEach((el) => {
+        nav.querySelectorAll('details').forEach((el) => {
           const detailObject = new Accordion(el);
           tracker.push(detailObject);
         });
@@ -619,7 +619,7 @@ export default async function decorate(block) {
     li.removeAttribute('role');
   });
 
-  document.querySelectorAll('details').forEach((el) => {
+  nav.querySelectorAll('details').forEach((el) => {
     const detailObject = new Accordion(el);
     tracker.push(detailObject);
   });
