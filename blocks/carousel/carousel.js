@@ -82,7 +82,7 @@ function createSlide(row, slideIndex, carouselId) {
     } else {
       column.classList.add('carousel-slide-content');
       column.classList.add(`slide-content-${colIdx}`);
-      column.classList.add(`slide-${slideIndex + 1}`);
+      column.classList.add(`slide-content-${colIdx}-slide-${slideIndex + 1}`);
     }
 
     slide.append(column);

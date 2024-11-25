@@ -6,7 +6,7 @@
 .carousel .carousel-slides,
 .carousel .carousel-slide-indicators {
     list-style: none;
-    z-index: 3;
+    z-index: 5;
     margin: 0;
     padding: 0;
 }
@@ -53,7 +53,19 @@
     width: 100%;
     object-fit: cover;
     display: flex;
+    
 }
+
+.carousel .carousel-slide .carousel-slide-image picture::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 15%); /* Change the color and opacity as needed */
+  }
 
 .carousel .carousel-slide .carousel-slide-content {
     z-index: 1;
@@ -68,7 +80,8 @@
     display: flex;
     justify-content: center;
     gap: 0.75rem;
-    transform: translate(-0%, -350%);
+    transform: translate(-0%, -300%);
+    top: -80px;
 }
 
 .carousel .carousel-slide-indicator button {
@@ -168,9 +181,8 @@
         
         align-content: center;
         align-self: center;
-        transform: translate(0%, -10%);
+        
     }
-
 
     .carousel-slides a.button {
         font: 400 24px 'Open Sans',sans-serif;
@@ -183,64 +195,92 @@
         background-color: white;
     }
 
-    .button-container a.button{
-        display: flex;
-        align-self: flex-end;
-        background-color: rgb(255 255 255);
-        transform: translate(0%, -60%);
-        
-    }
+    
 
     .carousel-slide-content p {
         color: #fff;
         
     }
 
+    
+
     .slide-content-1 p {
-        position: relative;
-        display: auto;
-        align-items: center;
+        display: flex;
         font: 400 30px 'Open Sans', sans-serif;
         color: #fff;
-        margin: 50px 0 30px;
-
-              
+        align-items: center;
+        text-align: center;
+        position: relative;
+        top: -75%;
+                
     }
 
-    .carousel-slide-content-1:empty {
-        content: "<p>&nbsp;</p>";
+    .slide-content-1-slide-2 p {
+        display: flex;
+        font: 400 30px 'Open Sans', sans-serif;
+        color: #fff;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        top: -200%;
+                
     }
+   
 
-    
+          
     .slide-content-2 p {
         display: flex;
         font: 400 24px 'Open Sans', sans-serif;
         color: #fff;
-        margin: 38px 0 15px;
+        position: relative;
+        top: -100%;
                 
     }
 
-    .slide-content-3 {
+    .slide-content-3 p {
         display: flex;
-        font: 400 96px 'Open Sans', sans-serif;
-        line-height: 1em;
-        height: auto;
-        margin-left: 1%;
-        margin-right: 1%;
+        position: relative;
+        align-items: center;
+        font: 400 90px 'Open Sans', sans-serif;
+        margin: 0 3%;
+        top: -35%;
     }
 
     .slide-content-4 {
         display: flex;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        bottom: 0;
-    }
-
-     .slide-2 {
-        margin-top: 9.5%;
+        position: relative;
+        align-items: center;
         
     }
-}   
+
+    .slide-content-4 .button-container a.button{
+        align-items: center;
+        display: flex;
+        background-color: rgb(255 255 255);
+    }
+
+    .slide-content-4-slide-2 {
+        top: 20%;
+    }
+
+     
+   
+.slide-content-1 p::before {
+    content:'';
+	display:inline-block;
+	width:45px;
+	height: 85px;
+    background: url('../../assets/images/leaf-left.png') center/cover no-repeat;
+    margin:0 12px 0 0;
+}
+
+.slide-content-1 p::after {
+    content:'';
+	display:inline-block;
+	width:45px;
+	height: 85px;
+    background: url('../../assets/images/leaf-right.png') center/cover no-repeat;
+    margin:12 12px 0 0;
+}
+
+}
