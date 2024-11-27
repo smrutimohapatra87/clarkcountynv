@@ -265,13 +265,13 @@ main > div.section.mobile.with-background-image img {
   height: 700px;
 }
 
-main > div::before {
-  content: '';
+main > div:first-child::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 700px;
+    height: 667px;
     z-index: 0;
     background: #000;
     opacity: 0.1;

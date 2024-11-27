@@ -1,3 +1,9 @@
+// eslint-disable-next-line import/no-unresolved
+import { getViewPort } from '../../scripts/utils.js';
+import {
+  div,
+} from '../../scripts/dom-helpers.js';
+
 const tracker = [];
 
 // Using the Web Animations API to animate the accordion
@@ -9,6 +15,8 @@ class Accordion {
     this.summary = el.querySelector('summary');
     // Store the parent <details> element
     this.parent = el.parentElement.parentElement;
+    // Store the grand parent <details> element
+    this.grandParent = el.parentElement.parentElement.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
 
@@ -158,11 +166,8 @@ function findLevel(element) {
   return level;
 }
 
-export default function decorate() {
-  const mainUL = document.querySelector('ul');
-
+function decorateMobileView(mainUL) {
   // Get the height of the overall UL for the Mobile view and pass it to the CSS variable
-
   const divHeight = mainUL.children.length * 46;
   const height = document.querySelector(':root');
   height.style.setProperty('--height', `${divHeight}px`);
@@ -188,13 +193,72 @@ export default function decorate() {
     const detailObject = new Accordion(el);
     tracker.push(detailObject);
   });
+
   tracker.forEach((t) => {
-    t.el.addEventListener('click', () => {
+    t.summary.addEventListener('click', () => {
       tracker.forEach((t2) => {
-        if (t2 !== t && !t.parent.isEqualNode(t2.el)) {
-          t2.shrink();
+        if (!t.grandParent) {
+          if (t !== t2 && !t.parent.isEqualNode(t2.el)) {
+            t2.shrink();
+          }
+        } else if (!t.grandParent.isEqualNode(t2.el)) {
+          if (t !== t2 && !t.parent.isEqualNode(t2.el)) {
+            t2.shrink();
+          }
         }
       });
     });
   });
+  return mainUL;
+}
+
+function decorateDesktopView(mainUL) {
+  const level = 0;
+  // Allotting levels to UL based on the depth of the UL
+  mainUL.classList.add('level0');
+  mainUL.querySelectorAll(':scope > li').forEach((lilevel1) => {
+    if (lilevel1.querySelector(':scope > ul')) {
+      lilevel1.querySelector(':scope > ul').classList.add(`level${level + 1}`);
+      lilevel1.querySelector(':scope > ul').querySelectorAll(':scope > li').forEach((lilevel2) => {
+        if (lilevel2.querySelector(':scope > ul')) {
+          lilevel2.querySelector(':scope > ul').classList.add(`level${level + 2}`);
+          lilevel2.querySelector(':scope > ul').querySelectorAll(':scope > li').forEach((lilevel3) => {
+            if (lilevel3.querySelector(':scope > ul')) {
+              lilevel3.querySelector(':scope > ul').classList.add(`level${level + 3}`);
+            }
+          });
+        }
+      });
+    }
+  });
+  return mainUL;
+}
+
+export default function decorate(block) {
+  const mainUL = document.querySelector('ul');
+  const mainULBackUp = mainUL.parentElement.parentElement.cloneNode(true);
+  if (getViewPort() === 'mobile') {
+    decorateMobileView(mainUL);
+  } else {
+    decorateDesktopView(mainUL);
+  }
+
+  function resizeFunction() {
+    const currentUL = block.querySelector('div > div > ul');
+    console.log(currentUL);
+    if (getViewPort() === 'mobile' && currentUL.classList.contains('level0')) {
+      currentUL.parentElement.parentElement.remove();
+      const modifiedUL = decorateMobileView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
+      const divElement = div(div(modifiedUL));
+      block.append(divElement);
+    }
+    if (getViewPort() === 'desktop' && currentUL.classList.contains('content')) {
+      currentUL.parentElement.parentElement.remove();
+      const modifiedUL = decorateDesktopView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
+      const divElement = div(div(modifiedUL));
+      block.append(divElement);
+    }
+  }
+
+  window.addEventListener('resize', resizeFunction);
 }
