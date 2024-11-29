@@ -23,6 +23,7 @@
   --dark-orange: #B54425;
   --height: x;
   --original-height: y;
+  --tab-height: z;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
@@ -206,10 +207,10 @@ main .section-top {
 
 .newsletter > div {
   background: #F8F7EE;
-  padding: 52px 59px 49px 40px;
+  padding: 26px 34px 24px;
   display: inline-block;
   padding-top: 37px;
-  width: 665px;
+  width: 332px;
 }
 
 main .section-top > div {
@@ -309,7 +310,7 @@ body > main > div.section.updates.section-top-container.column-container.cards-c
 }
 
 .newsletter h2 {
-  font: 400 24px var(--body-font-family);
+  font: 400 15px var(--body-font-family);
   color: var(--orange);
   margin-bottom: 8px;
 }
@@ -389,6 +390,10 @@ main > div.mobile.with-background-image {
     margin: auto;
   }
 
+  .newsletter h2 {
+    font: 400 24px var(--body-font-family);
+  }
+
   main > div img {
     height: auto;
   }
@@ -428,5 +433,10 @@ main > div.mobile.with-background-image {
   
   .share-float{
     margin-top:12px;
+  }
+
+  .newsletter > div {
+    padding: 52px 59px 49px 40px;
+    width: 665px;
   }
 }
