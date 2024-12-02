@@ -529,8 +529,8 @@ async function buildBreadcrumbs() {
 
   const crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);
 
-  const ol = document.createElement('ol');
-  ol.append(...crumbs.map((item) => {
+  const ul = document.createElement('ul');
+  ul.append(...crumbs.map((item) => {
     const li = document.createElement('li');
     if (item['aria-current']) li.setAttribute('aria-current', item['aria-current']);
     if (item.url) {
@@ -544,7 +544,7 @@ async function buildBreadcrumbs() {
     return li;
   }));
 
-  breadcrumbs.append(ol);
+  breadcrumbs.append(ul);
   return breadcrumbs;
 }
 
