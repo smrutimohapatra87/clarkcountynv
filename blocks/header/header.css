@@ -923,6 +923,12 @@ header .breadcrumbs ul li:not(:last-of-type)::after {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
+header .breadcrumbs a:any-link {
+  color: currentcolor;
+  font-weight: normal;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
 header .breadcrumbs a {
   display:inline-block;
   color:#fff;
