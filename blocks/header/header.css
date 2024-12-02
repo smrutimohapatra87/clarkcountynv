@@ -910,11 +910,20 @@ header .breadcrumbs ol li {
 }
 
 header .breadcrumbs ol li:not(:last-child)::after {
-  content: '/';
-  padding-left: 1ch;
+  content: '';
+  width: 4px;
+  height: 8px;
+  background: url("../../icons/breadcrumbs-arrow.png") center / 4px 8px no-repeat;
+  position: absolute;
+  top: 8px;
+  right: -15px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 header .breadcrumbs ol li[aria-current] {
   color: var(--white);
+}
+
+header .breadcrumbs ol li:first-of-type {
+  color: #FFC7B8;
 }
