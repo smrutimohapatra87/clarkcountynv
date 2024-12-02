@@ -890,6 +890,7 @@ header .breadcrumbs {
   right: 0;
   top: 150px;
   width:1654px;
+  padding-left: 47px;
   overflow: hidden;
 }
 
