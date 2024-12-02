@@ -1,3 +1,27 @@
+.newsletter {
+    position: relative;
+    background: var(--dark-orange);
+    border-top: 35px solid rgb(179 70 40);
+    border-bottom: 55px solid rgb(179 70 40);
+
+    .default-content-wrapper {
+        border: none;
+        padding: 52px 59px 49px 40px;
+    }
+
+    h2 {
+        font: 400 15px var(--body-font-family);
+        color: var(--orange);
+        margin: unset;
+    }
+
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+    
+}
+
 footer {
     position: relative;
     background: #b54425 url("../../icons/footer-bg.png") left bottom/cover repeat-x;
@@ -7,11 +31,11 @@ footer {
         max-width: 100%;
         margin: 0 auto;
         display: flex;
+        flex-wrap: wrap;
         padding: 40px 0 17px;
 
-        a {
-            color: white;
-            text-decoration: underline;
+        .newsletter:first-child {
+            width: 100%;
         }
     }
 
@@ -46,6 +70,11 @@ footer {
                 font: 400 18px 'Open Sans',sans-serif;
                 color: #fff;
                 margin-bottom: 4%;
+            }
+
+            a {
+                color: white;
+                text-decoration: underline;
             }
         }
 
@@ -184,4 +213,56 @@ footer .footer > div {
 
         }
     }
+}
+
+/* eslint-disable no-descending-specificity */
+
+
+@media (width >= 900px) {
+    .newsletter h2 {
+        font: 400 24px var(--body-font-family);
+    }
+
+    .newsletter > div {
+        padding: 52px 59px 49px 40px;
+        width: 665px;
+    }
+}
+
+@media only screen and (width <= 900px) {
+    /* widget for share */
+  .floating-share-btn {
+    position:fixed;
+    z-index:99999;
+    top:92%;
+    right:2%;
+    width:53px;
+    border-radius:0;
+    border:0;
+    background:#0094C3!important;
+    color:#fff!important;
+    padding:7px 8px;
+    box-shadow:0 0 10px rgba(0 0 0 0.3);
+    text-align:center;
+    line-height:1.5;
+  }
+  
+  .floating-share-btn span {
+    width: 18px;
+    display:block;
+    text-transform:uppercase;
+    font-size:12px;
+    line-height:1;
+  }
+  
+  .share-float{
+    margin-top:12px;
+  }
+  
+
+  .share-btn {
+        inset: auto;
+    }
+
+    
 }

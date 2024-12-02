@@ -294,47 +294,9 @@ main > div:first-child::before {
   margin: 0 0 5px;
 }
 
-.newsletter > a {
-  display: inline-block;
-  color: #000;
-}
-
 body > main > div.section.updates.section-top-container.column-container.cards-container > div.section-top-wrapper > div > div {
   max-width: 1630px;
   margin: 0 auto;
-}
-
-.newsletter {
-  position: relative;
-  background: var(--dark-orange);
-}
-
-.newsletter h2 {
-  font: 400 15px var(--body-font-family);
-  color: var(--orange);
-  margin-bottom: 8px;
-}
-
-body > main > div.section.newsletter > div > p > a {
-  display: inline-block;
-  color: #000;
-  border: none;
-  background-color: inherit;
-  padding: 1.5% 0;
-  margin: 0;
-  text-decoration: underline;
-  font: 350 17px var(--body-font-family);
-}
-
-body > main > div.section.newsletter > div > p {
-  margin: 0;
-}
-
-body > main > div.section.newsletter > div h2 {
-  font: 350 25px var(--body-font-family);
-  color: var(--orange);
-  margin-top: 1.5%;
-  margin-bottom: 8px;
 }
 
 /* section metadata */
@@ -390,10 +352,6 @@ main > div.mobile.with-background-image {
     margin: auto;
   }
 
-  .newsletter h2 {
-    font: 400 24px var(--body-font-family);
-  }
-
   main > div img {
     height: auto;
   }
@@ -433,10 +391,5 @@ main > div.mobile.with-background-image {
   
   .share-float{
     margin-top:12px;
-  }
-
-  .newsletter > div {
-    padding: 52px 59px 49px 40px;
-    width: 665px;
   }
 }
