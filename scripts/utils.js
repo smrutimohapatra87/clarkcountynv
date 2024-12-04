@@ -23,3 +23,7 @@ export function getViewPort() {
 export function capitalize(s) {
   return String(s[0]).toUpperCase() + String(s).slice(1);
 }
+
+export function normalizeString(str) {
+  return str.toLowerCase().replace(/ /g, '-');
+}

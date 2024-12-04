@@ -255,7 +255,7 @@ body > main > div:nth-child(1) > div picture > img {
   height: 100%;
 }
 
-main > div.section.desktop img {
+main div.section.desktop img {
   width: 100%;
   height: 667px;
   object-fit: cover;
