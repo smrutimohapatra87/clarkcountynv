@@ -15,7 +15,27 @@
   transition: background .3s ease;
 }
 
+.cards.clickable > ul > a {
+  display: block;
+  width: 90%;
+  min-height: 262px;
+  margin-right: 2.66%;
+  margin-bottom: 25px;
+  border: 1px solid #eae9e8;
+  text-align: center;
+  transition: background .3s ease;
+  color: black;
+  list-style: none;
+}
+
 .cards > ul > li:hover {
+  background: var(--orange);
+  text-decoration: none;
+  transition: background .3s ease;
+  color: white;
+}
+
+.cards.clickable > ul > a:hover {
   background: var(--orange);
   text-decoration: none;
   transition: background .3s ease;
@@ -57,14 +77,26 @@
   width: 96px;
 }
 
+.cards.clickable > ul > a > li img {
+  width: 96px;
+}
+
 @media (width >= 600px) {
   .cards > ul > li {
+    width: 40%;
+  }
+
+  .cards.clickable > ul > a {
     width: 40%;
   }
 }
 
 @media (width >= 900px) {
   .cards > ul > li {
+    width: 22%;
+  }
+
+  .cards.clickable > ul > a {
     width: 22%;
   }
 }
