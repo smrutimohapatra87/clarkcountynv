@@ -1,13 +1,12 @@
 import { div, section } from '../../scripts/dom-helpers.js';
-import { normalizeString } from '../../scripts/utils.js';
 
-const childCalendars = [
-  'County Commissioners',
-  'County Commission District A',
-  'County Commission District B',
-  'County Commissioners District C',
-  'County Commissioners District D',
-];
+// const childCalendars = [
+//   'County Commissioners',
+//   'County Commission District A',
+//   'County Commission District B',
+//   'County Commissioners District C',
+//   'County Commissioners District D',
+// ];
 
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
@@ -17,7 +16,7 @@ export async function fetchPlaceholders(prefix) {
 
   if (!loaded) {
     window.placeholders[`${TRANSLATION_KEY}-loaded`] = new Promise((resolve) => {
-      fetch(`/calendar/${prefix}/${prefix}.json?sheet=events`)
+      fetch(`/calendar/${prefix}.json`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
@@ -43,29 +42,25 @@ async function initializeCalendar() {
   let eventsData = [];
   const calendarEl = document.getElementById('calendar');
   // const data = getEventsManual();
-  childCalendars.forEach(async (childCalendar, i) => {
-    const normalizeCalendar = normalizeString(childCalendar);
-    const placeholders = await fetchPlaceholders(normalizeCalendar);
-    eventsData = [...eventsData, ...placeholders.data];
-    if (i === childCalendars.length - 1) {
-      // eslint-disable-next-line no-undef
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-        },
-        navLinks: true, // can click day/week names to navigate views
-        editable: true,
-        selectable: true,
-        dayMaxEvents: true,
-        events: eventsData,
-        eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
-      });
-      calendar.render();
-    }
+  const normalizeCalendar = 'events';
+  const placeholders = await fetchPlaceholders(normalizeCalendar);
+  eventsData = [...eventsData, ...placeholders.data];
+  // eslint-disable-next-line no-undef
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+    },
+    navLinks: true, // can click day/week names to navigate views
+    editable: true,
+    selectable: true,
+    dayMaxEvents: true,
+    events: eventsData,
+    eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
   });
+  calendar.render();
 }
 
 export function loadfullcalendar() {
