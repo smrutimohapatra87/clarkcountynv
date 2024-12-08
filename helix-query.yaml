@@ -1,0 +1,63 @@
+indices:
+  site:
+    include:
+      - '/**'
+    exclude:
+      - '/drafts/**'
+      - '/fragments/**'
+      - '/calendar/**'
+      - '/tools/**'
+    target: /query-index.json
+    properties:
+      title:
+        select: h1
+        value: textContent(el)
+      description:
+        select: main > div p
+        value: words(textContent(el), 0, 50)
+      publishDate:
+        select: head > meta[name="publishdatetime"]
+        value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, 'content')
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, "content")
+  events:
+    include:
+      - /calendar/**
+    target: /calendar/events.json
+    properties:
+      divisionname:
+        select: head > meta[name="division-name"]
+        value: attribute(el, "content")
+      divisionid:
+        select: head > meta[name="division-id"]
+        value: attribute(el, "content")
+      division-color:
+        select: head > meta[name="division-color"]
+        value: attribute(el, "content")
+      start:
+        select: head > meta[name="event-start"]
+        value: attribute(el, "content")
+      stop:
+        select: head > meta[name="event-stop"]
+        value: attribute(el, "content")
+      daysofweek:
+        select: head > meta[name="daysofweek"]
+        value: attribute(el, "content")
+      eventtitle:
+        select: head > meta[name="event-title"]
+        value: attribute(el, "content")
+      eventdescription:
+        select: head > meta[name="event-description"]
+        value: attribute(el, "content")
+      eventname:
+        select: head > meta[name="event-name"]
+        value: attribute(el, "content")
+      publishedDate:
+        select: head > meta[name="publication-date"]
+        value: attribute(el, "content")
+
+  

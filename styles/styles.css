@@ -227,7 +227,7 @@ main .section-top > div {
   justify-content: space-between;
 }
 
-body:not(.calendar-event) > main > div:nth-child(1) > div {
+body:not(.event) > main > div:nth-child(1) > div {
   background-color: var(--text-color);
   overflow: hidden;
 }
@@ -253,7 +253,7 @@ main div.section.desktop img {
   object-fit: cover;
 }
 
-body:not(.calendar-event) > main > div:nth-child(1) > div picture > img {
+body:not(.event) > main > div:nth-child(1) > div picture > img {
   opacity: 0.75;
   transform-origin: bottom center;
   transform: scale(1.18);
@@ -278,7 +278,7 @@ main > div.section.mobile.with-background-image img {
   height: 700px;
 }
 
-body:not(.calendar-event) main > div:first-child:not(.short)::before {
+body:not(.event) main > div:first-child:not(.short)::before {
     content: '';
     position: absolute;
     top: 0;
