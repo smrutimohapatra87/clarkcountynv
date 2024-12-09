@@ -44,7 +44,7 @@ indices:
       start:
         select: head > meta[name="event-start"]
         value: attribute(el, "content")
-      stop:
+      end:
         select: head > meta[name="event-stop"]
         value: attribute(el, "content")
       daysOfWeek:
@@ -62,7 +62,7 @@ indices:
       endRecur:
         select: head > meta[name="endrecur"]
         value: attribute(el, "content")
-      eventtitle:
+      title:
         select: head > meta[name="event-title"]
         value: attribute(el, "content")
       eventdescription:
