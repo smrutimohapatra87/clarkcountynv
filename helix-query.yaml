@@ -38,6 +38,9 @@ indices:
       division-color:
         select: head > meta[name="division-color"]
         value: attribute(el, "content")
+      classNames:
+        select: head > meta[name="division-classnames"]
+        value: attribute(el, "content")
       start:
         select: head > meta[name="event-start"]
         value: attribute(el, "content")
@@ -46,6 +49,18 @@ indices:
         value: attribute(el, "content")
       daysOfWeek:
         select: head > meta[name="daysofweek"]
+        value: attribute(el, "content")
+      startTime:
+        select: head > meta[name="starttime"]
+        value: attribute(el, "content")
+      endTime:
+        select: head > meta[name="endtime"]
+        value: attribute(el, "content")
+      startRecur:
+        select: head > meta[name="startrecur"]
+        value: attribute(el, "content")
+      endRecur:
+        select: head > meta[name="endrecur"]
         value: attribute(el, "content")
       eventtitle:
         select: head > meta[name="event-title"]
