@@ -56,6 +56,9 @@ indices:
       endTime:
         select: head > meta[name="endtime"]
         value: attribute(el, "content")
+      allDay:
+        select: head > meta[name="allday"]
+        value: attribute(el, "content")
       startRecur:
         select: head > meta[name="startrecur"]
         value: attribute(el, "content")
@@ -74,5 +77,9 @@ indices:
       publishedDate:
         select: head > meta[name="publication-date"]
         value: attribute(el, "content")
+      homepage:
+        select: head > meta[name="homepage"]
+        value: attribute(el, "content")
+
 
   
