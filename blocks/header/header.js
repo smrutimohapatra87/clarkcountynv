@@ -523,11 +523,46 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   return crumbs;
 }
 
+export const fetchAndParseDocument = async (url) => {
+  try {
+    const response = await fetch(`${url}.plain.html`);
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    return doc;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching and parsing document:', error);
+  }
+  return null;
+};
+
+async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
+  const crumbs = [];
+  // TODO: changing logic based on path as we will likely load from meta or tabs from index later
+  let paths = await fetchAndParseDocument(getMetadata('breadcrumbs-base'));
+  paths = paths.querySelectorAll('li a');
+  paths.forEach((path) => {
+    crumbs.push({ title: path.textContent, url: path.href });
+  });
+
+  const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
+  if (currentUrl !== homeUrl && getMetadata('breadcrumbs-current') !== '') {
+    crumbs.push({ title: getMetadata('breadcrumbs-current'), url: null });
+  }
+  return crumbs;
+}
+
 async function buildBreadcrumbs() {
   const breadcrumbs = document.createElement('nav');
   breadcrumbs.className = 'breadcrumbs';
 
-  const crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);
+  let crumbs;
+  if (getMetadata('breadcrumbs-base')) {
+    crumbs = await buildBreadcrumbsFromMetadata(document.querySelector('.nav-sections'), document.location.href);
+  } else {
+    crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);
+  }
 
   const ul = document.createElement('ul');
   ul.append(...crumbs.map((item) => {

@@ -1,0 +1,14 @@
+.agendadetail {
+
+    padding: 50px 0 60px 15px;
+
+    h3 {
+        margin-top: unset;
+        font-weight: unset;
+        padding-bottom: 5px;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+}
