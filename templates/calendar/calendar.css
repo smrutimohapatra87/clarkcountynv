@@ -1,19 +1,23 @@
-.county-commissioners {
+body.calendar .county-commissioners {
     background-color: #3787d8;
 }
 
-.county-commission-district-a {
+body.calendar .county-commission-district-a {
     background-color: #da80c1;
 }
 
-.county-commission-district-b {
+body.calendar .county-commission-district-b {
     background-color: #c0a6dd;
 }
 
-.county-commissioners-district-c {
+body.calendar .county-commissioners-district-c {
     background-color: #48e7e2;
 }
 
-.county-commissioners-district-d {
+body.calendar .county-commissioners-district-d {
     background-color: #7ad295;
+}
+
+body.calendar a:any-link {
+    color: white;
 }

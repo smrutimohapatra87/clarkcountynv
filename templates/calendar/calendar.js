@@ -2,7 +2,7 @@ import { div, section } from '../../scripts/dom-helpers.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, textColor) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -14,7 +14,7 @@ class Obj {
     this.endRecur = endRecur;
     this.url = url;
     this.backgroundColor = backgroundColor;
-    this.textColor = textColor;
+    this.classNames = classNames;
   }
 }
 
@@ -76,7 +76,7 @@ async function initializeCalendar() {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
     const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.textColor);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames);
     eventsList.push(eventObj);
   });
   eventsList.forEach((event) => {
@@ -91,7 +91,7 @@ async function initializeCalendar() {
         endRecur: event.endRecur,
         url: event.url,
         backgroundColor: event.backgroundColor,
-        textColor: event.textColor,
+        classNames: event.classNames,
       });
     } else {
       calendar.addEvent({
@@ -101,7 +101,7 @@ async function initializeCalendar() {
         allDay: event.allDay,
         url: event.url,
         backgroundColor: event.backgroundColor,
-        textColor: event.textColor,
+        classNames: event.classNames,
       });
     }
   });
@@ -116,6 +116,7 @@ export function loadfullcalendar() {
 }
 
 export default async function decorate(doc) {
+  doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
   const $mainChildren = Array.from($main.childNodes);
   const $section = section();
