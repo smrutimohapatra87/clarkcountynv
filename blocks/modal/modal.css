@@ -7,12 +7,9 @@ body.modal-open {
 }
 
 .modal dialog {
-  overscroll-behavior: none;
-  overflow-y: hidden;
   position: relative;
   width: calc(100vw - 48px);
-  max-width: 900px;
-  max-height: calc(100dvh - (2 * var(--header-height)));
+  max-width: 800px;
   padding: 0;
   border: 1px solid var(--dark-color);
 }
@@ -25,7 +22,14 @@ body.modal-open {
   max-height: calc(100dvh - (2 * var(--header-height)) - 48px);
   padding: 24px;
   padding-top: 0;
-  margin-top: 44px;
+  margin-top: 0;
+  font-size: 18px;
+  font-family: 'Neue Montreal', sans-serif;
+  font-weight: normal;
+}
+
+.modal dialog .modal-content p:first-child {
+  font: 500 32px 'Neue Montreal', sans-serif;
 }
 
 @media (width >= 900px) {
@@ -44,8 +48,8 @@ body.modal-open {
   position: absolute;
   top: 0;
   right: 0;
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 30px;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -84,23 +88,50 @@ body.modal-open {
   padding: 0;
 }
 
-.social-nav-item {
+.modal .copysociallink {
+  border-color: #DBE7F0;
+  background: #F4F9FD;
+  border-width: 1px;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  display: block;
+  font-size: 87.5%;
+  color: #212529;
+}
+
+.modal .social-nav-item {
   display: flex;
   justify-content: center;
+  text-align: center;
   padding-top: 12px;
   width: 204px;
   height: 170px;
 }
 
-.facebook-nav-item:hover {
+.modal .cards > ul > li {
+  display: flex;
+  
+  /* width: 90%; */
+  min-height: 170px;
+  margin-right: 2.66%;
+  margin-bottom: 5px;
+  border: 1px solid #eae9e8;
+  text-align: center;
+  transition: background .3s ease;
+}
+
+.modal .social-nav-item:hover {
+  background: var(--white);
+}
+
+.modal .facebook-nav-item:hover {
   border-color: #3b5998;
 }
 
-.twitter-nav-item:hover {
+.modal .twitter-nav-item:hover {
   border-color: #00ACED;
 }
 
-.reddit-nav-item:hover {
+.modal .reddit-nav-item:hover {
   border-color: #ff5700;
 }
 
@@ -119,14 +150,27 @@ body.modal-open {
   height: 64px;
 }
 
+.modal.block .cards .cards-card-body p {
+  margin-top: 2.5vh;
+}
+
 .modal.block .section.cards-container .default-content-wrapper:last-child p > a.share-close {
   background-color: #0094C3;
   font-size: 16px;
   padding: 14px 30px;
+  margin: 0;
   border: 0;
   border-radius: 3px;
 }
 
 .modal.block .section.cards-container .default-content-wrapper:last-child p > a.share-close:hover {
   background-color: #218838
+}
+
+@media (width >= 900px) {
+  .modal dialog {
+    overscroll-behavior: none;
+    overflow-y: hidden;
+    max-height: 672px;
+  }
 }

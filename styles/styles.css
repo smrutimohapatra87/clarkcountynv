@@ -422,12 +422,16 @@ main .section.details-404 > .default-content-wrapper {
     width:53px;
     border-radius:0;
     border:0;
-    background:#0094C3!important;
+    background:#C54B2A!important;
     color:#fff!important;
     padding:7px 8px;
     box-shadow:0 0 10px rgba(0 0 0 0.3);
     text-align:center;
     line-height:1.5;
+  }
+
+  .floating-share-btn-home {
+    background:#0094C3!important;
   }
   
   .floating-share-btn span {
