@@ -16,6 +16,8 @@ import {
   createOptimizedPicture,
 } from './aem.js';
 
+import { h3 } from './dom-helpers.js';
+
 import { getViewPort } from './utils.js';
 
 function decorateSectionsWithBackgrounds(element) {
@@ -50,6 +52,12 @@ function decorateSectionsWithBackgrounds(element) {
       const backgroundPic = createOptimizedPicture(background);
       backgroundPic.classList.add('background-image');
       section.append(backgroundPic);
+    }
+    const heading = section.getAttribute('data-page-title');
+    if (heading) {
+      const pageTitle = h3(heading);
+      pageTitle.classList.add('page-title');
+      section.append(pageTitle);
     }
   });
 }

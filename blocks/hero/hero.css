@@ -40,16 +40,6 @@ main .hero.text {
   justify-content: center;
 }
 
-main .hero.agenda {
-  position: relative;
-  right: 0;
-  font: 700 44px 'Open Sans', sans-serif;
-  color: #fff;
-  line-height: 1;
-  text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
-  margin-top: -220px;
-}
-
 main .hero.text p {
   font: 385 48px var(--heading-font-family);
   color: #fff;
@@ -62,11 +52,6 @@ main .hero.text p {
   }
 
   main .hero.text {
-    min-height: 128px;
-    top: 0;
-  }
-
-  main .hero.agenda {
     min-height: 128px;
     top: 0;
   }

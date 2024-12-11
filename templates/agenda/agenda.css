@@ -1,6 +1,8 @@
 .agendadetail {
 
-    padding: 50px 0 60px 15px;
+    @media (width >= 900px) {
+        padding: 50px 0 60px 15px;
+    }
 
     h3 {
         margin-top: unset;
@@ -10,5 +12,11 @@
 
     a {
         text-decoration: underline;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .agendadetail {
+        padding: 10px 34px;
     }
 }
