@@ -38,7 +38,7 @@ indices:
       division-color:
         select: head > meta[name="division-color"]
         value: attribute(el, "content")
-      className:
+      classNames:
         select: head > meta[name="division-classname"]
         value: attribute(el, "content")
       start:
