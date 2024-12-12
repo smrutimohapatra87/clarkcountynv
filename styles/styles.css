@@ -261,12 +261,26 @@ body:not(.event) > main > div:nth-child(1) > div picture > img {
   height: 100%;
 }
 
-main div.section.desktop.short img {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  top: -105px;
+main div.section.desktop.short {
+    img {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        top: -105px;
+    }
+
+    h3 {
+        position: relative;
+        left: 30px;
+        right: 0;
+        bottom: 280px;
+        font: 700 44px 'Open Sans', sans-serif;
+        color: #fff;
+        line-height: 1;
+        text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
+        padding: 0 15px;
+    }
 }
 
 main div.section.desktop.short::before {
@@ -276,6 +290,31 @@ main div.section.desktop.short::before {
 main > div.section.mobile.with-background-image img {
   object-fit: cover;
   height: 700px;
+}
+
+main div.section.mobile.short {
+    img {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }
+
+    h3 {
+        position: relative;
+        left: 15px;
+        right: 0;
+        bottom: 120px;
+        font: 700 44px 'Open Sans', sans-serif;
+        color: #fff;
+        line-height: 1;
+        text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
+        padding: 0 15px;
+    }
+}
+
+main div.section.mobile.short::before {
+    background: unset;
 }
 
 body:not(.event) main > div:first-child:not(.short)::before {

@@ -47,35 +47,32 @@ export default {
     const blockSeparator = document.createElement('p');
     blockSeparator.innerText = '---';
 
-    const desktopBlock = WebImporter.Blocks.createBlock(document, {
+    const pageTitleEl = main.querySelector('#page-title');
+    const pageHeading = pageTitleEl.textContent.trim();
+    const desktopSectionMetadata = {
       name: 'Section Metadata',
       cells: [
         ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style ', 'Desktop, homepage, short'],
+        ['Style', 'Desktop, homepage, short'],
       ],
-    });
+    };
 
-    const mobileBlock = WebImporter.Blocks.createBlock(document, {
+    const mobileSectionMetadata = {
       name: 'Section Metadata',
       cells: [
         ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style ', 'Mobile, homepage, short'],
+        ['Style', 'Mobile, homepage, short'],
       ],
-    });
+    };
 
-    const pageHeading = main.querySelector('#page-title');
-    if (pageHeading.textContent.trim().length > 0) {
-      const heroBlock = WebImporter.Blocks.createBlock(document, {
-        name: 'Hero (agenda)',
-        cells: [
-          [pageHeading.textContent.trim(), ''],
-        ],
-      });
-      params['breadcrumbs-current'] = pageHeading.textContent.trim();
-      main.querySelector('#page-title').remove();
-      main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
-      main.insertBefore(heroBlock, main.firstChild);
+    if (pageHeading.length > 0) {
+      desktopSectionMetadata.cells.push(['Page-Title', pageHeading]);
+      mobileSectionMetadata.cells.push(['Page-Title', pageHeading]);
+      params['breadcrumbs-current'] = pageHeading;
+      pageTitleEl.remove();
     }
+    const desktopBlock = WebImporter.Blocks.createBlock(document, desktopSectionMetadata);
+    const mobileBlock = WebImporter.Blocks.createBlock(document, mobileSectionMetadata);
 
     main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
     main.insertBefore(mobileBlock, main.firstChild);
