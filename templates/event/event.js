@@ -10,11 +10,16 @@ export default async function decorate(doc) {
   // Change the background color of the hero date & time based on the division-color metadata
   const divisionColor = getMetadata('division-color');
   if (divisionColor) {
-    doc.querySelectorAll('body.event main .section.hero .hero-wrapper .block.hero div div').forEach((element) => {
-      element.style.backgroundColor = divisionColor;
-    });
     doc.querySelectorAll('body.event main .section.event-footer .default-content-wrapper p > a').forEach((element) => {
       element.style.backgroundColor = divisionColor;
     });
   }
+  // Configuring a POST Message on scrolling to send the event title to the parent window
+  window.onscroll = function funcScroll() {
+    if (window.scrollY > 50) {
+      window.top.postMessage({ message: 'off' }, '*');
+    } else {
+      window.top.postMessage({ message: 'on' }, '*');
+    }
+  };
 }

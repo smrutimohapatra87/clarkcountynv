@@ -1,4 +1,6 @@
-import { div, section } from '../../scripts/dom-helpers.js';
+import {
+  div, iframe, section, p,
+} from '../../scripts/dom-helpers.js';
 
 class Obj {
   // eslint-disable-next-line max-len
@@ -48,6 +50,77 @@ export async function fetchPlaceholders(prefix) {
   return window.placeholders[`${TRANSLATION_KEY}`];
 }
 
+function createModal(doc) {
+  const modal = div({ class: 'event-modal' }, div(
+    { class: 'event-modal-content' },
+    iframe({
+      id: 'event-iframe',
+      width: '100%',
+      height: '100%',
+    }),
+    div({ class: 'event-modal-date' }, p(), p()),
+    div({ class: 'event-modal-time' }, p()),
+  ), div(
+    { class: 'event-modal-footer' },
+  ));
+  doc.body.append(modal);
+}
+
+function tConv24(time24) {
+  let ts = time24;
+  const H = +ts.substr(0, 2);
+  let h = (H % 12) || 12;
+  h = (h < 10) ? (`0${h}`) : h; // leading 0 at the left for 1 digit hours
+  const ampm = H < 12 ? ' AM' : ' PM';
+  ts = h + ts.substr(2, 3) + ampm;
+  return ts;
+}
+
+function popupEvent(url, startTime, endTime, backgroundColor) {
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
+    'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
+  let eventDate = startTime.getDate();
+  if (eventDate < 10) {
+    eventDate = `0${eventDate}`;
+  }
+  const eventMonth = startTime.getMonth();
+  const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
+  const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
+  const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
+  const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
+  const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
+  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+
+  // convert number into Month name
+  const eventMonthName = months[eventMonth];
+
+  const modal = document.querySelector('.event-modal');
+  modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
+  modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
+  modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
+  modal.querySelector('iframe').src = url;
+  modal.style.display = 'block';
+
+  // Listen for messages from iframe window
+  window.addEventListener('message', (event) => {
+    if (event.data.message === 'off') {
+      modal.querySelector('.event-modal-date').classList.add('off');
+      modal.querySelector('.event-modal-time').classList.add('off');
+    } else {
+      modal.querySelector('.event-modal-date').classList.remove('off');
+      modal.querySelector('.event-modal-time').classList.remove('off');
+    }
+  });
+
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+}
+
 async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
@@ -70,6 +143,12 @@ async function initializeCalendar() {
     dayMaxEvents: true,
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventClick: (info) => {
+      info.jsEvent.preventDefault(); // don't let the browser navigate
+      if (info.event.url) {
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor);
+      }
+    },
   });
   calendar.render();
   importedData.forEach((event) => {
@@ -131,4 +210,5 @@ export default async function decorate(doc) {
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
   loadfullcalendar();
+  createModal(doc);
 }
