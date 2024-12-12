@@ -99,6 +99,32 @@ body.calendar .event-modal .event-modal-content {
     animation: animatetop 1s;
 }
 
+body.calendar .event-modal .event-modal-footer {
+    width: 500px;
+    max-width: 100%;
+    position: absolute;
+    padding: 15px;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1vw;
+    color: white;
+}
+
+body.calendar .event-modal .event-modal-footer button, body.calendar .event-modal .event-modal-footer a {
+    padding: 8px 12px 6px;
+    display: block;
+    float: right;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
 @keyframes animatetop {
     from {
         top: -50px;

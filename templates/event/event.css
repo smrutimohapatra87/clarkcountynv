@@ -160,6 +160,7 @@ body.event main .section.event-footer {
     font-size: 16px;
     font-family: var(--heading-font-family);
     border-top: 1px solid #dee2e6;
+    height: 14vh;
 }
 
 body.event main .section.event-footer .default-content-wrapper {

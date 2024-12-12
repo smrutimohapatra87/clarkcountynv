@@ -17,9 +17,15 @@ export default async function decorate(doc) {
   // Configuring a POST Message on scrolling to send the event title to the parent window
   window.onscroll = function funcScroll() {
     if (window.scrollY > 50) {
-      window.top.postMessage({ message: 'off' }, '*');
+      // window.top.postMessage({ eventtop: 'off' }, '*');
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        // you're at the bottom of the page
+        window.top.postMessage({ eventfooter: 'on', eventtop: 'off' }, '*');
+      } else {
+        window.top.postMessage({ eventfooter: 'off', eventtop: 'off' }, '*');
+      }
     } else {
-      window.top.postMessage({ message: 'on' }, '*');
+      window.top.postMessage({ eventtop: 'on' }, '*');
     }
   };
 }

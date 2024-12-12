@@ -38,8 +38,8 @@ indices:
       division-color:
         select: head > meta[name="division-color"]
         value: attribute(el, "content")
-      classNames:
-        select: head > meta[name="division-classnames"]
+      className:
+        select: head > meta[name="division-classname"]
         value: attribute(el, "content")
       start:
         select: head > meta[name="event-start"]
@@ -70,6 +70,9 @@ indices:
         value: attribute(el, "content")
       eventdescription:
         select: head > meta[name="event-description"]
+        value: attribute(el, "content")
+      readMore:
+        select: head > meta[name="readmore"]
         value: attribute(el, "content")
       eventname:
         select: head > meta[name="event-name"]

@@ -1,5 +1,5 @@
 import {
-  div, iframe, section, p,
+  div, iframe, section, p, button, a,
 } from '../../scripts/dom-helpers.js';
 
 class Obj {
@@ -60,8 +60,7 @@ function createModal(doc) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-  ), div(
-    { class: 'event-modal-footer' },
+    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
   ));
   doc.body.append(modal);
 }
@@ -97,6 +96,10 @@ function popupEvent(url, startTime, endTime, backgroundColor) {
   const modal = document.querySelector('.event-modal');
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer button.ics').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
   modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
@@ -105,12 +108,17 @@ function popupEvent(url, startTime, endTime, backgroundColor) {
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
-    if (event.data.message === 'off') {
+    if (event.data.eventtop === 'off') {
       modal.querySelector('.event-modal-date').classList.add('off');
       modal.querySelector('.event-modal-time').classList.add('off');
     } else {
       modal.querySelector('.event-modal-date').classList.remove('off');
       modal.querySelector('.event-modal-time').classList.remove('off');
+    }
+    if (event.data.eventfooter === 'on') {
+      modal.querySelector('.event-modal-footer').classList.remove('off');
+    } else {
+      modal.querySelector('.event-modal-footer').classList.add('off');
     }
   });
 
