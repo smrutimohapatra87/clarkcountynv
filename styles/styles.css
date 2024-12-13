@@ -152,7 +152,6 @@ a.button:any-link, button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
 }
 
 a.button:hover, a.button:focus, button:hover, button:focus  {
@@ -180,13 +179,16 @@ main img {
 
 .icon {
   display: inline-block;
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 30px;
+  padding: 2px 2px 0 0;
+  
 }
 
 .icon img {
   height: 100%;
   width: 100%;
+  
 }
 
 .hero {
@@ -451,8 +453,8 @@ main .section.details-404 > .default-content-wrapper {
   main > div.section.desktop.with-background-image.short {
     height: 400px;
   }
-
-  /* widget for share */
+  
+   /* widget for share */
   .floating-share-btn {
     position:fixed;
     z-index:99999;
@@ -484,4 +486,189 @@ main .section.details-404 > .default-content-wrapper {
   .share-float{
     margin-top:12px;
   }
+
+  /* BEGIN BUSINESS PAGES STYLES */
+  main > div.section.desktop.with-background-image.business-detail {
+    height: 400px;
+    width: 100%;
+    background-size: auto; /* or "contain" depending on what you want */
+    background-position: center center;
+  }
+
+  .business-map {
+    width: 30%;
+    margin: 0 0 80px 25px;
+    translate: 0 -40%;
+  }
+
+  .business-map-bottom {
+    width: 30%;
+    margin: 25px 0 80px 25px;
+  }
+
+  .business-section-bottom {
+    background: #fff;
+    padding: 26px 34px 24px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+  }
+
+  .columns-wrapper {
+    background-color: #fff;
+    margin-top: 20%;
+    top: auto;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding: 26px 34px 24px;
+  }
+
+  .columns-container {
+    margin-bottom: 25px;
+  }
+
+  .coulum1 {
+    width: 50%;
+  }
+
+  .coulums-2-cols strong {
+    font: 500 45px 'Neue Montreal', sans-serif;
+  }
+/* stylelint-disable no-descending-specificity */
+  .columns > div > div.column1 {
+    display: inline-block;
+    width: 50%;
+    text-wrap: wrap;
+
+    a {
+      text-decoration: underline; 
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1;
+      display: inline-block;
+      font-size: 16px;
+      color: #000;
+      padding: 0;
+      background-color: none !important;
+      box-sizing: none;
+      
+    }
+
+    p {
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1.1;
+      display: block;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0;
+      padding: 0%;
+      color: #000;
+    }
+  }
+
+  div:has(.row1cols) {
+    padding:  26px 0 0;
+  }
+  
+  .columns > div > div.column2 strong:last-of-type {
+    font-size: 16px;
+    
+  }
+
+  .columns > div > div.column2 p strong:first-of-type{
+    font: 500 45px 'Neue Montreal', sans-serif;
+   
+  }
+
+  .row2cols > div > div.column2 p strong:first-of-type{
+    font: 600 18px 'Neue Montreal', sans-serif;
+   
+  }
+
+  .column1-paragraph{
+    margin:0;
+    
+  }
+
+  .column1-paragraph > .button:any-link {
+    text-align: left;
+    margin: 1px;
+    
+  }
+  
+  .row1cols {
+    padding: 0 24px;
+  }
+
+  .row2cols > div > div.column2 {
+    padding-left: 0%;
+  }
+
+  div:has(.row2cols) {
+    padding:  0 0 24px;
+  }
+
+  .columns > div > div.column2 p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .business-single-col {
+    background-color: #fff;
+    margin-top: 20%;
+    top: auto;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding: 26px 34px 24px;
+    color: #000;
+
+    .button-container button{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0;
+      padding: 0%;
+      background-color: #fff;
+      color: #000;
+      
+    }
+
+    a {
+      text-decoration: underline; 
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1;
+      display: block;
+      font-size: 16px;
+      color: #000;
+      padding: 0;
+      background-color: none !important;
+      
+      --link-color: #000;
+      --border-box: 0;
+      --link-hover-color: #000;
+      --background-color: #fff;
+      
+      box-sizing: none;
+    
+    }
+
+  }
+  
+  
+  
+ 
+
 }
+
+
