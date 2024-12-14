@@ -53,7 +53,7 @@ function decorateSectionsWithBackgrounds(element) {
       backgroundPic.classList.add('background-image');
       section.append(backgroundPic);
     }
-    const heading = section.getAttribute('data-page-title');
+    const heading = getMetadata('page-title');
     if (heading) {
       const pageTitle = h3(heading);
       pageTitle.classList.add('page-title');

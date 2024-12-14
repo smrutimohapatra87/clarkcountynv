@@ -27,8 +27,8 @@ export const createMetadata = (main, document, params) => {
     meta['breadcrumbs-base'] = params['breadcrumbs-base'];
   }
 
-  if (params['breadcrumbs-current']) {
-    meta['breadcrumbs-current'] = params['breadcrumbs-current'];
+  if (params['page-title']) {
+    meta['page-title'] = params['page-title'];
   }
 
   const image = document.createElement('img');

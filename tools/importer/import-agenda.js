@@ -49,30 +49,25 @@ export default {
 
     const pageTitleEl = main.querySelector('#page-title');
     const pageHeading = pageTitleEl.textContent.trim();
-    const desktopSectionMetadata = {
+    if (pageHeading.length > 0) {
+      params['page-title'] = pageHeading;
+      pageTitleEl.remove();
+    }
+
+    const desktopBlock = WebImporter.Blocks.createBlock(document, {
       name: 'Section Metadata',
       cells: [
         ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
         ['Style', 'Desktop, homepage, short'],
       ],
-    };
-
-    const mobileSectionMetadata = {
+    });
+    const mobileBlock = WebImporter.Blocks.createBlock(document, {
       name: 'Section Metadata',
       cells: [
         ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
         ['Style', 'Mobile, homepage, short'],
       ],
-    };
-
-    if (pageHeading.length > 0) {
-      desktopSectionMetadata.cells.push(['Page-Title', pageHeading]);
-      mobileSectionMetadata.cells.push(['Page-Title', pageHeading]);
-      params['breadcrumbs-current'] = pageHeading;
-      pageTitleEl.remove();
-    }
-    const desktopBlock = WebImporter.Blocks.createBlock(document, desktopSectionMetadata);
-    const mobileBlock = WebImporter.Blocks.createBlock(document, mobileSectionMetadata);
+    });
 
     main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
     main.insertBefore(mobileBlock, main.firstChild);
