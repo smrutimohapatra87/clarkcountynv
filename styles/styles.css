@@ -306,13 +306,17 @@ main div.section.mobile.short {
         position: relative;
         left: 15px;
         right: 0;
-        bottom: 120px;
+        bottom: 150px;
         font: 700 44px 'Open Sans', sans-serif;
         color: #fff;
         line-height: 1;
         text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
         padding: 0 15px;
     }
+}
+
+main div.section.mobile.short.details-404 h3 {
+  bottom: 200px;
 }
 
 main div.section.mobile.short::before {
@@ -443,7 +447,7 @@ main .section.details-404 > .default-content-wrapper {
     align-items: center;
     gap: 2vh;
     font-family: var(--heading-font-family);
-    font-size: var(--heading-font-size-xs);
+    font-size: var(--heading-font-size-xm);
   }
 
   main > div.section.desktop.with-background-image {
