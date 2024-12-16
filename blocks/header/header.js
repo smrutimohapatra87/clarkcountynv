@@ -551,8 +551,8 @@ async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
   });
 
   const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
-  if (currentUrl !== homeUrl && getMetadata('breadcrumbs-current') !== '') {
-    crumbs.push({ title: getMetadata('breadcrumbs-current'), url: null });
+  if (currentUrl !== homeUrl && getMetadata('page-title') !== '') {
+    crumbs.push({ title: getMetadata('page-title'), url: null });
   }
   return crumbs;
 }

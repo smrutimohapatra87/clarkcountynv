@@ -229,7 +229,7 @@ main .section-top > div {
   justify-content: space-between;
 }
 
-body:not(.event) > main > div:nth-child(1) > div {
+body:not(:has('sidekick-library')) main > div:nth-child(1) > div, body:not(.event) > main > div:nth-child(1) > div {
   background-color: var(--text-color);
   overflow: hidden;
 }
@@ -306,7 +306,7 @@ main div.section.mobile.short {
         position: relative;
         left: 15px;
         right: 0;
-        bottom: 120px;
+        bottom: 150px;
         font: 700 44px 'Open Sans', sans-serif;
         color: #fff;
         line-height: 1;
@@ -315,11 +315,15 @@ main div.section.mobile.short {
     }
 }
 
+main div.section.mobile.short.details-404 h3 {
+  bottom: 200px;
+}
+
 main div.section.mobile.short::before {
     background: unset;
 }
 
-body:not(.event) main > div:first-child:not(.short)::before {
+body:not(:has('sidekick-library')) main > div:first-child:not(.short)::before, body:not(.event) main > div:first-child:not(.short)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -443,7 +447,7 @@ main .section.details-404 > .default-content-wrapper {
     align-items: center;
     gap: 2vh;
     font-family: var(--heading-font-family);
-    font-size: var(--heading-font-size-xs);
+    font-size: var(--heading-font-size-xm);
   }
 
   main > div.section.desktop.with-background-image {

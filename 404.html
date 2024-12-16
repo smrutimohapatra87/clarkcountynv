@@ -1,120 +1,81 @@
+
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title>Page not found</title>
-  <script type="text/javascript">
-    window.isErrorPage = true;
-    window.errorCode = '404';
-
-  </script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Page not found">
-  <meta name="breadcrumbs" content="TRUE">
-  <script src="/scripts/scripts.js" type="module" crossorigin="use-credentials"></script>
-  <script type="module">
-    window.addEventListener('load', () => {
-      if (document.referrer) {
-        const { origin, pathname } = new URL(document.referrer);
-        if (origin === window.location.origin) {
-          const backBtn = document.createElement('a');
-          backBtn.classList.add('button', 'error-button-back');
-          backBtn.href = pathname;
-          backBtn.textContent = 'Go back';
-          backBtn.title = 'Go back';
-          const btnContainer = document.querySelector('.button-container');
-          btnContainer.append(backBtn);
-        }
-      }
-    });
-  </script>
-  <script type="module">
-    import { sampleRUM } from '/scripts/aem.js';
-    sampleRUM('404', { source: document.referrer });
-  </script>
-  <link rel="stylesheet" href="/styles/styles.css">
-  <style>
-    main.error {
-      min-height: calc(100vh - var(--nav-height));
-      display: flex;
-      align-items: center;
-    }
-
-    main.error .error-number {
-      width: 100%;
-    }
-
-    main.error .error-number text {
-      font-family: monospace;
-    }
-  </style>
-  <link rel="stylesheet" href="/styles/lazy-styles.css">
-</head>
-
-<body>
-  <header></header>
-  <main>
-    <div>
-      <div class="section-metadata">
-        <div>
-          <div data-valign="middle">Bg-image</div>
-          <div data-valign="middle">
-            <picture>
-              <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=webply&#x26;optimize=medium" media="(min-width: 600px)">
-              <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=webply&#x26;optimize=medium">
-              <source type="image/png" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=png&#x26;optimize=medium" media="(min-width: 600px)">
-              <img loading="lazy" alt="" src="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=png&#x26;optimize=medium" width="1700" height="400">
-            </picture>
+  <head>
+    <title>404. The page/URL requested wasn't found on this site.</title>
+    <link rel="canonical" href="https://main--clarkcountynv--aemsites.aem.live/pagenotfound">
+    <meta name="description" content="Oops! That page couldn&#x27;t be found because . . .">
+    <meta property="og:title" content="404.  The page/URL requested wasn&#x27;t found on this site.">
+    <meta property="og:description" content="Oops! That page couldn&#x27;t be found because . . .">
+    <meta property="og:url" content="https://main--clarkcountynv--aemsites.aem.live/pagenotfound">
+    <meta property="og:image" content="https://main--clarkcountynv--aemsites.aem.live/media_14ed20a1632633044a12c4a35c21f0a9a5f9ccb50.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta property="og:image:secure_url" content="https://main--clarkcountynv--aemsites.aem.live/media_14ed20a1632633044a12c4a35c21f0a9a5f9ccb50.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="404.  The page/URL requested wasn&#x27;t found on this site.">
+    <meta name="twitter:description" content="Oops! That page couldn&#x27;t be found because . . .">
+    <meta name="twitter:image" content="https://main--clarkcountynv--aemsites.aem.live/media_14ed20a1632633044a12c4a35c21f0a9a5f9ccb50.png?width=1200&#x26;format=pjpg&#x26;optimize=medium">
+    <meta name="page-title" content="404.  The page/URL requested wasn&#x27;t found on this site.">
+    <meta name="breadcrumbs" content="FALSE">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/scripts/aem.js" type="module"></script>
+    <script src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <div class="section-metadata">
+          <div>
+            <div data-valign="middle">Bg-image</div>
+            <div data-valign="middle">
+              <picture>
+                <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=webply&#x26;optimize=medium" media="(min-width: 600px)">
+                <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=png&#x26;optimize=medium" media="(min-width: 600px)">
+                <img loading="lazy" alt="" src="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=png&#x26;optimize=medium" width="1700" height="400">
+              </picture>
+            </div>
+          </div>
+          <div>
+            <div data-valign="middle">Style</div>
+            <div data-valign="middle">Desktop, homepage, short</div>
           </div>
         </div>
-        <div>
-          <div data-valign="middle">Style</div>
-          <div data-valign="middle">Desktop, homepage, short</div>
-        </div>
       </div>
-    </div>
-    <div>
-      <div class="section-metadata">
-        <div>
-          <div data-valign="middle">Bg-image</div>
-          <div data-valign="middle">
-            <picture>
-              <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=webply&#x26;optimize=medium" media="(min-width: 600px)">
-              <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=webply&#x26;optimize=medium">
-              <source type="image/png" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=png&#x26;optimize=medium" media="(min-width: 600px)">
-              <img loading="lazy" alt="" src="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=png&#x26;optimize=medium" width="1700" height="400">
-            </picture>
+      <div>
+        <div class="section-metadata">
+          <div>
+            <div data-valign="middle">Bg-image</div>
+            <div data-valign="middle">
+              <picture>
+                <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=webply&#x26;optimize=medium" media="(min-width: 600px)">
+                <source type="image/webp" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=webply&#x26;optimize=medium">
+                <source type="image/png" srcset="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=2000&#x26;format=png&#x26;optimize=medium" media="(min-width: 600px)">
+                <img loading="lazy" alt="" src="./media_14379055c9de7af1dccdd3afeb2c943b2bd93aa85.png?width=750&#x26;format=png&#x26;optimize=medium" width="1700" height="400">
+              </picture>
+            </div>
+          </div>
+          <div>
+            <div data-valign="middle">Style</div>
+            <div data-valign="middle">Mobile, homepage, short, details-404</div>
           </div>
         </div>
-        <div>
-          <div data-valign="middle">Style</div>
-          <div data-valign="middle">Mobile, homepage, short</div>
+      </div>
+      <div>
+        <p>Oops! That page couldn't be found because . . .</p>
+        <p>Clark County, NV has a new website at www.clarkcountynv.gov</p>
+        <p>You can easily find what you are looking for by using our new search feature.</p>
+        <p><strong>Click the search at the top of the page and type what you are looking for.</strong></p>
+        <div class="section-metadata">
+          <div>
+            <div>Style</div>
+            <div>details-404</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="hero agenda">
-        <div>
-          <div>404. The page/URL requested wasn't found on this site.</div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <p>Oops! That page couldn't be found because . . .</p>
-      <p>Clark County, NV has a new website at www.clarkcountynv.gov</p>
-      <p>You can easily find what you are looking for by using our new search feature.</p>
-      <p><strong>Click the search at the top of the page and type what you are looking for.</strong></p>
-      <div class="section-metadata">
-        <div>
-          <div>Style</div>
-          <div>details-404</div>
-        </div>
-      </div>
-    </div>
-    <div></div>
-  </main>
-  <footer></footer>
-</body>
-
+      <div></div>
+    </main>
+    <footer></footer>
+  </body>
 </html>
