@@ -229,7 +229,7 @@ main .section-top > div {
   justify-content: space-between;
 }
 
-body:not(.event) > main > div:nth-child(1) > div {
+body:not(:has('sidekick-library')) main > div:nth-child(1) > div, body:not(.event) > main > div:nth-child(1) > div {
   background-color: var(--text-color);
   overflow: hidden;
 }
@@ -323,7 +323,7 @@ main div.section.mobile.short::before {
     background: unset;
 }
 
-body:not(.event) main > div:first-child:not(.short)::before {
+body:not(:has('sidekick-library')) main > div:first-child:not(.short)::before, body:not(.event) main > div:first-child:not(.short)::before {
     content: '';
     position: absolute;
     top: 0;
