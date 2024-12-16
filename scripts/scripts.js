@@ -124,7 +124,7 @@ export function decorateButtons(element) {
       const up = a.parentElement;
       const twoup = a.parentElement.parentElement;
       if (!a.querySelector('img')) {
-        // TODO:  comment below will remove button links, should see if 
+        // TODO:  comment below will remove button links, should see if
         // we do css for no-button instead "Link (plain links, no buttons)"
 
         // if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
