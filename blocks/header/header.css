@@ -294,6 +294,10 @@ header nav .nav-sections:has(details) .default-content-wrapper details ul {
   margin: 0;
 }
 
+header .nav-tools .nav-language ul:not(.show) {
+  display: none;
+}
+
 header nav .nav-sections:has(details) .default-content-wrapper .itemcolor2 {
   background-color: rgba(0 0 0 / 15%);
   font-family: var(--heading-font-family);
@@ -895,6 +899,10 @@ header .breadcrumbs ul li:first-of-type a {
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
     display: none;
     position: relative;
+  }
+
+  header .nav-tools .nav-language ul:not(.show) {
+    display: none;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"] > ul {
