@@ -1,0 +1,85 @@
+.kv-list.plain-links a.button.primary {
+  font-weight: var(--font-weight-medium);
+  background-color: unset;
+  color: var(--secondary);
+  height: unset;
+  justify-content: left;
+  padding: 0;
+}
+
+.columns.plain-links a.button {
+  padding: 0;
+}
+
+.columns.plain-links > div > div,
+.columns.plain-links > div > div p {
+  font-size: var(--body-font-size-s);
+  margin-left: 0;
+}
+
+.columns.plain-links > div h6 {
+  border-bottom: 1px var(--transparent-grey-light-color) solid;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-bottom: 0.5rem;
+  text-transform: unset;
+}
+.columns.plain-links.collapse > div h6 {
+  color: var(--text-color);
+  padding-bottom: 0.5rem;
+  margin: 0 0 1rem;
+  position: relative;
+}
+
+.columns.plain-links.collapse > div > div {
+  width: 100%;
+}
+
+.columns.plain-links.collapse:not(.continuation) > div > div:first-child {
+  margin-top: 3rem;
+}
+
+.columns.plain-links > div li {
+  list-style: none;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+  padding-left: 0;
+}
+
+.columns.plain-links > div a {
+  font-size: var(--body-font-size-s);
+  color: var(--secondary);
+}
+
+.columns.plain-links a.button.primary {
+  display: inline-block;
+  font-weight: var(--font-weight-medium);
+  background-color: unset;
+  color: var(--secondary);
+}
+
+.columns.plain-links > div a {
+  font-size: var(--body-font-size-m);
+  line-height: 1.2;
+}
+
+.columns.plain-links.collapse ul {
+  display: none;
+}
+
+.columns.top-down {
+  margin: 40px 0 0;
+}
+
+.columns.top-down > div {
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.columns.top-down.columns-2-cols {
+  max-width: 790px;
+}
+
+.columns.top-down.columns-3-cols {
+  max-width: 1200px;
+}
