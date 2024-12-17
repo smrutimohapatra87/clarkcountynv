@@ -4,7 +4,7 @@ import {
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -17,6 +17,7 @@ class Obj {
     this.url = url;
     this.backgroundColor = backgroundColor;
     this.classNames = classNames;
+    this.readMore = readMore;
   }
 }
 
@@ -75,7 +76,7 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, endTime, backgroundColor) {
+function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -105,6 +106,12 @@ function popupEvent(url, startTime, endTime, backgroundColor) {
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
+  if (readMore.length > 0) {
+    modal.querySelector('.event-modal-footer a').href = readMore;
+    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
+  } else {
+    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
+  }
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
@@ -154,7 +161,8 @@ async function initializeCalendar() {
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
       if (info.event.url) {
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor);
+        // eslint-disable-next-line max-len
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
     },
   });
@@ -163,7 +171,7 @@ async function initializeCalendar() {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
     const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore);
     eventsList.push(eventObj);
   });
   eventsList.forEach((event) => {
@@ -179,6 +187,7 @@ async function initializeCalendar() {
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
+        extendedProps: { readMore: event.readMore },
       });
     } else {
       calendar.addEvent({
@@ -189,6 +198,7 @@ async function initializeCalendar() {
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
+        extendedProps: { readMore: event.readMore },
       });
     }
   });

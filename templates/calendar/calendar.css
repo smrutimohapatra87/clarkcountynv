@@ -26,6 +26,10 @@ body.calendar .off {
     opacity: 0;
 }
 
+body.calendar .event-modal .event-modal-footer a.displayoff {
+    display: none;
+}
+
 body.calendar .event-modal {
     display: none; 
     position: fixed; 
