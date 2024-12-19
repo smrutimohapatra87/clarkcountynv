@@ -24,6 +24,7 @@
   --height: x;
   --original-height: y;
   --tab-height: z;
+  --default-button: #0094C3;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;

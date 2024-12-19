@@ -80,8 +80,8 @@ indices:
       publishedDate:
         select: head > meta[name="publication-date"]
         value: attribute(el, "content")
-      homepage:
-        select: head > meta[name="homepage"]
+      featured:
+        select: head > meta[name="featured"]
         value: attribute(el, "content")
 
 

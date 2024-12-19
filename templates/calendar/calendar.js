@@ -21,6 +21,53 @@ class Obj {
   }
 }
 
+// Array of divisions
+const divisions = [
+  { name: 'Events', color: '#312222', id: 1 },
+  { name: 'Featured Events', color: '#3787d8', id: 2 },
+  { name: 'County Commissioners', color: '#3787d8', id: 3 },
+  { name: 'County Commission District A', color: '#da80c1', id: 4 },
+  { name: 'County Commission District B', color: '#c0a6dd', id: 5 },
+  { name: 'County Commissioners District C', color: '#48e7e2', id: 6 },
+  { name: 'County Commissioners District D', color: '#7ad295', id: 7 },
+  { name: 'County Commissioners District E', color: '#d4dbb6', id: 8 },
+  { name: 'County Commissioners District F', color: '#f9a97f', id: 9 },
+  { name: 'County Commissioners District G', color: '#2619e4', id: 10 },
+  { name: 'Goodsprings Citizens Advisory Committee', color: '#ff8600', id: 11 },
+  { name: 'Laughlin TAB', color: '#37d84e', id: 12 },
+  { name: 'Lone Mountain Citizens Advisory Council', color: '#7237d8', id: 13 },
+  { name: 'Lower Kyle Canyon Citizens Advisory Committee', color: '#d837d2', id: 14 },
+  { name: 'Moapa Town Advisory Board', color: '#9d484d', id: 15 },
+  { name: 'Paradise Town Advisory Board', color: '#058089', id: 16 },
+  { name: 'Spring Valley Town Advisory Board', color: '#3a9500', id: 17 },
+  { name: 'Winchester Town Advisory Board', color: '#3c8c98', id: 18 },
+  { name: 'Enterprise Town Advisory Board', color: '#d5cd70', id: 19 },
+  { name: 'Moapa Valley Town Advisory Board', color: '#89b5bc', id: 20 },
+  { name: 'Red Rock Citizens Advisory Committee', color: '#fe0000', id: 21 },
+  { name: 'Searchlight Town Advisory Board', color: '#37d891', id: 22 },
+  { name: 'Bunkerville Town Advisory Board', color: '#b4ada6', id: 23 },
+  { name: 'Mount Charleston Town Advisory Board', color: '#f3bbea', id: 24 },
+  { name: 'Sunrise Manor Town Advisory Board', color: '#dadd32', id: 25 },
+  { name: 'Whitney Town Advisory Board', color: '#07caf7', id: 26 },
+  { name: 'PC', color: '#047c6d', id: 27 },
+  { name: 'BCC', color: '#9086d8', id: 28 },
+  { name: 'Mountain Springs Citizens Advisory Council', color: '#6aa85a', id: 29 },
+  { name: 'Indian Springs Town Advisory Board', color: '#069874', id: 30 },
+  { name: 'Sandy Valley Citizens Advisory Council Meeting', color: '#51277c', id: 31 },
+  { name: 'Wetlands Park', color: '#3787d8', id: 32 },
+  { name: 'Working Group to Address Homelessness', color: '#3787d8', id: 33 },
+  { name: 'County Manager', color: '#edf77f', id: 34 },
+  { name: 'Parks & Recreation', color: '#ddc08f', id: 35 },
+  { name: 'American Rescue Plan Act', color: '#3787d8', id: 36 },
+  { name: 'Truancy Prevention Outreach Program', color: '#37d847', id: 37 },
+  { name: 'CJCC', color: '#3787d8', id: 38 },
+  { name: 'Mojave Max and DCP Outreach Events / Volunteer Opportunities', color: '#f26d1e', id: 39 },
+  { name: 'Family Services', color: '#3787d8', id: 40 },
+  { name: 'Independent Living', color: '#3787d8', id: 41 },
+];
+
+console.log(divisions);
+
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
   window.placeholders = window.placeholders || {};

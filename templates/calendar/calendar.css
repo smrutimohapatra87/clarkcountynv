@@ -29,7 +29,7 @@ body.calendar .off {
 body.calendar main section.fc-search a {
     margin: 5px 0;
     padding: .375rem .75rem;
-    background: #0094C3;
+    background: var(--default-button);
     color: #fff;
     border: 0;
     border-radius: 0;
