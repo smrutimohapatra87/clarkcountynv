@@ -274,14 +274,13 @@ main div.section.desktop.short {
 
     h3 {
         position: relative;
-        left: 30px;
         right: 0;
         bottom: 280px;
         font: 700 44px 'Open Sans', sans-serif;
         color: #fff;
         line-height: 1;
         text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
-        padding: 0 15px;
+        padding: 0 45px;
     }
 }
 
