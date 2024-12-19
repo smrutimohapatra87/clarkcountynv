@@ -136,37 +136,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   };
 }
 
-async function initializeCalendar() {
-  let importedData = [];
-  const eventsList = [];
-  const calendarEl = document.getElementById('calendar');
-  // const data = getEventsManual();
-  const normalizeCalendar = 'events';
-  const placeholders = await fetchPlaceholders(normalizeCalendar);
-  importedData = [...importedData, ...placeholders.data];
-  // eslint-disable-next-line no-undef
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'addEventButton',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay',
-    },
-    navLinks: true, // can click day/week names to navigate views
-    editable: true,
-    selectable: true,
-    dayMaxEvents: true,
-    // events: importedData,
-    eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
-    eventClick: (info) => {
-      info.jsEvent.preventDefault(); // don't let the browser navigate
-      if (info.event.url) {
-        // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
-      }
-    },
-  });
-  calendar.render();
+function createEvents(calendar, importedData, eventsList) {
   importedData.forEach((event) => {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
@@ -202,6 +172,41 @@ async function initializeCalendar() {
       });
     }
   });
+}
+
+async function initializeCalendar() {
+  let importedData = [];
+  const eventsList = [];
+  const calendarEl = document.getElementById('calendar');
+  // const data = getEventsManual();
+  const normalizeCalendar = 'events';
+  const placeholders = await fetchPlaceholders(normalizeCalendar);
+  importedData = [...importedData, ...placeholders.data];
+  // eslint-disable-next-line no-undef
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,list',
+      center: '',
+      right: 'title',
+    },
+    navLinks: true, // can click day/week names to navigate views
+    editable: true,
+    selectable: true,
+    dayMaxEvents: true,
+    // events: importedData,
+    eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventClick: (info) => {
+      info.jsEvent.preventDefault(); // don't let the browser navigate
+      if (info.event.url) {
+        // eslint-disable-next-line max-len
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
+      }
+    },
+  });
+  calendar.render();
+
+  createEvents(calendar, importedData, eventsList);
 }
 
 export function loadfullcalendar() {
