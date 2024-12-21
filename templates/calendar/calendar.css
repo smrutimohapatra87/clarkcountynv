@@ -18,7 +18,11 @@ body.calendar .county-commissioners-district-d {
     background-color: #7ad295;
 }
 
-body.calendar a:any-link {
+body.calendar main a:any-link {
+    color: white;
+}
+
+body.calendar div.event-modal a:any-link {
     color: white;
 }
 
@@ -26,7 +30,7 @@ body.calendar .off {
     opacity: 0;
 }
 
-body.calendar main section.fc-search a {
+body.calendar main section.fc-search .fc-calendar-filters > a {
     margin: 5px 0;
     padding: .375rem .75rem;
     background: var(--default-button);
@@ -41,6 +45,81 @@ body.calendar main section.fc-search a {
     line-height: 1.5;
     vertical-align: top;
     transition: all .3s;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters {
+    position: relative;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul {
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: height .5s ease-in;
+    margin: 0;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters button.fc-close {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    right: .2vw;
+    top: 5.5vh;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    background-image: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/media_1340ed71a23c8180cbade5b224fea6977ac4b3510.png');
+}
+
+body.calendar main section.fc-search .fc-calendar-filters button.fc-close.expanded {
+    display: block;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul.expanded {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-auto-rows: 1fr;
+    position: absolute;
+    z-index: 9;
+    box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
+    left: 0;
+    right: 0;
+    top: 5vh;
+    background: #fff;
+    padding: 30px;
+    transition: height .5s ease-in;
+    height: 1000px;
+    overflow: scroll;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li {
+    background: #fff;
+    transition: all .2s ease;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li a {
+    transition: all .2s ease;
+    line-height: 1;
+    display: block;
+    padding: 11px;
+    color: #333;
+    text-decoration: none;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+body.calendar main section.fc-search .fc-calendar-filters ul li.active a {
+    transition: all .2s ease;
+    text-decoration: underline;
+    color: #fff;
 }
 
 body.calendar main section.fc-search form {
@@ -222,10 +301,6 @@ body.calendar main section .fc thead {
     font-family: var(--heading-font-family);
 }
 
-body.calendar main section .fc .fc-header-toolbar {
-    gap: vw;
-}
-
 body.calendar main section .fc .fc-daygrid-day.fc-day-today {
     background-color: var(--orange);
 }
@@ -268,6 +343,13 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
     
     body.calendar main section.fc-search {
         padding: 5vh 1vw 1vw;
+    }
+
+    body.calendar main section.fc-search .fc-calendar-filters ul.expanded {
+        /* display: none; */
+        grid-template-columns: repeat(3, 33%);
+        height: 650px;
+        transition: height .5s ease-in;
     }
 }
 

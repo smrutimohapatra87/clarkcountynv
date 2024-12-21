@@ -1,10 +1,10 @@
 import {
-  div, iframe, section, p, button, a,
+  div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -18,8 +18,13 @@ class Obj {
     this.backgroundColor = backgroundColor;
     this.classNames = classNames;
     this.readMore = readMore;
+    this.divisionid = divisionid;
   }
 }
+
+let calendar = null;
+let events = [];
+let calendarEl = null;
 
 // Array of divisions
 const divisions = [
@@ -65,8 +70,6 @@ const divisions = [
   { name: 'Family Services', color: '#3787d8', id: 40 },
   { name: 'Independent Living', color: '#3787d8', id: 41 },
 ];
-
-console.log(divisions);
 
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
@@ -183,14 +186,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   };
 }
 
-function createEvents(calendar, importedData, eventsList) {
-  importedData.forEach((event) => {
-    const startTime = event.startRecur.split('T')[1];
-    const endTime = event.endRecur.split('T')[1];
-    const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore);
-    eventsList.push(eventObj);
-  });
+function createEvents(eventsList) {
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
       calendar.addEvent({
@@ -204,6 +200,7 @@ function createEvents(calendar, importedData, eventsList) {
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
+        groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
       });
     } else {
@@ -215,22 +212,28 @@ function createEvents(calendar, importedData, eventsList) {
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
+        groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
       });
     }
   });
 }
 
-async function initializeCalendar() {
-  let importedData = [];
-  const eventsList = [];
-  const calendarEl = document.getElementById('calendar');
-  // const data = getEventsManual();
-  const normalizeCalendar = 'events';
-  const placeholders = await fetchPlaceholders(normalizeCalendar);
-  importedData = [...importedData, ...placeholders.data];
+function createEventList(importedData, eventsList) {
+  importedData.forEach((event) => {
+    const startTime = event.startRecur.split('T')[1];
+    const endTime = event.endRecur.split('T')[1];
+    const url = window.location.origin + event.path;
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid);
+    eventsList.push(eventObj);
+  });
+  createEvents(eventsList);
+  return eventsList;
+}
+
+function createCalendar() {
   // eslint-disable-next-line no-undef
-  const calendar = new FullCalendar.Calendar(calendarEl, {
+  calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
       left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,list',
@@ -252,8 +255,18 @@ async function initializeCalendar() {
     },
   });
   calendar.render();
+}
 
-  createEvents(calendar, importedData, eventsList);
+async function initializeCalendar() {
+  let importedData = [];
+  const eventsList = [];
+  calendarEl = document.getElementById('calendar');
+  // const data = getEventsManual();
+  const normalizeCalendar = 'events';
+  const placeholders = await fetchPlaceholders(normalizeCalendar);
+  importedData = [...importedData, ...placeholders.data];
+  createCalendar();
+  events = createEventList(importedData, eventsList);
 }
 
 export function loadfullcalendar() {
@@ -264,6 +277,19 @@ export function loadfullcalendar() {
   document.head.append(scriptfullcalendar);
 }
 
+function filterEvents(divisionId) {
+  if (divisionId === '1') {
+    calendar.destroy();
+    createCalendar();
+    createEvents(events);
+    return;
+  }
+  const filteredEvents = events.filter((event) => event.divisionid === divisionId);
+  calendar.destroy();
+  createCalendar();
+  createEvents(filteredEvents);
+}
+
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
@@ -271,8 +297,17 @@ export default async function decorate(doc) {
   const $calendarSection = section();
 
   // For the search section implementation
+  const calendarfilters = div({ class: 'fc-calendar-filters' });
   const calendarButton = a();
-  calendarButton.textContent = 'Calendars';
+  const closeButton = button({ class: 'fc-close' });
+  const calendarList = ul({ class: 'fc-calendar-list' });
+  divisions.forEach((division) => {
+    const divisionLi = li({ class: 'fc-calendar-list-item', id: `${division.id}` });
+    const divisionButton = a({ class: 'fc-calendar-list-button' });
+    divisionButton.textContent = division.name;
+    divisionLi.appendChild(divisionButton);
+    calendarList.appendChild(divisionLi);
+  });
   const searchDiv = div();
   searchDiv.innerHTML = `
     <form class="fc-search">
@@ -280,9 +315,12 @@ export default async function decorate(doc) {
         <button type="submit" class="fc-search"><i class="fc-search"></i></button>
     </form>
     `;
-  const bottomDiv = div();
+  const bottomDiv = div({ class: 'fc-calendar-search' });
   bottomDiv.appendChild(searchDiv);
-  $searchSection.appendChild(calendarButton);
+  calendarfilters.appendChild(calendarButton);
+  calendarfilters.appendChild(closeButton);
+  calendarfilters.appendChild(calendarList);
+  $searchSection.appendChild(calendarfilters);
   $searchSection.appendChild(bottomDiv);
 
   $main.appendChild($searchSection);
@@ -291,4 +329,33 @@ export default async function decorate(doc) {
   $main.append($calendarSection);
   loadfullcalendar();
   createModal(doc);
+  calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
+    divisionLi.addEventListener('click', () => {
+      parent.forEach((liele) => {
+        liele.classList.toggle('active', liele === divisionLi);
+        if (liele.classList.contains('active')) {
+          const divisionId = liele.id;
+          divisions.forEach((division) => {
+            if (division.id === parseInt(divisionId, 10)) {
+              liele.style.backgroundColor = division.color;
+              liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
+              filterEvents(divisionId);
+            }
+          });
+        } else {
+          liele.style.backgroundColor = '#fff';
+          liele.querySelector('.fc-calendar-list-button').style.backgroundColor = '#fff';
+        }
+      });
+    });
+  });
+  calendarButton.textContent = 'Calendars';
+  calendarButton.addEventListener('click', () => {
+    calendarList.classList.toggle('expanded');
+    closeButton.classList.toggle('expanded');
+  });
+  closeButton.addEventListener('click', () => {
+    calendarList.classList.remove('expanded');
+    closeButton.classList.remove('expanded');
+  });
 }
