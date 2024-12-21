@@ -290,6 +290,42 @@ function filterEvents(divisionId) {
   createEvents(filteredEvents);
 }
 
+function searchItems(searchTerm) {
+  const tokenizedSearchWords = searchTerm.split(' ');
+  if (tokenizedSearchWords.length > 1) tokenizedSearchWords.unshift(searchTerm);
+  return tokenizedSearchWords;
+}
+
+function filterMatches(tokenizedSearchWords) {
+  const allMatches = [];
+  tokenizedSearchWords.forEach((searchTerm) => {
+    const matches = events.filter((event) => (
+      event.divisionname
+        + event.title
+        + event.eventdescription
+        + event.eventname
+    )
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()));
+    allMatches.push(...matches);
+  });
+  // remove duplicates:
+  return [...new Set(allMatches)];
+}
+
+function implememtSearch(searchDiv) {
+  const response = document.getElementById('eventform');
+  searchDiv.querySelector('form').addEventListener('submit', async (web) => {
+    web.preventDefault();
+    const rawdata = response.value;
+    const tokenizedSearchWords = searchItems(rawdata);
+    const searchResults = filterMatches(tokenizedSearchWords);
+    calendar.destroy();
+    createCalendar();
+    createEvents(searchResults);
+  });
+}
+
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
@@ -311,7 +347,7 @@ export default async function decorate(doc) {
   const searchDiv = div();
   searchDiv.innerHTML = `
     <form class="fc-search">
-        <input type="text" id="event" name="event" placeholder="Search for Events...">
+        <input type="text" id="eventform" name="event" placeholder="Search for Events...">
         <button type="submit" class="fc-search"><i class="fc-search"></i></button>
     </form>
     `;
@@ -358,4 +394,5 @@ export default async function decorate(doc) {
     calendarList.classList.remove('expanded');
     closeButton.classList.remove('expanded');
   });
+  implememtSearch(searchDiv);
 }
