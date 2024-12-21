@@ -22,6 +22,18 @@ body.calendar main a:any-link {
     color: white;
 }
 
+body.calendar .event-modal .event-modal-footer a {
+    padding: 8px 12px 6px;
+    display: block;
+    float: right;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
 body.calendar div.event-modal a:any-link {
     color: white;
 }
@@ -54,9 +66,18 @@ body.calendar main section.fc-search .fc-calendar-filters {
 body.calendar main section.fc-search .fc-calendar-filters ul {
     height: 0;
     overflow: hidden;
-    padding: 0;
-    transition: height .5s ease-in;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-auto-rows: 1fr;
+    position: absolute;
+    z-index: 9;
+    box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
+    left: 0;
+    right: 0;
+    top: 5vh;
+    background: #fff;
+    transition: height .2s ease-in;
 }
 
 body.calendar main section.fc-search .fc-calendar-filters button.fc-close {
@@ -78,20 +99,11 @@ body.calendar main section.fc-search .fc-calendar-filters button.fc-close.expand
 }
 
 body.calendar main section.fc-search .fc-calendar-filters ul.expanded {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    grid-auto-rows: 1fr;
-    position: absolute;
-    z-index: 9;
-    box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
-    left: 0;
-    right: 0;
-    top: 5vh;
     background: #fff;
-    padding: 30px;
-    transition: height .5s ease-in;
+    transition: height .2s ease-in;
     height: 1000px;
     overflow: scroll;
+    padding: 30px;
 }
 
 body.calendar main section.fc-search .fc-calendar-filters ul li {
@@ -247,7 +259,7 @@ body.calendar .event-modal .event-modal-footer {
     color: white;
 }
 
-body.calendar .event-modal .event-modal-footer button, body.calendar .event-modal .event-modal-footer a {
+body.calendar .event-modal .event-modal-footer button {
     padding: 8px 12px 6px;
     display: block;
     float: right;
@@ -283,6 +295,10 @@ body.calendar main section.fc-search {
 
 body.calendar main section .fc .fc-button {
     border-radius: 0;
+}
+
+body.calendar main section .fc-theme-standard .fc-popover {
+    width: 100%;
 }
 
 body.calendar main section .fc .fc-button-primary {
@@ -345,12 +361,35 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
         padding: 5vh 1vw 1vw;
     }
 
-    body.calendar main section.fc-search .fc-calendar-filters ul.expanded {
-        /* display: none; */
+    body.calendar main section.fc-search .fc-calendar-filters ul {
+        height: 0;
+        overflow: hidden;
+        margin: 0;
+        display: grid;
         grid-template-columns: repeat(3, 33%);
-        height: 650px;
-        transition: height .5s ease-in;
+        grid-auto-rows: 1fr;
+        position: absolute;
+        z-index: 9;
+        box-shadow: 0 2px 15px rgba(0 0 0 / 25%);
+        left: 0;
+        right: 0;
+        top: 5vh;
+        background: #fff;
+        transition: height .2s ease-in;
     }
+
+    body.calendar main section.fc-search .fc-calendar-filters ul.expanded {
+        background: #fff;
+        transition: height .2s ease-in;
+        height: 650px;
+        overflow: scroll;
+        padding: 30px;
+    }
+
+    body.calendar main section .fc-theme-standard .fc-popover {
+        width: auto;
+    }
+    
 }
 
 
