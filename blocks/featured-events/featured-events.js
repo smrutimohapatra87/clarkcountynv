@@ -73,6 +73,7 @@ function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundCol
       modal.querySelector('.event-modal-date').classList.remove('off');
       modal.querySelector('.event-modal-time').classList.remove('off');
     }
+    console.log(event.data.eventfooter);
     if (event.data.eventfooter === 'on') {
       modal.querySelector('.event-modal-footer').classList.remove('off');
     } else {

@@ -127,7 +127,6 @@ function tConv24(time24) {
 }
 
 function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
-  console.log(endTime);
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -189,7 +188,6 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
 
 function createEvents(eventsList) {
   eventsList.forEach((event) => {
-    console.log(event);
     if (event.daysOfWeek.length > 0) {
       calendar.addEvent({
         title: event.title,
