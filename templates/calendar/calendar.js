@@ -127,6 +127,7 @@ function tConv24(time24) {
 }
 
 function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
+  console.log(endTime);
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -313,7 +314,7 @@ function filterMatches(tokenizedSearchWords) {
   return [...new Set(allMatches)];
 }
 
-function implememtSearch(searchDiv) {
+function implementSearch(searchDiv) {
   const response = document.getElementById('eventform');
   searchDiv.querySelector('form').addEventListener('submit', async (web) => {
     web.preventDefault();
@@ -394,5 +395,5 @@ export default async function decorate(doc) {
     calendarList.classList.remove('expanded');
     closeButton.classList.remove('expanded');
   });
-  implememtSearch(searchDiv);
+  implementSearch(searchDiv);
 }

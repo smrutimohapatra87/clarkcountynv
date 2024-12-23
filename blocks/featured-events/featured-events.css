@@ -2,6 +2,10 @@
     margin-top: 0;
 }
 
+.block.featured-events .off {
+    opacity: 0;
+}
+
 .block.featured-events .block.columns {
     display: flex;
     justify-content: space-between;
@@ -83,6 +87,85 @@
     background: url('https://main--clarkcountynv--aemsites.aem.page/assets/images/calendar-icon.png') center / cover no-repeat;
 }
 
+.block.featured-events .event-modal .event-modal-date p {
+    color: white;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    font-family: var(--heading-font-family);
+    font-size: 21px;
+}
+
+.block.featured-events .event-modal .event-modal-time p {
+    color: white;
+    z-index: 1;
+    padding: 0 .6vw;
+    margin: 0;
+    font-family: var(--heading-font-family);
+    font-size: 16px;
+}
+
+.block.featured-events .event-modal .event-modal-date p:last-child {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.block.featured-events .event-modal .event-modal-time {
+    top: 276px;
+    position: absolute;
+    min-width: 165px;
+    transition: opacity .25s ease-in-out;
+}
+
+.block.featured-events .event-modal .event-modal-content {
+    width: 500px;
+    max-width: 100%;
+    background-color: white;
+    height: 750px;
+    margin: auto;
+    margin-top: 0;
+    position: relative;
+    animation: animatetop 1s;
+}
+
+@keyframes animatetop {
+    from {
+        top: -50px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.block.featured-events .event-modal .event-modal-footer {
+    width: 500px;
+    max-width: 100%;
+    position: absolute;
+    padding: 15px;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1vw;
+    color: white;
+}
+
+.block.featured-events .event-modal .event-modal-footer button {
+    padding: 8px 12px 6px;
+    display: block;
+    float: right;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
 .block.featured-events .block.columns > div > div.column1 p {
     white-space: normal;
 }
@@ -105,6 +188,45 @@
     background-color: rgb(0 0 0); 
     background-color: rgba(0 0 0 / 40%);
 }
+
+.block.featured-events .event-modal .event-modal-footer a {
+    padding: 8px 12px 6px;
+    display: block;
+    float: right;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
+.block.featured-events div.event-modal a:any-link {
+    color: white;
+}
+
+.block.featured-events .event-modal .event-modal-footer a.displayoff {
+    display: none;
+}
+
+.block.featured-events .event-modal .event-modal-date {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    text-align: center;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding-top: 1.2vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: .2vh;
+    line-height: 1;
+    transition: opacity .25s ease-in-out;
+}
+
 
 
 @media (width >= 900px) {
