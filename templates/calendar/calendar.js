@@ -189,6 +189,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
 
 function createEvents(eventsList) {
   eventsList.forEach((event) => {
+    console.log(event);
     if (event.daysOfWeek.length > 0) {
       calendar.addEvent({
         title: event.title,

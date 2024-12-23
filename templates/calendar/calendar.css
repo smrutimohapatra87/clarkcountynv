@@ -18,6 +18,14 @@ body.calendar .county-commissioners-district-d {
     background-color: #7ad295;
 }
 
+body.calendar .county-commissioners-district-e {
+    background-color: #d4dbb6;
+}
+
+body.calendar .county-commissioners-district-f {
+    background-color: #f9a97f;
+}
+
 body.calendar main a:any-link {
     color: white;
 }
