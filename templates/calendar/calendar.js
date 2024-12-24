@@ -329,6 +329,44 @@ function implementSearch(searchDiv) {
   });
 }
 
+// Get the featured events for the Calendar panel
+export async function fetchFeatured() {
+  window.placeholders = window.placeholders || {};
+  const TRANSLATION_KEY_EVENTS = 'featured-events';
+  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+
+  if (!loaded) {
+    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
+      fetch('/featured.json?sheet=events')
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error(`${resp.status}: ${resp.statusText}`);
+        })
+        .then((json) => {
+          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
+          resolve();
+        }).catch((error) => {
+        // Error While Loading Placeholders
+          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
+          reject(error);
+        });
+    });
+  }
+  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+}
+
+async function getFeaturedEvents() {
+  const placeholders = await fetchFeatured();
+  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  calendar.destroy();
+  createCalendar();
+  const eventsList = [];
+  createEventList(yesArray, eventsList);
+}
+
 export default async function decorate(doc) {
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
@@ -378,13 +416,17 @@ export default async function decorate(doc) {
             if (division.id === parseInt(divisionId, 10)) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
-              filterEvents(divisionId);
+              if (divisionId === '2') {
+                getFeaturedEvents();
+              } else { filterEvents(divisionId); }
             }
           });
         } else {
           liele.style.backgroundColor = '#fff';
           liele.querySelector('.fc-calendar-list-button').style.backgroundColor = '#fff';
         }
+        calendarList.classList.remove('expanded');
+        closeButton.classList.remove('expanded');
       });
     });
   });
