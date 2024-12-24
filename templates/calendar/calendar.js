@@ -235,8 +235,11 @@ function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
+    views: {
+      listMonth: { buttonText: 'list' },
+    },
     headerToolbar: {
-      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,list',
+      left: 'prev,next,today dayGridMonth,timeGridWeek,timeGridDay,listMonth',
       center: '',
       right: 'title',
     },
