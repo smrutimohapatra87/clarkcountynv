@@ -4,7 +4,7 @@ import {
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludedDates) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -19,7 +19,7 @@ class Obj {
     this.classNames = classNames;
     this.readMore = readMore;
     this.divisionid = divisionid;
-    this.excludedDates = excludedDates;
+    this.excludeDates = excludeDates;
   }
 }
 
@@ -190,20 +190,6 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
 function createEvents(eventsList) {
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
-      // calendar.addEvent({
-      //   title: event.title,
-      //   allDay: false,
-      //   daysOfWeek: event.daysOfWeek,
-      //   startTime: event.startTime,
-      //   endTime: event.endTime,
-      //   startRecur: event.startRecur,
-      //   endRecur: event.endRecur,
-      //   url: event.url,
-      //   backgroundColor: event.backgroundColor,
-      //   classNames: event.classNames,
-      //   groupId: event.divisionid,
-      //   extendedProps: { readMore: event.readMore },
-      // });
       calendar.addEvent({
         title: event.title,
         allDay: false,
@@ -214,7 +200,7 @@ function createEvents(eventsList) {
           until: event.endRecur,
         },
         duration: '02:00',
-        exdate: event.excludedDates.split(','),
+        exdate: ['2025-01-10T13:00:00', '2025-01-17T13:00:00'],
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
@@ -242,7 +228,7 @@ function createEventList(importedData, eventsList) {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
     const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
