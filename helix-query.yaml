@@ -65,6 +65,9 @@ indices:
       endRecur:
         select: head > meta[name="endrecur"]
         value: attribute(el, "content")
+      excludeDates:
+        select: head > meta[name="exclude-dates"]
+        value: attribute(el, "content")
       title:
         select: head > meta[name="event-title"]
         value: attribute(el, "content")
