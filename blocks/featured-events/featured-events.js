@@ -141,7 +141,7 @@ export async function fetchPlaceholders() {
 
   if (!loaded) {
     window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/featured.json?sheet=events')
+      fetch('/calendar/featured-events/featured.json?sheet=events')
         .then((resp) => {
           if (resp.ok) {
             return resp.json();

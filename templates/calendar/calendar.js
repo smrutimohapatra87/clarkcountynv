@@ -2,6 +2,8 @@ import {
   div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
+import { normalizeString } from '../../scripts/utils.js';
+
 class Obj {
   // eslint-disable-next-line max-len
   constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates) {
@@ -264,6 +266,44 @@ function createCalendar() {
   calendar.render();
 }
 
+// Get the featured events for the Calendar panel
+export async function fetchFeatured() {
+  window.placeholders = window.placeholders || {};
+  const TRANSLATION_KEY_EVENTS = 'featured-events';
+  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+
+  if (!loaded) {
+    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
+      fetch('/calendar/featured-events/featured.json?sheet=events')
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error(`${resp.status}: ${resp.statusText}`);
+        })
+        .then((json) => {
+          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
+          resolve();
+        }).catch((error) => {
+        // Error While Loading Placeholders
+          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
+          reject(error);
+        });
+    });
+  }
+  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+}
+
+async function getFeaturedEvents() {
+  const placeholders = await fetchFeatured();
+  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  calendar.destroy();
+  createCalendar();
+  const eventsList = [];
+  createEventList(yesArray, eventsList);
+}
+
 async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
@@ -273,7 +313,22 @@ async function initializeCalendar() {
   const placeholders = await fetchPlaceholders(normalizeCalendar);
   importedData = [...importedData, ...placeholders.data];
   createCalendar();
-  events = createEventList(importedData, eventsList);
+  const checkDivision = window.location.pathname.split('/');
+  if (checkDivision[2] && checkDivision[2].length > 0) {
+    divisions.forEach((division) => {
+      if (normalizeString(division.name) === checkDivision[2]) {
+        if (normalizeString(division.name) === 'featured-events') {
+          getFeaturedEvents();
+        } else {
+          // eslint-disable-next-line max-len
+          const filterData = importedData.filter((event) => event.divisionid === String(division.id));
+          createEventList(filterData, eventsList);
+        }
+      }
+    });
+  } else {
+    events = createEventList(importedData, eventsList);
+  }
 }
 
 export function loadrrtofullcalendar() {
@@ -302,15 +357,10 @@ export function loadrrule() {
 
 function filterEvents(divisionId) {
   if (divisionId === '1') {
-    calendar.destroy();
-    createCalendar();
-    createEvents(events);
+    window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
-  const filteredEvents = events.filter((event) => event.divisionid === divisionId);
-  calendar.destroy();
-  createCalendar();
-  createEvents(filteredEvents);
+  window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -347,44 +397,6 @@ function implementSearch(searchDiv) {
     createCalendar();
     createEvents(searchResults);
   });
-}
-
-// Get the featured events for the Calendar panel
-export async function fetchFeatured() {
-  window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'featured-events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-
-  if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/featured.json?sheet=events')
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
-        })
-        .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
-        });
-    });
-  }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
-}
-
-async function getFeaturedEvents() {
-  const placeholders = await fetchFeatured();
-  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
-  calendar.destroy();
-  createCalendar();
-  const eventsList = [];
-  createEventList(yesArray, eventsList);
 }
 
 export default async function decorate(doc) {
@@ -424,7 +436,6 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
-  // loadfullcalendar();
   loadrrule();
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
@@ -438,6 +449,7 @@ export default async function decorate(doc) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               if (divisionId === '2') {
+                window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
               } else { filterEvents(divisionId); }
             }
