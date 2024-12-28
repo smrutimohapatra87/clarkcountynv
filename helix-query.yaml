@@ -29,7 +29,15 @@ indices:
       - /calendar/**
     exclude:
       - /calender
-      -/calendar/index
+      - /calendar/
+      - /calendar/county-commission-district-a/
+      - /calendar/county-commission-district-b/
+      - /calendar/featured-events/
+      - /calendar/county-commissioners/
+      - /calendar/county-commissioners-district-d/
+      - /calendar/county-commissioners-district-e/
+      - /calendar/county-commissioners-district-f/
+      - /calendar/county-commissioners-district-c/
     target: /calendar/events.json
     properties:
       divisionname:
@@ -67,6 +75,9 @@ indices:
         value: attribute(el, "content")
       endRecur:
         select: head > meta[name="endrecur"]
+        value: attribute(el, "content")
+      duration:
+        select: head > meta[name="duration"]
         value: attribute(el, "content")
       excludeDates:
         select: head > meta[name="exclude-dates"]
