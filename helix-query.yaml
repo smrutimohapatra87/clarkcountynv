@@ -27,6 +27,9 @@ indices:
   events:
     include:
       - /calendar/**
+    exclude:
+      - /calender
+      -/calendar/index
     target: /calendar/events.json
     properties:
       divisionname:
