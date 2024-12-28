@@ -6,7 +6,7 @@ import { normalizeString } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates, duration) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -22,6 +22,7 @@ class Obj {
     this.readMore = readMore;
     this.divisionid = divisionid;
     this.excludeDates = excludeDates;
+    this.duration = duration;
   }
 }
 
@@ -190,8 +191,14 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
 }
 
 function createEvents(eventsList) {
+  let eventDuration = '';
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
+      if (event.duration && event.duration.length > 0) {
+        eventDuration = `${event.duration.split('-')[1]}`;
+      } else {
+        eventDuration = '01:00';
+      }
       calendar.addEvent({
         title: event.title,
         allDay: false,
@@ -201,7 +208,7 @@ function createEvents(eventsList) {
           dtstart: event.startRecur,
           until: event.endRecur,
         },
-        duration: '02:00',
+        duration: eventDuration,
         exdate: ['2025-01-10T13:00:00', '2025-01-17T13:00:00'],
         url: event.url,
         backgroundColor: event.backgroundColor,
@@ -230,7 +237,7 @@ function createEventList(importedData, eventsList) {
     const startTime = event.startRecur.split('T')[1];
     const endTime = event.endRecur.split('T')[1];
     const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
