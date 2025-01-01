@@ -443,7 +443,7 @@ export default async function decorate(doc) {
   const calDiv = div({ id: 'calendar' });
   $calendarSection.append(calDiv);
   $main.append($calendarSection);
-  loadrrule();
+  // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
     divisionLi.addEventListener('click', () => {
