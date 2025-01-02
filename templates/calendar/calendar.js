@@ -190,7 +190,13 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   };
 }
 
+function disableSpinner() {
+  const spinnerDiv = document.querySelector('.spinner');
+  spinnerDiv.style.display = 'none';
+}
+
 function createEvents(eventsList) {
+  disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
     if (event.daysOfWeek.length > 0) {
@@ -433,6 +439,8 @@ export default async function decorate(doc) {
     `;
   const bottomDiv = div({ class: 'fc-calendar-search' });
   bottomDiv.appendChild(searchDiv);
+  const spinnerDiv = div({ class: 'spinner' }, div({ class: 'circle-spinner' }));
+  bottomDiv.appendChild(spinnerDiv);
   calendarfilters.appendChild(calendarButton);
   calendarfilters.appendChild(closeButton);
   calendarfilters.appendChild(calendarList);

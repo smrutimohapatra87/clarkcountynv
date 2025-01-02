@@ -50,6 +50,48 @@ body.calendar .off {
     opacity: 0;
 }
 
+body.calendar main div.spinner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    z-index: 20000; 
+    height:250px;
+    margin-top: 100px;
+}
+
+body.calendar main div.spinner div.circle-spinner {
+    width: 40px;
+    height: 40px;
+    background: conic-gradient(var(--default-button), var(--default-button), #fff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    animation: rotate 2s ease-in-out infinite;
+}
+
+body.calendar main div.spinner div.circle-spinner::after {
+    content: "";
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0.7);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(720deg);
+    }
+}
+
 body.calendar main section.fc-search .fc-calendar-filters > a {
     margin: 5px 0;
     padding: .375rem .75rem;
@@ -294,6 +336,7 @@ body.calendar .event-modal .event-modal-footer button {
 body.calendar main section .fc {
     padding: 0 1vw 5vw;
     font-family: var(--heading-font-family);
+    height: 507px;
 }
 
 body.calendar main section.fc-search {
@@ -363,10 +406,15 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
 @media (width >= 900px) {
     body.calendar main section .fc {
         padding: 0 1vw 5vw;
+        height: 1241px;
     }
     
     body.calendar main section.fc-search {
         padding: 5vh 1vw 1vw;
+    }
+
+    body.calendar main div.spinner {
+        height: 1141px;
     }
 
     body.calendar main section.fc-search .fc-calendar-filters ul {
