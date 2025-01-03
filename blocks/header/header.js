@@ -1,4 +1,4 @@
-import { fetchPlaceholders, getMetadata, toClassName } from '../../scripts/aem.js';
+import { getMetadata, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import {
   div, img, span, a, button, details, summary, h2,
@@ -464,130 +464,6 @@ function buildNavSections(navSections) {
   }
 }
 
-const getPageTitle = async (url) => {
-  // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
-  const resp = await fetch(url); // invalid URL will return 404 in console
-  if (resp.ok) {
-    const html = document.createElement('div');
-    html.innerHTML = await resp.text();
-    const pageTitle = html.querySelector('meta[name="page-title"]');
-    if (pageTitle) {
-      return html.querySelector('title').innerText;
-    }
-    return html.querySelector('title').innerText;
-  }
-  return null;
-};
-
-const getAllPathsExceptCurrent = async (paths) => {
-  const result = [];
-  // remove first and last slash characters
-  const pathsList = paths.replace(/^\/|\/$/g, '').split('/');
-  for (let i = 0; i < pathsList.length - 1; i += 1) {
-    const pathPart = pathsList[i];
-    const prevPath = result[i - 1] ? result[i - 1].path : '';
-    const path = `${prevPath}/${pathPart}`;
-    const url = `${window.location.origin}${path}/`;
-    /* eslint-disable-next-line no-await-in-loop */
-    const name = await getPageTitle(url);
-    result.push({ path, name, url });
-  }
-  return result.filter(Boolean);
-};
-
-async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
-  const crumbs = [];
-  // TODO: changing logic based on path as we will likely load from meta or tabs from index later
-  const path = window.location.pathname;
-  const paths = await getAllPathsExceptCurrent(path);
-  paths.forEach((pathPart) => {
-    if (pathPart.name !== '') {
-      crumbs.push({ title: pathPart.name, url: pathPart.url });
-    }
-  });
-
-  // TODO: no link on home icon
-  const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
-  if (currentUrl !== homeUrl) {
-    crumbs.push({ title: getMetadata('page-title'), url: currentUrl });
-  }
-
-  // TODO: needs placeholders file
-  const placeholders = await fetchPlaceholders();
-  const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
-
-  crumbs.unshift({ title: homePlaceholder, url: homeUrl });
-
-  // last link is current page and should not be linked
-  if (crumbs.length > 1) {
-    crumbs[crumbs.length - 1].url = null;
-  }
-  crumbs[crumbs.length - 1]['aria-current'] = 'page';
-
-  return crumbs;
-}
-
-export const fetchAndParseDocument = async (url) => {
-  try {
-    const response = await fetch(`${url}.plain.html`);
-    const text = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    return doc;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error fetching and parsing document:', error);
-  }
-  return null;
-};
-
-async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
-  const crumbs = [];
-  // TODO: changing logic based on path as we will likely load from meta or tabs from index later
-  let paths = await fetchAndParseDocument(getMetadata('breadcrumbs-base'));
-  paths = paths.querySelectorAll('li a');
-  paths.forEach((path) => {
-    crumbs.push({ title: path.textContent, url: path.href });
-  });
-
-  const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
-  if (currentUrl !== homeUrl && (getMetadata('page-title') !== '' || getMetadata('breadcrumbs-title-override') !== '')) {
-    const title = getMetadata('breadcrumbs-title-override') || getMetadata('page-title');
-    crumbs.push({ title, url: null });
-  }
-  return crumbs;
-}
-
-async function buildBreadcrumbs() {
-  const breadcrumbs = document.createElement('nav');
-  breadcrumbs.className = 'breadcrumbs';
-
-  let crumbs;
-  if (getMetadata('breadcrumbs-base')) {
-    crumbs = await buildBreadcrumbsFromMetadata(document.querySelector('.nav-sections'), document.location.href);
-  } else {
-    crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);
-  }
-
-  const ul = document.createElement('ul');
-  ul.append(...crumbs.map((item) => {
-    const li = document.createElement('li');
-    if (item['aria-current']) li.setAttribute('aria-current', item['aria-current']);
-    if (item.url) {
-      const anc = document.createElement('a');
-      anc.href = item.url;
-      anc.textContent = item.title;
-      li.append(anc);
-    } else {
-      li.textContent = item.title;
-    }
-    return li;
-  }));
-
-  breadcrumbs.append(ul);
-  return breadcrumbs;
-}
-
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -726,10 +602,6 @@ export default async function decorate(block) {
   const navWrapper = div({ class: 'nav-wrapper' });
   navWrapper.append(nav);
   block.append(navWrapper);
-
-  if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
-    navWrapper.append(await buildBreadcrumbs());
-  }
 
   window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
