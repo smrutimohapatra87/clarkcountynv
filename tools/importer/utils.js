@@ -1,7 +1,8 @@
 /* global WebImporter */
 
 export const PREVIEW_DOMAIN = 'https://main--clarkcountynv--aemsites.aem.page';
-
+const METADATA_ALLOWED_KEYS = ['template', 'breadcrumbs-base', 'page-title', 'breadcrumbs-title-override',
+  'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl'];
 export const createMetadata = (main, document, params) => {
   const meta = {};
 
@@ -19,17 +20,11 @@ export const createMetadata = (main, document, params) => {
     Object.assign(meta, params.preProcessMetadata);
   }
 
-  if (params.template) {
-    meta.template = params.template;
-  }
-
-  if (params['breadcrumbs-base']) {
-    meta['breadcrumbs-base'] = params['breadcrumbs-base'];
-  }
-
-  if (params['page-title']) {
-    meta['page-title'] = params['page-title'];
-  }
+  METADATA_ALLOWED_KEYS.forEach((key) => {
+    if (params[key]) {
+      meta[key] = params[key];
+    }
+  });
 
   const image = document.createElement('img');
   image.src = `${PREVIEW_DOMAIN}/assets/images/logo.png`;

@@ -667,11 +667,14 @@ main .section.details-404 > .default-content-wrapper {
     }
 
   }
-  
-  
-  
- 
+}
 
+.newsdetail {
+    padding: 50px 15px 60px;
+}
+
+main > div.section.newsdetail > .default-content-wrapper > p {
+    margin-bottom: 30px;
 }
 
 
