@@ -44,10 +44,29 @@ export const fixRelativeLinks = (document) => {
   });
 };
 
+export const getImportPagePath = (url) => {
+  const path = new URL(url).pathname;
+  return path.endsWith('.php') ? path.slice(0, -4) : path;
+};
+
+export const getSanitizedPath = (url) => {
+  const u = new URL(url);
+  // if link points to a URL outside this site, return the original URL
+  if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
+    return url;
+  }
+
+  const path = u.pathname;
+  if (path.endsWith('index.php')) {
+    return path.slice(0, -9);
+  } if (path.endsWith('.php')) {
+    return path.slice(0, -4);
+  }
+  return path;
+};
+
 export const getPathSegments = (url) => (new URL(url)).pathname.split('/')
   .filter((segment) => segment);
-
-export const normalizeString = (str) => str.toLowerCase().replace(/ /g, '_');
 
 export const fetchAndParseDocument = async (url) => {
   try {
@@ -61,4 +80,66 @@ export const fetchAndParseDocument = async (url) => {
     console.error('Error fetching and parsing document:', error);
   }
   return null;
+};
+
+export const fixPdfLinks = (main, results, assetType = '') => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && href.endsWith('.pdf')) {
+      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType ? `/${assetType}/` : ''}${u.pathname.split('/').pop()}`);
+      results.push({
+        path: newPath,
+        from: u.toString(),
+      });
+
+      a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN));
+    }
+  });
+};
+
+export const fixAudioLinks = (main) => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (href && (href.toLowerCase().search('.mp3') !== -1 || href.toLowerCase().search('.mp4') !== -1)) {
+      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      a.setAttribute('href', u.toString());
+    }
+  });
+};
+
+export const getCardsImagePath = (src) => {
+  const imagePath = new URL(src).pathname;
+  const u = new URL(imagePath, 'https://webfiles.clarkcountynv.gov');
+  return u.toString();
+};
+
+export const buildSectionMetadata = (cells) => WebImporter.Blocks.createBlock(document, {
+  name: 'Section Metadata',
+  cells: [...cells],
+});
+
+export const getDesktopBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Desktop, homepage, short'],
+]);
+
+export const getMobileBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
+  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+  ['Style', 'Mobile, homepage, short'],
+]);
+
+export const blockSeparator = () => {
+  const p = document.createElement('p');
+  p.innerText = '---';
+  return p;
+};
+
+export const setPageTitle = (main, params) => {
+  const pageTitleEl = main.querySelector('#page-title');
+  const pageHeading = pageTitleEl.textContent.trim();
+  if (pageHeading.length > 0) {
+    params['page-title'] = pageHeading;
+    pageTitleEl.remove();
+  }
 };

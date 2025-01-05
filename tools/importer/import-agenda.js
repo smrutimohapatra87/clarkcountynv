@@ -1,33 +1,12 @@
 /* global WebImporter */
 import {
-  PREVIEW_DOMAIN, createMetadata,
+  createMetadata,
+  blockSeparator,
+  buildSectionMetadata,
+  getMobileBgBlock,
+  getDesktopBgBlock,
+  getImportPagePath, fixPdfLinks, fixAudioLinks, setPageTitle,
 } from './utils.js';
-
-function fixPdfLinks(main, results) {
-  main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
-    if (href && href.endsWith('.pdf')) {
-      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/agenda/${u.pathname.split('/').pop()}`);
-      results.push({
-        path: newPath,
-        from: u.toString(),
-      });
-
-      a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN));
-    }
-  });
-}
-
-function fixAudioLinks(main) {
-  main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
-    if (href && (href.toLowerCase().search('.mp3') !== -1 || href.toLowerCase().search('.mp4') !== -1)) {
-      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      a.setAttribute('href', u.toString());
-    }
-  });
-}
 
 function breadcrumbUrl(main, results, newPath) {
   const parts = [];
@@ -108,63 +87,30 @@ export default {
       '.uwy.userway_p5.utb',
     ]);
 
-    let path = new URL(params.originalURL).pathname;
-    path = path.endsWith('.php') ? path.slice(0, -4) : path;
-    const newPath = WebImporter.FileUtils.sanitizePath(path);
+    const newPagePath = getImportPagePath(params.originalURL);
 
     // Handle all PDFs
-    fixPdfLinks(main, results);
+    fixPdfLinks(main, results, 'agenda');
     fixAudioLinks(main);
 
-    const blockSeparator = document.createElement('p');
-    blockSeparator.innerText = '---';
+    setPageTitle(main, params);
 
-    const pageTitleEl = main.querySelector('#page-title');
-    const pageHeading = pageTitleEl.textContent.trim();
-    if (pageHeading.length > 0) {
-      params['page-title'] = pageHeading;
-      pageTitleEl.remove();
-    }
-
-    const desktopBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Desktop, homepage, short'],
-      ],
-    });
-    const mobileBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Mobile, homepage, short'],
-      ],
-    });
-
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
-    main.insertBefore(mobileBlock, main.firstChild);
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
-    main.insertBefore(desktopBlock, main.firstChild);
-
-    const agendaDetailSectionMetadata = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Style', 'agendadetail'],
-      ],
-    });
-
-    main.append(agendaDetailSectionMetadata);
-    main.append(blockSeparator.cloneNode(true));
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+    main.insertBefore(getMobileBgBlock(), main.firstChild);
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+    main.insertBefore(getDesktopBgBlock(), main.firstChild);
+    main.append(buildSectionMetadata([['Style', 'agendadetail']]));
+    main.append(blockSeparator().cloneNode(true));
 
     params.template = 'agenda';
 
-    const breadcrumbsUrl = breadcrumbUrl(breadcrumbsEl, results, newPath);
+    const breadcrumbsUrl = breadcrumbUrl(breadcrumbsEl, results, newPagePath);
     params['breadcrumbs-base'] = `/agenda/${breadcrumbsUrl}`;// '/agenda/agenda-breadcrumbs';
     createMetadata(main, document, params);
 
     results.push({
       element: main,
-      path: newPath,
+      path: newPagePath,
     });
     return results;
   },

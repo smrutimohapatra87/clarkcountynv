@@ -1,23 +1,12 @@
 /* global WebImporter */
 import {
-  PREVIEW_DOMAIN, createMetadata,
+  createMetadata,
+  fixPdfLinks,
+  blockSeparator,
+  getMobileBgBlock,
+  getDesktopBgBlock,
+  buildSectionMetadata, getImportPagePath, setPageTitle,
 } from './utils.js';
-
-function fixPdfLinks(main, results) {
-  main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
-    if (href && href.endsWith('.pdf')) {
-      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/bid-detail/${u.pathname.split('/').pop()}`);
-      results.push({
-        path: newPath,
-        from: u.toString(),
-      });
-
-      a.setAttribute('href', newPath);
-    }
-  });
-}
 
 export default {
 
@@ -41,59 +30,28 @@ export default {
       '.uwy.userway_p5.utb',
     ]);
 
+    const newPagePath = getImportPagePath(params.originalURL);
+
     // Handle all PDFs
-    fixPdfLinks(main, results);
+    fixPdfLinks(main, results, 'bid-detail');
 
-    const blockSeparator = document.createElement('p');
-    blockSeparator.innerText = '---';
+    setPageTitle(main, params);
 
-    const pageTitleEl = main.querySelector('#page-title');
-    const pageHeading = pageTitleEl.textContent.trim();
-    if (pageHeading.length > 0) {
-      params['page-title'] = pageHeading;
-      pageTitleEl.remove();
-    }
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+    main.insertBefore(getMobileBgBlock(), main.firstChild);
+    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+    main.insertBefore(getDesktopBgBlock(), main.firstChild);
 
-    const desktopBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Desktop, homepage, short'],
-      ],
-    });
-    const mobileBlock = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/slide1.jpg`],
-        ['Style', 'Mobile, homepage, short'],
-      ],
-    });
-
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
-    main.insertBefore(mobileBlock, main.firstChild);
-    main.insertBefore(blockSeparator.cloneNode(true), main.firstChild);
-    main.insertBefore(desktopBlock, main.firstChild);
-
-    const bidDetailSectionMetadata = WebImporter.Blocks.createBlock(document, {
-      name: 'Section Metadata',
-      cells: [
-        ['Style', 'biddetail'],
-      ],
-    });
-
-    main.append(bidDetailSectionMetadata);
-    main.append(blockSeparator.cloneNode(true));
+    main.append(buildSectionMetadata([['Style', 'biddetail']]));
+    main.append(blockSeparator().cloneNode(true));
 
     params.template = 'agenda';
     params['breadcrumbs-base'] = '/bid-detail/bid-detail-breadcrumbs';
     createMetadata(main, document, params);
 
-    let path = new URL(params.originalURL).pathname;
-    path = path.endsWith('.php') ? path.slice(0, -4) : path;
-    const newPath = WebImporter.FileUtils.sanitizePath(path);
     results.push({
       element: main,
-      path: newPath,
+      path: newPagePath,
     });
 
     return results;
