@@ -58,4 +58,7 @@ function resizeAction() {
 window.addEventListener('resize', resizeAction);
 
 // Script for Full Calendar
-loadrrule();
+// check if windows location contains calendar
+if (window.location.pathname.includes('/calendar/')) {
+  loadrrule();
+}
