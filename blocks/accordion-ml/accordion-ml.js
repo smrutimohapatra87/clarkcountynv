@@ -235,7 +235,7 @@ function decorateDesktopView(mainUL) {
 }
 
 export default function decorate(block) {
-  const mainUL = document.querySelector('ul');
+  const mainUL = block.querySelector('ul');
   const mainULBackUp = mainUL.parentElement.parentElement.cloneNode(true);
   if (getViewPort() === 'mobile') {
     decorateMobileView(mainUL);

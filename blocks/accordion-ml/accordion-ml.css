@@ -14,7 +14,7 @@ details[open] > ul {
 }
 
 .accordion-ml.block ul {
-    margin-left: -1.8em;
+    margin-left: -2.2em;
     margin-top: 0;
 }
 
@@ -51,7 +51,6 @@ details[open] > ul {
 
 .accordion-ml details > summary.itemcolor2 a {
     font-family: var(--heading-font-family);
-    border-bottom: 1px solid rgba(0 0 0 / 15%);
     flex-grow: 1;
 }
 
@@ -61,7 +60,8 @@ details[open] > ul {
 }
 
 .accordion-ml details:not(:has(ul)) summary > div {
-    padding: 7px 60px 15px 0;
+    padding: 7px 7px 15px 0;
+    border-bottom: 1px solid rgba(0 0 0 / 15%);
 }
 
 .accordion-ml details > summary {
