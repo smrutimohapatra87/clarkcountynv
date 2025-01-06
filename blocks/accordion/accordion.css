@@ -1,0 +1,62 @@
+.accordion.block {
+    @media (width >= 900px) {
+        padding: 50px 70px 60px 50px;
+    }
+
+    details {
+        summary {
+            padding: 11px 55px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid #ddd;
+            margin: 3px 0 0;
+            background: #f9f9f9 url("/icons/arrow-down.png") no-repeat 20px center;
+            transition: 0.4s;
+            backface-visibility: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            list-style: none;
+
+            p {
+                padding: unset;
+                margin: unset;
+            }
+        }
+
+        .content {
+            padding: 20px 20px 0;
+            margin: 0 0 3px;
+            background: #fff;
+            border: 1px solid #C54B2A;
+            border-top-style: none;
+
+            p {
+                margin: 0 0 20px;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    details[open] {
+        summary {
+            border-color: #C54B2A;
+            background: #C54B2A url("/icons/arrow-up.png") no-repeat 20px center;
+
+            p {
+                color: #fff;
+            }
+        }
+
+        .content {
+            border-top: 1px solid #dadada;
+            background-color: var(--background-color);
+        }
+    }
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion details + details {
+    margin-top: 3px;
+}
