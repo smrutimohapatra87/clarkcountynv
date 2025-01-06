@@ -60,3 +60,15 @@
   top: 4px;
   left: 7px;
 }
+
+/* CSS for iframe embed forms */
+
+main .mainmenu .section.rightsection.googleform .block.embed > div {
+  height: 1500px !important;
+}
+
+main .mainmenu .section.rightsection.googleform .block.embed iframe {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
