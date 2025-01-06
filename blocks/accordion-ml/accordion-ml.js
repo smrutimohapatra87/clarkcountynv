@@ -19,7 +19,6 @@ class Accordion {
     this.grandParent = el.parentElement.parentElement.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
-    console.log(this.content);
 
     // Store the animation object (so we can cancel it if needed)
     this.animation = null;
@@ -181,11 +180,9 @@ function decorateMobileView(mainUL) {
       if (event.target.open) {
         height.style.setProperty('--height', 'auto');
         const value = findLevel(event.target);
-        if (event.target.querySelector('ul')) {
-          event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
-            ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
-          });
-        }
+        event.target.querySelector('ul').querySelectorAll(':scope > details').forEach((ele) => {
+          ele.querySelector('summary').classList.add(`itemcolor${value + 1}`);
+        });
         details.parentElement.querySelectorAll('details').forEach((ele) => {
           if (ele !== event.target) {
             ele.removeAttribute('open');

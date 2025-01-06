@@ -38,7 +38,9 @@ class Accordion {
     // Store if the element is expanding
     this.isExpanding = false;
     // Detect user clicks on the summary element
-    this.summary.addEventListener('click', (e) => this.onClick(e));
+    if (this.content) {
+      this.summary.addEventListener('click', (e) => this.onClick(e));
+    }
   }
 
   onClick(e) {
