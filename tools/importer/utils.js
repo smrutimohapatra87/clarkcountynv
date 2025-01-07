@@ -143,3 +143,10 @@ export const setPageTitle = (main, params) => {
     pageTitleEl.remove();
   }
 };
+
+export const fixLinks = (main) => {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = getSanitizedPath(a.getAttribute('href'));
+    a.setAttribute('href', href);
+  });
+};

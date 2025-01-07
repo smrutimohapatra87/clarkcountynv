@@ -2,7 +2,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle,
+  setPageTitle, fixLinks,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -30,6 +30,7 @@ function buildLeftNavItems(root) {
 function buildCardsBlock(main) {
   const tileBoxEl = main.querySelector('.tiles-box');
   if (!tileBoxEl) {
+    console.log('Cards block not found');
     return;
   }
   const cards = [];
@@ -77,6 +78,28 @@ function buildCardsBlock(main) {
   });
 
   tileBoxEl.replaceWith(cardBlock);
+}
+
+function buildFaqAccordion(main) {
+  const faqsEl = main.querySelector('.faqs-main');
+  if (!faqsEl) {
+    console.log('FAQ accordion not found');
+    return;
+  }
+
+  const elems = faqsEl.querySelectorAll('.faqs-heading, .faqs-toggle-content');
+  const cells = [];
+  for (let i = 0; i < elems.length;) {
+    cells.push([elems[i].innerText.trim(), elems[i + 1].innerHTML]);
+    i += 2;
+  }
+
+  const accordionBlock = WebImporter.Blocks.createBlock(document, {
+    name: 'accordion (faq)',
+    cells: [...cells],
+  });
+
+  faqsEl.replaceWith(accordionBlock);
 }
 
 export default {
@@ -142,6 +165,8 @@ export default {
 
     // add right section
     buildCardsBlock(main);
+    buildFaqAccordion(main);
+    fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
 
