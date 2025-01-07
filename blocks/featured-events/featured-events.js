@@ -28,8 +28,8 @@ function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundCol
     sourceDate = startTime;
     endDate = endTime;
   }
-  const dateStartObj = new Date(sourceDate.split('T')[0]);
-  const dateEndObj = new Date(endDate.split('T')[0]);
+  const dateStartObj = new Date(sourceDate);
+  const dateEndObj = new Date(endDate);
   let eventDate = dateStartObj.getDate();
   if (eventDate < 10) {
     eventDate = `0${eventDate}`;
