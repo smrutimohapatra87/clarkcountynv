@@ -50,7 +50,18 @@ export const getImportPagePath = (url) => {
 };
 
 export const getSanitizedPath = (url) => {
-  const u = new URL(url);
+  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4'))) {
+    return url;
+  }
+
+  let u;
+  try {
+    u = new URL(url);
+  } catch (error) {
+    console.error(`Cannot construct URL from ${url}`);
+    return url;
+  }
+
   // if link points to a URL outside this site, return the original URL
   if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
     return url;
@@ -65,7 +76,7 @@ export const getSanitizedPath = (url) => {
   return path;
 };
 
-export const getPathSegments = (url) => (new URL(url)).pathname.split('/')
+export const getPathSegments = (url) => (new URL(url, PREVIEW_DOMAIN)).pathname.split('/')
   .filter((segment) => segment);
 
 export const fetchAndParseDocument = async (url) => {

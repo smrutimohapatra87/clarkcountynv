@@ -2,7 +2,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks,
+  setPageTitle, fixLinks, getPathSegments,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -102,6 +102,48 @@ function buildFaqAccordion(main) {
   faqsEl.replaceWith(accordionBlock);
 }
 
+function buildNewsletterAccordion(main) {
+  const newsletterEl = main.querySelector('#categorties-wrap');
+  if (!newsletterEl) {
+    console.log('Newsletter accordion not found');
+    return;
+  }
+
+  const elems = newsletterEl.querySelectorAll('.docs-toggle, .file-group');
+  const cells = [];
+  for (let i = 0; i < elems.length;) {
+    const files = document.createElement('div');
+    const summary = elems[i].childNodes[0].nodeValue.trim();
+    const liEls = elems[i + 1].querySelectorAll('li');
+    liEls.forEach((li) => {
+      const a = li.querySelector('a');
+      const fileName = a.textContent.trim();
+      const { href } = a;
+      let description;
+      if (li.querySelector('.doc-file-desc')) {
+        description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+      }
+
+      const elem = document.createElement('a');
+      elem.href = href;
+      elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+      files.append(elem);
+      files.append(document.createElement('br'));
+    });
+
+    cells.push([summary, files]);
+    i += 2;
+  }
+
+  const docCenterBlock = WebImporter.Blocks.createBlock(document, {
+    name: 'document-center',
+    cells: [...cells],
+  });
+
+  const documentCenterEl = main.querySelector('article#document-center');
+  documentCenterEl.replaceWith(docCenterBlock);
+}
+
 export default {
 
   transform: ({
@@ -119,7 +161,9 @@ export default {
       'header',
       'footer',
       'aside',
-      'section', // hero background image
+      'section#slider', // hero background image
+      'section#modal-section', // Share modal
+      'section#newsletter', // footer newsletter
       'noscript',
       '#main',
       '#skip', // skip to main content
@@ -129,8 +173,21 @@ export default {
     ]);
 
     const newPagePath = getImportPagePath(params.originalURL);
+    const pathParts = getPathSegments(newPagePath);
+    let filesLocation;
+    switch (pathParts[0]) {
+      case 'government':
+        filesLocation = 'government';
+        break;
+      case 'business':
+        filesLocation = 'business';
+        break;
+      default:
+        filesLocation = 'general';
+    }
 
-    fixPdfLinks(main, results);
+    fixLinks(main);
+    fixPdfLinks(main, results, filesLocation);
     fixAudioLinks(main);
 
     setPageTitle(main, params);
@@ -166,6 +223,7 @@ export default {
     // add right section
     buildCardsBlock(main);
     buildFaqAccordion(main);
+    buildNewsletterAccordion(main, results);
     fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));

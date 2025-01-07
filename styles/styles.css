@@ -547,7 +547,7 @@ main .section.details-404 > .default-content-wrapper {
     text-wrap: wrap;
 
     a {
-      text-decoration: underline; 
+      text-decoration: underline;
       white-space: nowrap;
       overflow: hidden;
       line-height: 1;
@@ -557,7 +557,7 @@ main .section.details-404 > .default-content-wrapper {
       padding: 0;
       background-color: none !important;
       box-sizing: none;
-      
+
     }
 
     p {
@@ -583,33 +583,33 @@ main .section.details-404 > .default-content-wrapper {
   div:has(.row1cols) {
     padding:  26px 0 0;
   }
-  
+
   .columns > div > div.column2 strong:last-of-type {
     font-size: 16px;
-    
+
   }
 
   .columns > div > div.column2 p strong:first-of-type{
     font: 500 45px 'Neue Montreal', sans-serif;
-   
+
   }
 
   .row2cols > div > div.column2 p strong:first-of-type{
     font: 600 18px 'Neue Montreal', sans-serif;
-   
+
   }
 
   .column1-paragraph{
     margin:0;
-    
+
   }
 
   .column1-paragraph > .button:any-link {
     text-align: left;
     margin: 1px;
-    
+
   }
-  
+
   .row1cols {
     padding: 0 24px;
   }
@@ -626,7 +626,7 @@ main .section.details-404 > .default-content-wrapper {
     font-size: 18px;
     margin-bottom: 10px;
   }
-  
+
   .business-single-col {
     background-color: #fff;
     margin-top: 20%;
@@ -645,11 +645,11 @@ main .section.details-404 > .default-content-wrapper {
       padding: 0%;
       background-color: #fff;
       color: #000;
-      
+
     }
 
     a {
-      text-decoration: underline; 
+      text-decoration: underline;
       white-space: nowrap;
       overflow: hidden;
       line-height: 1;
@@ -658,14 +658,14 @@ main .section.details-404 > .default-content-wrapper {
       color: #000;
       padding: 0;
       background-color: none !important;
-      
+
       --link-color: #000;
       --border-box: 0;
       --link-hover-color: #000;
       --background-color: #fff;
-      
+
       box-sizing: none;
-    
+
     }
 
   }
