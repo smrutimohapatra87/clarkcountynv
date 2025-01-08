@@ -45,8 +45,13 @@ export const fixRelativeLinks = (document) => {
 };
 
 export const getImportPagePath = (url) => {
-  const path = new URL(url).pathname;
-  return path.endsWith('.php') ? path.slice(0, -4) : path;
+  let path = new URL(url).pathname;
+  path = path.endsWith('.php') ? path.slice(0, -4) : path;
+  const pathParts = path.split('/');
+  pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
+    pathParts[pathParts.length - 1],
+  );
+  return pathParts.join('/');
 };
 
 export const getSanitizedPath = (url) => {
@@ -57,27 +62,26 @@ export const getSanitizedPath = (url) => {
   let u;
   try {
     u = new URL(url);
+    if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
+      return url;
+    }
   } catch (error) {
-    console.error(`Cannot construct URL from ${url}`);
-    return url;
+    // noop
   }
+  let path = url;
 
-  // if link points to a URL outside this site, return the original URL
-  if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
-    return url;
+  path = path.endsWith('.php') ? path.slice(0, -4) : path;
+  const pathParts = path.split('/');
+  if (pathParts[pathParts.length - 1] === 'index') {
+    pathParts.pop();
   }
-
-  const path = u.pathname;
-  if (path.endsWith('index.php')) {
-    return path.slice(0, -9);
-  } if (path.endsWith('.php')) {
-    return path.slice(0, -4);
-  }
-  return path;
+  pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
+    pathParts[pathParts.length - 1],
+  );
+  return pathParts.join('/');
 };
 
-export const getPathSegments = (url) => (new URL(url, PREVIEW_DOMAIN)).pathname.split('/')
-  .filter((segment) => segment);
+export const getPathSegments = (url) => (url.split('/').filter((segment) => segment));
 
 export const fetchAndParseDocument = async (url) => {
   try {
