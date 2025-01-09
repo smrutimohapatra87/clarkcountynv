@@ -114,8 +114,13 @@ const resultParsers = {
     results.forEach((result) => {
       const row = [];
       const divLeft = div({ class: 'event-image' });
-      const columnImage = createOptimizedPicture(result.image);
-      divLeft.appendChild(columnImage);
+      if (result.image.length > 1) {
+        const columnImage = createOptimizedPicture(result.image);
+        divLeft.appendChild(columnImage);
+      } else {
+        const columnImage = createOptimizedPicture('/assets/images/general/media_1777f18b0073109f55dbd10b12552b5115288e89b.png');
+        divLeft.appendChild(columnImage);
+      }
       const divRight = div({ class: 'event-body' });
       if (result.start.length === 0) {
         sourceDate = result.startRecur;
