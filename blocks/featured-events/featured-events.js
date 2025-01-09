@@ -6,7 +6,10 @@ import {
   createOptimizedPicture, buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
 
+import { normalizeString } from '../../scripts/utils.js';
+
 const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
+let divisions = [];
 
 function tConv24(time24) {
   let ts = time24;
@@ -18,16 +21,10 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundColor, readMore) {
-  let sourceDate = '';
-  let endDate = '';
-  if (startTime.length === 0) {
-    sourceDate = startRecur;
-    endDate = endRecur;
-  } else {
-    sourceDate = startTime;
-    endDate = endTime;
-  }
+function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore) {
+  const sourceDate = startTime;
+  const endDate = endTime;
+  let eventEndTime = '';
   const dateStartObj = new Date(sourceDate);
   const dateEndObj = new Date(endDate);
   let eventDate = dateStartObj.getDate();
@@ -38,9 +35,29 @@ function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundCol
   const eventStartHours = dateStartObj.toString().split(' ')[4].split(':')[0];
   const eventStartMinutes = dateStartObj.toString().split(' ')[4].split(':')[1];
   const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
-  const eventEndHours = dateEndObj.toString().split(' ')[4].split(':')[0];
-  const eventEndMinutes = dateEndObj.toString().split(' ')[4].split(':')[1];
-  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+
+  // Calculating the end time after adding the duration in hh:mm format
+  if (duration.length > 1) {
+    const hr = duration.split('T')[1].split(':')[0];
+    const min = duration.split('T')[1].split(':')[1];
+    const eventEndHours = dateEndObj.toString().split(' ')[4].split(':')[0];
+    const eventEndMinutes = dateEndObj.toString().split(' ')[4].split(':')[1];
+    let totalHours = parseInt(hr, 10) + parseInt(eventEndHours, 10);
+    let totalMinutes = parseInt(min, 10) + parseInt(eventEndMinutes, 10);
+    if (totalMinutes > 59) {
+      const newMinutes = totalMinutes - 60;
+      totalHours += 1;
+      totalMinutes = newMinutes;
+    }
+    if (totalHours > 23) {
+      totalHours -= 24;
+    }
+    eventEndTime = tConv24(`${totalHours.toString()}:${totalMinutes.toString()}`);
+  } else {
+    const eventEndHours = dateEndObj.toString().split(' ')[4].split(':')[0];
+    const eventEndMinutes = dateEndObj.toString().split(' ')[4].split(':')[1];
+    eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+  }
 
   // convert number into Month name
   const eventMonthName = months[eventMonth];
@@ -57,7 +74,7 @@ function popupEvent(url, startTime, startRecur, endTime, endRecur, backgroundCol
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
-  if (readMore.length > 0) {
+  if (readMore.length > 1) {
     modal.querySelector('.event-modal-footer a').href = readMore;
     modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
   } else {
@@ -123,7 +140,12 @@ const resultParsers = {
       const columnBody = div({ class: 'event' });
       columnBody.addEventListener('click', () => {
         const url = window.location.origin + result.path;
-        popupEvent(url, result.start, result.startRecur, result.end, result.endRecur, result['division-color'], result.readMore);
+        divisions.forEach((division) => {
+          if (normalizeString(division.name) === normalizeString(result.divisionname)) {
+            result['division-color'] = division.color;
+          }
+        });
+        popupEvent(url, result.start, result.end, result.duration, result['division-color'], result.readMore);
       });
       columnBody.appendChild(divLeft);
       columnBody.appendChild(divRight);
@@ -134,32 +156,35 @@ const resultParsers = {
   },
 };
 
+// Fetching events from individual calendar sheets
 export async function fetchPlaceholders() {
   window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
+  const KEY = 'events';
+  const loaded = window.placeholders[`${KEY}-loaded`];
 
   if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/calendar/featured-events/featured.json?sheet=events')
+    window.placeholders[`${KEY}-loaded`] = new Promise((resolve) => {
+      fetch(`/calendar/${KEY}.json?sheet=default&sheet=divisions`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
           }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
+          return {};
         })
         .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
+          window.placeholders.calendarevents = json.default;
+          window.placeholders.divisions = json.divisions;
+          resolve(window.placeholders[KEY]);
+        })
+        .catch(() => {
+          // error loading placeholders
+          window.placeholders[KEY] = {};
+          resolve(window.placeholders[KEY]);
         });
     });
   }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
+  await window.placeholders[`${KEY}-loaded`];
+  return window.placeholders;
 }
 
 function createModal(block) {
@@ -177,9 +202,18 @@ function createModal(block) {
   block.append(modal);
 }
 
+function priorDate(date) {
+  const today = new Date();
+  const eventDate = new Date(date);
+  return eventDate < today;
+}
+
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
-  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  const yesArray = placeholders.calendarevents.data.filter((item) => item.featured === 'yes' && !priorDate(item.start));
+  // Sort via dates
+  yesArray.sort((x, y) => new Date(x.start) - new Date(y.start));
+  divisions = placeholders.divisions.data;
   const blockContents = resultParsers.columns(yesArray);
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);

@@ -6,7 +6,7 @@ import { normalizeString } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, startRecur, endRecur, url, backgroundColor, classNames, readMore, divisionid, excludeDates, duration) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, classNames, readMore, divisionid, excludeDates, duration) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -14,8 +14,6 @@ class Obj {
     this.daysOfWeek = daysOfWeek;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.startRecur = startRecur;
-    this.endRecur = endRecur;
     this.url = url;
     this.backgroundColor = backgroundColor;
     this.classNames = classNames;
@@ -30,50 +28,8 @@ let calendar = null;
 let events = [];
 let calendarEl = null;
 
-// Array of divisions
-const divisions = [
-  { name: 'Events', color: '#312222', id: 1 },
-  { name: 'Featured Events', color: '#3787d8', id: 2 },
-  { name: 'County Commissioners', color: '#3787d8', id: 3 },
-  { name: 'County Commission District A', color: '#da80c1', id: 4 },
-  { name: 'County Commission District B', color: '#c0a6dd', id: 5 },
-  { name: 'County Commissioners District C', color: '#48e7e2', id: 6 },
-  { name: 'County Commissioners District D', color: '#7ad295', id: 7 },
-  { name: 'County Commissioners District E', color: '#d4dbb6', id: 8 },
-  { name: 'County Commissioners District F', color: '#f9a97f', id: 9 },
-  { name: 'County Commissioners District G', color: '#2619e4', id: 10 },
-  { name: 'Goodsprings Citizens Advisory Committee', color: '#ff8600', id: 11 },
-  { name: 'Laughlin TAB', color: '#37d84e', id: 12 },
-  { name: 'Lone Mountain Citizens Advisory Council', color: '#7237d8', id: 13 },
-  { name: 'Lower Kyle Canyon Citizens Advisory Committee', color: '#d837d2', id: 14 },
-  { name: 'Moapa Town Advisory Board', color: '#9d484d', id: 15 },
-  { name: 'Paradise Town Advisory Board', color: '#058089', id: 16 },
-  { name: 'Spring Valley Town Advisory Board', color: '#3a9500', id: 17 },
-  { name: 'Winchester Town Advisory Board', color: '#3c8c98', id: 18 },
-  { name: 'Enterprise Town Advisory Board', color: '#d5cd70', id: 19 },
-  { name: 'Moapa Valley Town Advisory Board', color: '#89b5bc', id: 20 },
-  { name: 'Red Rock Citizens Advisory Committee', color: '#fe0000', id: 21 },
-  { name: 'Searchlight Town Advisory Board', color: '#37d891', id: 22 },
-  { name: 'Bunkerville Town Advisory Board', color: '#b4ada6', id: 23 },
-  { name: 'Mount Charleston Town Advisory Board', color: '#f3bbea', id: 24 },
-  { name: 'Sunrise Manor Town Advisory Board', color: '#dadd32', id: 25 },
-  { name: 'Whitney Town Advisory Board', color: '#07caf7', id: 26 },
-  { name: 'PC', color: '#047c6d', id: 27 },
-  { name: 'BCC', color: '#9086d8', id: 28 },
-  { name: 'Mountain Springs Citizens Advisory Council', color: '#6aa85a', id: 29 },
-  { name: 'Indian Springs Town Advisory Board', color: '#069874', id: 30 },
-  { name: 'Sandy Valley Citizens Advisory Council Meeting', color: '#51277c', id: 31 },
-  { name: 'Wetlands Park', color: '#3787d8', id: 32 },
-  { name: 'Working Group to Address Homelessness', color: '#3787d8', id: 33 },
-  { name: 'County Manager', color: '#edf77f', id: 34 },
-  { name: 'Parks & Recreation', color: '#ddc08f', id: 35 },
-  { name: 'American Rescue Plan Act', color: '#3787d8', id: 36 },
-  { name: 'Truancy Prevention Outreach Program', color: '#37d847', id: 37 },
-  { name: 'CJCC', color: '#3787d8', id: 38 },
-  { name: 'Mojave Max and DCP Outreach Events / Volunteer Opportunities', color: '#f26d1e', id: 39 },
-  { name: 'Family Services', color: '#3787d8', id: 40 },
-  { name: 'Independent Living', color: '#3787d8', id: 41 },
-];
+let divisions = [];
+let placeholders = [];
 
 // Fetching events from individual calendar sheets
 export async function fetchPlaceholders(prefix) {
@@ -83,7 +39,7 @@ export async function fetchPlaceholders(prefix) {
 
   if (!loaded) {
     window.placeholders[`${TRANSLATION_KEY}-loaded`] = new Promise((resolve) => {
-      fetch(`/calendar/${prefix}.json`)
+      fetch(`/calendar/${prefix}.json?sheet=default&sheet=divisions`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
@@ -91,7 +47,8 @@ export async function fetchPlaceholders(prefix) {
           return {};
         })
         .then((json) => {
-          window.placeholders[prefix] = json;
+          window.placeholders.calendarevents = json.default;
+          window.placeholders.divisions = json.divisions;
           resolve(window.placeholders[prefix]);
         })
         .catch(() => {
@@ -102,7 +59,7 @@ export async function fetchPlaceholders(prefix) {
     });
   }
   await window.placeholders[`${TRANSLATION_KEY}-loaded`];
-  return window.placeholders[`${TRANSLATION_KEY}`];
+  return window.placeholders;
 }
 
 function createModal(doc) {
@@ -160,7 +117,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
-  if (readMore.length > 0) {
+  if (readMore.length > 1) {
     modal.querySelector('.event-modal-footer a').href = readMore;
     modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
   } else {
@@ -199,40 +156,65 @@ function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
-    if (event.daysOfWeek.length > 0) {
+    if (event.daysOfWeek.length > 1) {
       if (event.duration && event.duration.length > 0) {
-        eventDuration = `${event.duration.split('-')[1]}`;
+        eventDuration = `${event.duration.split('T')[1]}`;
       } else {
         eventDuration = '01:00';
       }
-      calendar.addEvent({
-        title: event.title,
-        allDay: false,
-        rrule: {
-          freq: 'weekly',
-          byweekday: event.daysOfWeek.split(','),
-          dtstart: event.startRecur,
-          until: event.endRecur,
-        },
-        duration: eventDuration,
-        exdate: ['2025-01-10T13:00:00', '2025-01-17T13:00:00'],
-        url: event.url,
-        backgroundColor: event.backgroundColor,
-        classNames: event.classNames,
-        groupId: event.divisionid,
-        extendedProps: { readMore: event.readMore },
-      });
+      if (event.excludeDates && event.excludeDates.length > 1) {
+        if (typeof event.excludeDates === 'string') {
+          event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`);
+        }
+        calendar.addEvent({
+          title: event.title,
+          allDay: false,
+          rrule: {
+            freq: 'weekly',
+            byweekday: event.daysOfWeek.split(','),
+            dtstart: event.start,
+            until: event.end,
+          },
+          duration: eventDuration,
+          exdate: event.excludeDates,
+          url: event.url,
+          backgroundColor: event.backgroundColor,
+          classNames: event.classNames,
+          groupId: event.divisionid,
+          borderColor: event.backgroundColor,
+          extendedProps: { readMore: event.readMore },
+        });
+      } else {
+        calendar.addEvent({
+          title: event.title,
+          allDay: false,
+          rrule: {
+            freq: 'weekly',
+            byweekday: event.daysOfWeek.split(','),
+            dtstart: event.start,
+            until: event.end,
+          },
+          duration: eventDuration,
+          url: event.url,
+          backgroundColor: event.backgroundColor,
+          classNames: event.classNames,
+          groupId: event.divisionid,
+          borderColor: event.backgroundColor,
+          extendedProps: { readMore: event.readMore },
+        });
+      }
     } else {
       calendar.addEvent({
         title: event.title,
         start: event.start,
         end: event.end,
-        allDay: event.allDay,
+        allDay: false,
         url: event.url,
         backgroundColor: event.backgroundColor,
         classNames: event.classNames,
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
+        borderColor: event.backgroundColor,
       });
     }
   });
@@ -240,10 +222,18 @@ function createEvents(eventsList) {
 
 function createEventList(importedData, eventsList) {
   importedData.forEach((event) => {
-    const startTime = event.startRecur.split('T')[1];
-    const endTime = event.endRecur.split('T')[1];
+    const startTime = event.start.split('T')[1];
+    const endTime = event.end.split('T')[1];
     const url = window.location.origin + event.path;
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, event.startRecur, event.endRecur, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
+    // Check for each division and assign the class, color, id to the event
+    divisions.forEach((division) => {
+      if (normalizeString(division.name) === normalizeString(event.divisionname)) {
+        event['division-color'] = division.color;
+        event.divisionid = division.id;
+        event.classNames = normalizeString(event.divisionname);
+      }
+    });
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
@@ -262,6 +252,7 @@ function createCalendar() {
       center: '',
       right: 'title',
     },
+    eventDisplay: 'block',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
@@ -279,38 +270,9 @@ function createCalendar() {
   calendar.render();
 }
 
-// Get the featured events for the Calendar panel
-export async function fetchFeatured() {
-  window.placeholders = window.placeholders || {};
-  const TRANSLATION_KEY_EVENTS = 'featured-events';
-  const loaded = window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-
-  if (!loaded) {
-    window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`] = new Promise((resolve, reject) => {
-      fetch('/calendar/featured-events/featured.json?sheet=events')
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error(`${resp.status}: ${resp.statusText}`);
-        })
-        .then((json) => {
-          window.placeholders[TRANSLATION_KEY_EVENTS] = json;
-          resolve();
-        }).catch((error) => {
-        // Error While Loading Placeholders
-          window.placeholders[TRANSLATION_KEY_EVENTS] = {};
-          reject(error);
-        });
-    });
-  }
-  await window.placeholders[`${TRANSLATION_KEY_EVENTS}-loaded`];
-  return [window.placeholders[TRANSLATION_KEY_EVENTS]];
-}
-
 async function getFeaturedEvents() {
-  const placeholders = await fetchFeatured();
-  const yesArray = placeholders[0].data.filter((item) => item.featured === 'yes');
+  const placeholdersfeatured = placeholders.calendarevents;
+  const yesArray = placeholdersfeatured.data.filter((item) => item.featured === 'yes');
   calendar.destroy();
   createCalendar();
   const eventsList = [];
@@ -321,10 +283,7 @@ async function initializeCalendar() {
   let importedData = [];
   const eventsList = [];
   calendarEl = document.getElementById('calendar');
-  // const data = getEventsManual();
-  const normalizeCalendar = 'events';
-  const placeholders = await fetchPlaceholders(normalizeCalendar);
-  importedData = [...importedData, ...placeholders.data];
+  importedData = placeholders.calendarevents.data;
   createCalendar();
   const checkDivision = window.location.pathname.split('/');
   if (checkDivision[2] && checkDivision[2].length > 0) {
@@ -334,7 +293,7 @@ async function initializeCalendar() {
           getFeaturedEvents();
         } else {
           // eslint-disable-next-line max-len
-          const filterData = importedData.filter((event) => event.divisionid === String(division.id));
+          const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
           createEventList(filterData, eventsList);
         }
       }
@@ -423,6 +382,9 @@ export default async function decorate(doc) {
   const calendarButton = a();
   const closeButton = button({ class: 'fc-close' });
   const calendarList = ul({ class: 'fc-calendar-list' });
+  const normalizeCalendar = 'events';
+  placeholders = await fetchPlaceholders(normalizeCalendar);
+  divisions = placeholders.divisions.data;
   divisions.forEach((division) => {
     const divisionLi = li({ class: 'fc-calendar-list-item', id: `${division.id}` });
     const divisionButton = a({ class: 'fc-calendar-list-button' });
@@ -460,13 +422,15 @@ export default async function decorate(doc) {
         if (liele.classList.contains('active')) {
           const divisionId = liele.id;
           divisions.forEach((division) => {
-            if (division.id === parseInt(divisionId, 10)) {
+            if (division.id === divisionId) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
               if (divisionId === '2') {
                 window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
                 getFeaturedEvents();
-              } else { filterEvents(divisionId); }
+              } else {
+                filterEvents(divisionId);
+              }
             }
           });
         } else {

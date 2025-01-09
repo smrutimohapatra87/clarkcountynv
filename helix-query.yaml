@@ -70,6 +70,5 @@ indices:
       image:
         select: head > meta[name="featuredimage"]
         value: attribute(el, 'content')
+        
 
-
-  
