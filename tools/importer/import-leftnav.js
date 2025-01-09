@@ -30,6 +30,7 @@ function buildLeftNavItems(root) {
 function buildCardsBlock(main) {
   const tileBoxEl = main.querySelector('.tiles-box');
   if (!tileBoxEl) {
+    // eslint-disable-next-line no-console
     console.log('Cards block not found');
     return;
   }
@@ -83,6 +84,7 @@ function buildCardsBlock(main) {
 function buildFaqAccordion(main) {
   const faqsEl = main.querySelector('.faqs-main');
   if (!faqsEl) {
+    // eslint-disable-next-line no-console
     console.log('FAQ accordion not found');
     return;
   }
@@ -105,6 +107,7 @@ function buildFaqAccordion(main) {
 function buildNewsletterAccordion(main) {
   const newsletterEl = main.querySelector('#categorties-wrap');
   if (!newsletterEl) {
+    // eslint-disable-next-line no-console
     console.log('Newsletter accordion not found');
     return;
   }

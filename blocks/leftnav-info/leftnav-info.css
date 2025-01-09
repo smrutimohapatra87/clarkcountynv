@@ -1,0 +1,55 @@
+.leftnav-info .leftnav-info-card {
+    padding: 10px 15px 15px 5px;
+    background: #B54425;
+    margin: 10px 0;
+
+    h2 {
+        display: block;
+        font: 700 24px Oswald,sans-serif;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 15px 10px 11px 15px;
+        margin-top: unset;
+        margin-bottom: 8px;
+    }
+
+    p {
+        font-size: var(--body-font-size-s);
+        color: #fff;
+        display: block;
+        padding: 0 10px 0 15px;
+        word-break: break-word;
+        word-wrap: break-word;
+        margin-top: unset;
+        margin-bottom: unset;
+        line-height: 1.7;
+    }
+
+    p.contact-address {
+        margin-top: 14px;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: underline
+    }
+}
+
+@media (width >= 900px) {
+    .leftnav-info .leftnav-info-card {
+        padding: 20px 15px 30px 5px;
+        margin: 0 15px 50px;
+
+        h2 {
+            padding: 15px 10px 11px 15px;
+            margin-top: unset;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-top: unset;
+            margin-bottom: unset;
+            padding: 0 10px 0 15px;
+        }
+    }
+}

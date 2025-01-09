@@ -123,6 +123,7 @@ details[open] > ul {
 
     .accordion-ml.block ul {
         margin-left: 0;
+        padding-bottom: 34px;
     }
 
     .accordion-ml.block > div > div > ul.level0 {

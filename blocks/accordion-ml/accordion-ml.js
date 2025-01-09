@@ -251,15 +251,14 @@ export default function decorate(block) {
       currentUL.parentElement.parentElement.remove();
       const modifiedUL = decorateMobileView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
       const divElement = div(div(modifiedUL));
-      block.append(divElement);
+      block.insertBefore(divElement, block.firstChild);
     }
     if (getViewPort() === 'desktop' && currentUL.classList.contains('content')) {
       currentUL.parentElement.parentElement.remove();
       const modifiedUL = decorateDesktopView(mainULBackUp.cloneNode(true).querySelector('div > div > ul'));
       const divElement = div(div(modifiedUL));
-      block.append(divElement);
+      block.insertBefore(divElement, block.firstChild);
     }
   }
-
   window.addEventListener('resize', resizeFunction);
 }
