@@ -445,7 +445,14 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
     body.calendar main section .fc-theme-standard .fc-popover {
         width: auto;
     }
+
+    body.calendar main section .fc-direction-ltr .fc-daygrid-event .fc-event-time {
+        flex-basis: 40%;
+    }
     
+    body.calendar main section .fc .fc-h-event .fc-event-title-container {
+        flex-basis: 90%;
+    }
 }
 
 

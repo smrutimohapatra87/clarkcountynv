@@ -27,3 +27,14 @@ export function capitalize(s) {
 export function normalizeString(str) {
   return str.toLowerCase().replace(/ /g, '-');
 }
+
+// Links opening in new tab
+export function externalLinks(main) {
+  const links = main.querySelectorAll('a[href]');
+  links.forEach((linkItem) => {
+    const hrefURL = new URL(linkItem.href);
+    if (hrefURL.pathname.includes('pdf') || hrefURL.hostname !== window.location.hostname) {
+      linkItem.setAttribute('target', '_blank');
+    }
+  });
+}

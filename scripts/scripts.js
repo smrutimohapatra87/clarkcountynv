@@ -17,7 +17,7 @@ import {
 
 import { h3 } from './dom-helpers.js';
 
-import { getViewPort } from './utils.js';
+import { getViewPort, externalLinks } from './utils.js';
 
 const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
@@ -295,6 +295,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionsWithBackgrounds(main);
+  externalLinks(main);
 }
 
 /**
