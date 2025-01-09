@@ -11,11 +11,7 @@ export default async function decorate(doc) {
   doc.querySelector('.title').innerHTML = `<h2>${titleText}</h2>`;
 
   const featuredImage = getMetadata('featuredimage');
-  if (featuredImage.length === 0) {
-    doc.querySelector('.image').innerHTML = '<img src=./assets/images/general/media_1777f18b0073109f55dbd10b12552b5115288e89b.png>';
-  } else {
-    doc.querySelector('.image').innerHTML = `<img src="${featuredImage}">`;
-  }
+  doc.querySelector('.image').innerHTML = `<img src="${featuredImage}">`;
 
   // Configuring a POST Message on scrolling to send the event title to the parent window
   window.onscroll = function funcScroll() {
