@@ -1,4 +1,5 @@
 /* global WebImporter */
+/* eslint-disable no-console */
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
@@ -30,7 +31,6 @@ function buildLeftNavItems(root) {
 function buildCardsBlock(main) {
   const tileBoxEl = main.querySelector('.tiles-box');
   if (!tileBoxEl) {
-    // eslint-disable-next-line no-console
     console.log('Cards block not found');
     return;
   }
@@ -84,7 +84,6 @@ function buildCardsBlock(main) {
 function buildFaqAccordion(main) {
   const faqsEl = main.querySelector('.faqs-main');
   if (!faqsEl) {
-    // eslint-disable-next-line no-console
     console.log('FAQ accordion not found');
     return;
   }
@@ -107,7 +106,6 @@ function buildFaqAccordion(main) {
 function buildNewsletterAccordion(main) {
   const newsletterEl = main.querySelector('#categorties-wrap');
   if (!newsletterEl) {
-    // eslint-disable-next-line no-console
     console.log('Newsletter accordion not found');
     return;
   }
@@ -145,6 +143,21 @@ function buildNewsletterAccordion(main) {
 
   const documentCenterEl = main.querySelector('article#document-center');
   documentCenterEl.replaceWith(docCenterBlock);
+}
+
+function buildIframeForm(main) {
+  const iframeEl = main.querySelector('#post iframe');
+  if (iframeEl) {
+    const iframeLink = iframeEl.src;
+    const link = document.createElement('a');
+    link.href = iframeLink;
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: 'embed',
+      cells: [[iframeLink]],
+    });
+    iframeEl.replaceWith(block);
+  }
+  console.log('Iframe form not found');
 }
 
 export default {
@@ -211,7 +224,7 @@ export default {
     subMenuToggleEl.innerText = ':submenu: SUB MENU';
 
     const leftSectionMetadata = buildSectionMetadata([['Style', 'leftsection']]);
-    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection'], ['temp', 'new']]);
+    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
 
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(leftSectionMetadata, main.firstChild);
@@ -227,6 +240,7 @@ export default {
     buildCardsBlock(main);
     buildFaqAccordion(main);
     buildNewsletterAccordion(main, results);
+    buildIframeForm(main);
     fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
