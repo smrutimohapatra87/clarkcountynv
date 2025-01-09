@@ -41,68 +41,35 @@ indices:
     target: /calendar/events.json
     properties:
       divisionname:
-        select: head > meta[name="division-name"]
-        value: attribute(el, "content")
-      divisionid:
-        select: head > meta[name="division-id"]
-        value: attribute(el, "content")
-      division-color:
-        select: head > meta[name="division-color"]
-        value: attribute(el, "content")
-      classNames:
-        select: head > meta[name="division-classname"]
+        select: head > meta[name="divisionname"]
         value: attribute(el, "content")
       start:
-        select: head > meta[name="event-start"]
+        select: head > meta[name="eventstart"]
         value: attribute(el, "content")
       end:
-        select: head > meta[name="event-stop"]
+        select: head > meta[name="eventstop"]
         value: attribute(el, "content")
       daysOfWeek:
         select: head > meta[name="daysofweek"]
-        value: attribute(el, "content")
-      startTime:
-        select: head > meta[name="starttime"]
-        value: attribute(el, "content")
-      endTime:
-        select: head > meta[name="endtime"]
-        value: attribute(el, "content")
-      allDay:
-        select: head > meta[name="allday"]
-        value: attribute(el, "content")
-      startRecur:
-        select: head > meta[name="startrecur"]
-        value: attribute(el, "content")
-      endRecur:
-        select: head > meta[name="endrecur"]
         value: attribute(el, "content")
       duration:
         select: head > meta[name="duration"]
         value: attribute(el, "content")
       excludeDates:
-        select: head > meta[name="exclude-dates"]
+        select: head > meta[name="excludedates"]
         value: attribute(el, "content")
       title:
-        select: head > meta[name="event-title"]
+        select: head > meta[name="featuredtitle"]
         value: attribute(el, "content")
       eventdescription:
-        select: head > meta[name="event-description"]
+        select: head > meta[name="featureddescription"]
         value: attribute(el, "content")
       readMore:
         select: head > meta[name="readmore"]
         value: attribute(el, "content")
-      eventname:
-        select: head > meta[name="event-name"]
-        value: attribute(el, "content")
-      publishedDate:
-        select: head > meta[name="publication-date"]
-        value: attribute(el, "content")
       image:
-        select: head > meta[property="og:image"]
+        select: head > meta[name="featuredimage"]
         value: attribute(el, 'content')
-      featured:
-        select: head > meta[name="featured"]
-        value: attribute(el, "content")
 
 
   
