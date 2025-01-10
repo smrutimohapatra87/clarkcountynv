@@ -127,12 +127,10 @@ const resultParsers = {
       } else {
         sourceDate = result.start;
       }
-      const dateObj = new Date(sourceDate.split('T')[0]);
-      const eventDate = dateObj.getDate();
-      const eventMonth = dateObj.getMonth();
-      // convert number into Month name
-      const eventMonthName = months[eventMonth];
-      const eventYear = dateObj.getFullYear();
+      const eventMonth = sourceDate.split('T')[0].split('-')[1] - 1;
+      const eventMonthName = months[parseInt(eventMonth, 10)];
+      const eventYear = sourceDate.split('T')[0].split('-')[0];
+      const eventDate = sourceDate.split('T')[0].split('-')[2];
       const fullDate = `${eventMonthName} ${eventDate}, ${eventYear}`;
       const dateDiv = div({ class: 'date' }, fullDate);
       const divTitle = div({ class: 'title' }, h3(result.title));

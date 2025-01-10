@@ -243,6 +243,7 @@ function createEventList(importedData, eventsList) {
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
+    timeZone: 'America/Vancouver',
     initialView: 'dayGridMonth',
     views: {
       listMonth: { buttonText: 'list' },
@@ -311,19 +312,43 @@ export function loadrrtofullcalendar() {
   document.head.append(scriptrrtofullcalendar);
 }
 
+export function loadmomenttofullcalendar() {
+  const scriptrrtofullcalendar = document.createElement('script');
+  scriptrrtofullcalendar.setAttribute('type', 'text/javascript');
+  scriptrrtofullcalendar.src = 'https://cdn.jsdelivr.net/npm/@fullcalendar/moment-timezone@6.1.15/index.global.min.js';
+  scriptrrtofullcalendar.addEventListener('load', loadrrtofullcalendar);
+  document.head.append(scriptrrtofullcalendar);
+}
+
 export function loadfullcalendar() {
   const scriptfullcalendar = document.createElement('script');
   scriptfullcalendar.setAttribute('type', 'text/javascript');
   scriptfullcalendar.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js';
-  scriptfullcalendar.addEventListener('load', loadrrtofullcalendar);
+  scriptfullcalendar.addEventListener('load', loadmomenttofullcalendar);
   document.head.append(scriptfullcalendar);
+}
+
+export function loadmomentTZ() {
+  const scriptrrule = document.createElement('script');
+  scriptrrule.setAttribute('type', 'text/javascript');
+  scriptrrule.src = 'https://cdn.jsdelivr.net/npm/moment-timezone@0.5.40/builds/moment-timezone-with-data.min.js';
+  scriptrrule.addEventListener('load', loadfullcalendar);
+  document.head.append(scriptrrule);
+}
+
+export function loadmoment() {
+  const scriptrrule = document.createElement('script');
+  scriptrrule.setAttribute('type', 'text/javascript');
+  scriptrrule.src = 'https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js';
+  scriptrrule.addEventListener('load', loadmomentTZ);
+  document.head.append(scriptrrule);
 }
 
 export function loadrrule() {
   const scriptrrule = document.createElement('script');
   scriptrrule.setAttribute('type', 'text/javascript');
   scriptrrule.src = 'https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js';
-  scriptrrule.addEventListener('load', loadfullcalendar);
+  scriptrrule.addEventListener('load', loadmoment);
   document.head.append(scriptrrule);
 }
 
