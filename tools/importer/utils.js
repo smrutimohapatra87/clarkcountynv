@@ -165,3 +165,11 @@ export const fixLinks = (main) => {
     a.setAttribute('href', href);
   });
 };
+
+export const getPreviewDomainLink = (url) => {
+  const u = new URL(url, window.location.origin);
+  if (u.hostname === 'www.clarkcountynv.gov' || u.hostname === 'localhost') {
+    return `${PREVIEW_DOMAIN}${u.pathname}`;
+  }
+  return url;
+};

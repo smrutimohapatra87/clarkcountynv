@@ -100,3 +100,75 @@
     width: 22%;
   }
 }
+
+.cards.tiles.block{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 40px 0 20px;
+    background-color: white;
+    padding: 35px 50px 50px 35px;
+
+    ul {
+        list-style: none;
+        padding: 0 0 10px;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+
+        li {
+            height: auto;
+            border: none;
+            display: block;
+            position: relative;
+            width: 48.2%;
+            margin: unset;
+            margin-bottom: 40px;
+            background: #F5F5F5;
+
+            .visitors-tile {
+                display: block;
+                text-decoration: none;
+                transition: transform 0.3s ease;
+
+                .visitors-tile-banner{
+                    height: 285px;
+                    width: 100%;
+                }
+
+                .visitors-tile-text{
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                    padding: 19px 0;
+                    font: 600 30px Oswald,sans-serif;
+                    color: #000;
+                    text-align: center;
+                    line-height: 1.2;
+                    background-color: #FFF;
+                }
+            }
+        }
+    }
+
+    .visitors-tile:hover{
+        transform: scale(1.05);
+    }
+}
+
+@media screen and (width <= 900px) {
+    .cards.tiles.block li {
+        flex: 1 1 calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        width: 100%;
+    }
+}
+
+@media screen and (width >= 900px) {
+    .cards.tiles.block li {
+        flex: 1 1 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+}

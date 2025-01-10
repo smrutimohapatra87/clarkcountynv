@@ -3,7 +3,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPathSegments,
+  setPageTitle, fixLinks, getPathSegments, getPreviewDomainLink,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -245,6 +245,40 @@ function buildIframeForm(main) {
   console.log('Iframe form not found');
 }
 
+function buildCardsTilesBlock(main) {
+  const tilesEl = main.querySelector('#visitors-tiles');
+  if (tilesEl) {
+    const cells = [];
+    [...tilesEl.children].forEach((tile) => {
+      const link = getPreviewDomainLink(tile.href);
+      const title = tile.querySelector('.visitors-tile-text').textContent.trim();
+
+      const imgSrc = tile.querySelector('.visitors-tile-banner').style['background-image'];
+      const urlMatch = imgSrc ? imgSrc.match(/url\(["']?(.*?)["']?\)/) : '';
+      const url = urlMatch ? urlMatch[1] : null;
+
+      const container = document.createElement('div');
+      const aEl = document.createElement('a');
+      aEl.href = link;
+      aEl.innerText = title;
+      container.append(aEl);
+
+      const img = document.createElement('img');
+      img.src = new URL(url, 'https://webfiles.clarkcountynv.gov').toString();
+      container.append(img);
+
+      cells.push([container]);
+    });
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: 'cards (tiles)',
+      cells: [...cells],
+    });
+    tilesEl.replaceWith(block);
+  } else {
+    console.log('Visitors tiles cards not found');
+  }
+}
+
 export default {
 
   transform: ({
@@ -329,6 +363,7 @@ export default {
     buildFaqAccordion(main);
     buildNewsletterAccordion(main, results);
     buildIframeForm(main);
+    buildCardsTilesBlock(main);
     fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
