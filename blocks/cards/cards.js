@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  ul, li, a, div,
+  ul, li, a, div, img, h4, i, br,
 } from '../../scripts/dom-helpers.js';
 
 export default function decorate(block) {
@@ -40,6 +40,51 @@ export default function decorate(block) {
           ),
         ),
       );
+    } else if (block.classList.contains('staff')) {
+      const imgSrc = row.children[0].querySelector('img').src;
+      const altText = imgSrc.split('/').pop().split('?')[0];
+      const name = row.children[1].textContent;
+      const title = row.children[2].textContent;
+      const pageLink = row.children[3].querySelector('a')?.href;
+      const phone = row.children[4].querySelector('a[title="phone"]')?.href;
+      const email = row.children[4].querySelector('a[title="email"]')?.href;
+      const facebookSrc = row.children[4].querySelector('a[title="facebook"]')?.href;
+      const twitterSrc = row.children[4].querySelector('a[title="twitter"]')?.href;
+      const instagramSrc = row.children[4].querySelector('a[title="instagram"]')?.href;
+
+      $ul.append(
+        li(
+          a(
+            { href: pageLink, class: 'tile-detail' },
+            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText })),
+            h4({ class: 'staff-tile-name' }, `${name.split('-')[0]} - `, br(), name.split('-')[1]),
+            div({ class: 'staff-tile-title' }, title),
+          ),
+          div(
+            { class: 'staff-tile-contacts' },
+            phone ? a(
+              { href: phone, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-phone' }),
+            ) : null,
+            email ? a(
+              { href: email, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-envelope' }),
+            ) : null,
+            facebookSrc ? a(
+              { href: facebookSrc, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-facebook' }),
+            ) : null,
+            twitterSrc ? a(
+              { href: twitterSrc, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-x-twitter' }),
+            ) : null,
+            instagramSrc ? a(
+              { href: instagramSrc, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-instagram' }),
+            ) : null,
+          ),
+        ),
+      );
     } else {
       const $li = li();
       while (row.firstElementChild) $li.append(row.firstElementChild);
@@ -50,7 +95,7 @@ export default function decorate(block) {
       $ul.append($li);
     }
   });
-  $ul.querySelectorAll('picture > img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+  $ul.querySelectorAll('picture > img').forEach((imgEl) => imgEl.closest('picture').replaceWith(createOptimizedPicture(imgEl.src, imgEl.alt, false, [{ width: '750' }])));
   block.textContent = '';
   block.append($ul);
 }

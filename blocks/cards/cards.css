@@ -172,3 +172,79 @@
         max-width: calc(50% - 20px);
     }
 }
+
+.cards.staff.block {
+    ul {
+        margin: unset;
+    }
+
+    li:nth-of-type(4n) {
+        margin-right: 0;
+    }
+
+    li:hover {
+        background: none;
+    }
+
+    .staff-tile-img-box {
+        margin-top: 20px;
+
+        img {
+            display: inline-block;
+            min-width: 162px;
+            width: 162px;
+            height: 162px;
+            object-fit: cover;
+            border-radius: 50%
+        }
+    }
+
+    .staff-tile-name {
+        font: 700 18px 'Open Sans', sans-serif;
+        color: #000;
+        margin: 20px 0 10px;
+    }
+
+    .staff-tile-title {
+        font: 400 18px 'Open Sans', sans-serif;
+        color: #000;
+        margin-bottom: 15px
+    }
+
+    .staff-tile-contacts {
+        background: #C54B2A;
+        text-align: center;
+        padding: 5px 15px;
+
+        a {
+            margin: 0 10px
+        }
+
+        i.fa {
+            color: #FFF;
+            font-family: FontAwesome, sans-serif;
+            font-style: normal;
+        }
+    }
+}
+
+.fa-phone::before {
+    content: "\f095"
+}
+
+.fa-envelope::before {
+    content: "\f0e0";
+}
+
+.fa-facebook::before {
+    content: "\f09a"
+}
+
+.fa-x-twitter::before {
+    content: "\e61b";
+    font-family: FontAwesomeBrands, sans-serif
+}
+
+.fa-instagram::before {
+    content: "\f16d"
+}

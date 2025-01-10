@@ -73,3 +73,8 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         padding: 50px 50px 60px;
     }
 }
+
+.h2underline h2 {
+    border-bottom: 5px solid #312422;
+    padding-bottom: 5px;
+}

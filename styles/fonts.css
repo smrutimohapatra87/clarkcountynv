@@ -64,3 +64,21 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+    font-family: FontAwesome;
+    src: url('../fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('../fonts/fontawesome-webfont.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: FontAwesomeBrands;
+    src: url('../fonts/fa-brands-400.woff2') format('woff2'),
+    url('../fonts/fa-brands-400.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
