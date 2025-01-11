@@ -2,12 +2,10 @@
     position: relative;
     width: 100%;
     height: 500px;
-    
 }
 
 .banner-carousel .carousel-slides-container {
     position: relative;
-    height: 30rem;
 }
 
 .banner-carousel .carousel-slides,
@@ -106,8 +104,8 @@
     justify-content: center;
     position: relative;
     width: auto;
-    min-height: min(55rem, calc(100svh - var(--nav-height)));
     min-width: 110%;
+    height: 500px;
 }
 
 
@@ -193,20 +191,22 @@
     background-color: white;
 }
 
-.banner-title h3{
+.block.banner-carousel .banner-title.desktop.short {
+    position: absolute;
+    bottom: 100px;
+    display: block;
+}
+
+.block.banner-carousel .banner-title h3{
     position: relative;
     right: 0;
-    bottom: 280px;
+    bottom: 0;
     font: 700 44px 'Open Sans', sans-serif;
     color: #fff;
     line-height: 1;
     text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
     padding: 0 45px;
 }
-
-
-
-
     
 /* stylelint-disable */
 @media (width <= 950px) {
@@ -219,8 +219,8 @@
         justify-content: center;
         position: relative;
         width: 100%;
-        min-height: min(45rem, calc(100svh - var(--nav-height)));
         min-width: 100%;
+        height: 350px;
     }
 
    
@@ -281,6 +281,7 @@
     .banner-carousel .carousel-navigation-buttons button {
         width: 1.5rem;
         height: 1.5rem;
+        display: none;
     }
 
     .banner-carousel .carousel-navigation-buttons button::after {
@@ -308,12 +309,11 @@
     }
 
     .banner-carousel .carousel-slide .carousel-slide-image picture > img {
-        height: auto;
+        height: 100%;
         width: 100%;
         object-fit: fill;
         display: flex;
         opacity: .99;
-        max-width: 100%;
         max-height: 100%;
         min-width: 100%;
         min-height: 50%;
@@ -323,7 +323,7 @@
     .banner-carousel-container {
         position: relative;
         width: 100%;
-        height: 500px;
+        height: 400px;
         
     }
 
@@ -333,6 +333,7 @@
         gap: 0.75rem;
         transform: translate(-0%, -400%);
         top: -70px;
+        display: none;
     }
 
     
