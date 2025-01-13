@@ -1,4 +1,4 @@
-/* body.calendar .county-commissioners {
+body.calendar .county-commissioners {
     background-color: #3787d8;
 }
 
@@ -24,7 +24,7 @@ body.calendar .county-commissioners-district-e {
 
 body.calendar .county-commissioners-district-f {
     background-color: #f9a97f;
-} */
+}
 
 body.calendar main a:any-link {
     color: white;
