@@ -33,7 +33,7 @@ export default {
     const newPagePath = getImportPagePath(params.originalURL);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, 'bid-detail');
+    fixPdfLinks(main, results, newPagePath);
 
     setPageTitle(main, params);
 

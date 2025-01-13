@@ -85,7 +85,7 @@ export default {
     const newPagePath = getImportPagePath(params.originalURL);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, 'news');
+    fixPdfLinks(main, results, newPagePath);
 
     setPageTitle(main, params);
 

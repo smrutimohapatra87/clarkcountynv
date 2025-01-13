@@ -55,7 +55,7 @@ export const getImportPagePath = (url) => {
 };
 
 export const getSanitizedPath = (url) => {
-  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4'))) {
+  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4') || url.startsWith('mailto') || url.startsWith('tel:'))) {
     return url;
   }
 
@@ -97,18 +97,20 @@ export const fetchAndParseDocument = async (url) => {
   return null;
 };
 
-export const fixPdfLinks = (main, results, assetType = '') => {
+export const fixPdfLinks = (main, results, pageUrl) => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
     if (href && href.endsWith('.pdf')) {
-      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType ? `/${assetType}/` : ''}${u.pathname.split('/').pop()}`);
+      const originalLocation = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
       results.push({
-        path: newPath,
-        from: u.toString(),
+        path: pageUrl,
+        report: {
+          redirectPdfFrom: newPath.toString(),
+          redirectPdfTo: originalLocation.toString(),
+        },
       });
-
-      a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN));
+      a.setAttribute('href', newPath.toString());
     }
   });
 };
@@ -162,7 +164,7 @@ export const setPageTitle = (main, params) => {
 export const fixLinks = (main) => {
   main.querySelectorAll('a').forEach((a) => {
     const href = getSanitizedPath(a.getAttribute('href'));
-    a.setAttribute('href', href);
+    a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());
   });
 };
 

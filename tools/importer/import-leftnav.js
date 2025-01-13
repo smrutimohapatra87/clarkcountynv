@@ -3,7 +3,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPathSegments, getPreviewDomainLink,
+  setPageTitle, fixLinks, getPreviewDomainLink,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -308,21 +308,11 @@ export default {
     ]);
 
     const newPagePath = getImportPagePath(params.originalURL);
-    const pathParts = getPathSegments(newPagePath);
-    let filesLocation;
-    switch (pathParts[0]) {
-      case 'government':
-        filesLocation = 'government';
-        break;
-      case 'business':
-        filesLocation = 'business';
-        break;
-      default:
-        filesLocation = 'general';
-    }
 
+    fixPdfLinks(main, results, newPagePath);
+    fixPdfLinks(leftNavAsideEl, results, newPagePath);
     fixLinks(main);
-    fixPdfLinks(main, results, filesLocation);
+    fixLinks(leftNavAsideEl);
     fixAudioLinks(main);
 
     setPageTitle(main, params);
@@ -364,7 +354,7 @@ export default {
     buildNewsletterAccordion(main, results);
     buildIframeForm(main);
     buildCardsTilesBlock(main);
-    fixLinks(main);
+    // fixLinks(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
 

@@ -90,7 +90,7 @@ export default {
     const newPagePath = getImportPagePath(params.originalURL);
 
     // Handle all PDFs
-    fixPdfLinks(main, results, 'agenda');
+    fixPdfLinks(main, results, newPagePath);
     fixAudioLinks(main);
 
     setPageTitle(main, params);
