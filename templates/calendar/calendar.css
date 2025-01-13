@@ -1,35 +1,3 @@
-body.calendar .county-commissioners {
-    background-color: #3787d8;
-}
-
-body.calendar .county-commission-district-a {
-    background-color: #da80c1;
-}
-
-body.calendar .county-commission-district-b {
-    background-color: #c0a6dd;
-}
-
-body.calendar .county-commissioners-district-c {
-    background-color: #48e7e2;
-}
-
-body.calendar .county-commissioners-district-d {
-    background-color: #7ad295;
-}
-
-body.calendar .county-commissioners-district-e {
-    background-color: #d4dbb6;
-}
-
-body.calendar .county-commissioners-district-f {
-    background-color: #f9a97f;
-}
-
-body.calendar main a:any-link {
-    color: white;
-}
-
 body.calendar .event-modal .event-modal-footer a {
     padding: 8px 12px 6px;
     display: block;
