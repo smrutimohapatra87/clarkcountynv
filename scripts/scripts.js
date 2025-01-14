@@ -27,7 +27,7 @@ const getPageTitle = async (url) => {
     html.innerHTML = await resp.text();
     const pageTitle = html.querySelector('meta[name="page-title"]');
     if (pageTitle) {
-      return html.querySelector('title').innerText;
+      return html.querySelector('meta[name="page-title"]').content;
     }
     return html.querySelector('title').innerText;
   }
