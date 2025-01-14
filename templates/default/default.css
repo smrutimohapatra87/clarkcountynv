@@ -29,6 +29,23 @@ main .mainmenu .leftsection>.default-content-wrapper>p {
     cursor: pointer;
 }
 
+main .section.rightsection.biography img {
+    padding-right: 10px;
+    width: 265px;
+    float: left;
+  }
+  
+main .section.rightsection.biography p:not(:first-child) {
+    margin-top: 4em;
+  }
+
+main .section.rightsection.no-button a:any-link {
+    color: var(--no-button-link);
+    text-decoration: none;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
 main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordion-ml-wrapper > .block.accordion-ml.active {
     height: var(--height);
     transition: height .5s ease-in;

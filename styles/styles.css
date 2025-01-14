@@ -25,6 +25,7 @@
   --original-height: y;
   --tab-height: z;
   --default-button: #0094C3;
+  --no-button-link: #007bff;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
@@ -361,17 +362,6 @@ main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
 }
-
-body > main .section.rightsection.biography img {
-  padding-right: 10px;
-  width: 265px;
-  float: left;
-}
-
-body > main .section.rightsection.biography p:not(:first-child) {
-  margin-top: 4em;
-}
-
 
 main > div.mobile.with-background-image {
   height: 700px;
