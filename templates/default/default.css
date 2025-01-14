@@ -29,15 +29,36 @@ main .mainmenu .leftsection>.default-content-wrapper>p {
     cursor: pointer;
 }
 
-main .section.rightsection.biography img {
+body > main .section.rightsection.biography {
+
+  img {
     padding-right: 10px;
     width: 265px;
     float: left;
   }
-  
-main .section.rightsection.biography p:not(:first-child) {
+
+  h4 + p {
+    margin-top: 0 !important;
+  }
+
+  p:not(:first-child) {
     margin-top: 4em;
   }
+
+  h4 {
+    font: 500 35px 'Neue Montreal',sans-serif;
+    color: #000;
+  }
+}
+
+.team .icon {
+  line-height: inherit;
+
+  /* stylelint-disable no-descending-specificity */
+  img {
+    margin-block: -5px;
+  }
+}
 
 main .section.rightsection.no-button a:any-link {
     color: var(--no-button-link);

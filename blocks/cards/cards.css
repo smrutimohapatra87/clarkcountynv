@@ -208,7 +208,7 @@
     .staff-tile-title {
         font: 400 18px 'Open Sans', sans-serif;
         color: #000;
-        margin-bottom: 15px
+        margin-bottom: 15px;
     }
 
     .staff-tile-contacts {
@@ -226,6 +226,14 @@
             font-style: normal;
         }
     }
+}
+
+.team .cards.staff.block .staff-tile-title   {
+    line-height: 1.5em;
+    height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .fa-phone::before {

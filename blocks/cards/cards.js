@@ -41,8 +41,8 @@ export default function decorate(block) {
         ),
       );
     } else if (block.classList.contains('staff')) {
-      const imgSrc = row.children[0].querySelector('img').src;
-      const altText = imgSrc.split('/').pop().split('?')[0];
+      const imgSrc = row.children[0].querySelector('img')?.src;
+      const altText = imgSrc?.split('/').pop().split('?')[0];
       const name = row.children[1].textContent;
       const title = row.children[2].textContent;
       const pageLink = row.children[3].querySelector('a')?.href;
@@ -55,8 +55,8 @@ export default function decorate(block) {
       $ul.append(
         li(
           a(
-            { href: pageLink, class: 'tile-detail' },
-            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText })),
+            { href: pageLink || '', class: 'tile-detail', style: pageLink ? '' : 'pointer-events: none;' },
+            div({ class: 'staff-tile-img-box' }, img({ src: imgSrc, alt: altText || '' })),
             h4({ class: 'staff-tile-name' }, `${name.split('-')[0]} - `, br(), name.split('-')[1]),
             div({ class: 'staff-tile-title' }, title),
           ),

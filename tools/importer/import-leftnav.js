@@ -3,7 +3,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPreviewDomainLink,
+  setPageTitle, fixLinks, getPreviewDomainLink, fixImageLinks,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -313,6 +313,7 @@ export default {
     fixPdfLinks(leftNavAsideEl, results, newPagePath);
     fixLinks(main);
     fixLinks(leftNavAsideEl);
+    fixImageLinks(main);
 
     setPageTitle(main, params);
 

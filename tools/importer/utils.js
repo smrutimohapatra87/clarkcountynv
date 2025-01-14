@@ -168,6 +168,15 @@ export const fixLinks = (main) => {
   });
 };
 
+export const fixImageLinks = (main) => {
+  main.querySelectorAll('img').forEach((image) => {
+    const href = image.getAttribute('src');
+    const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+
+    image.setAttribute('src', u.toString());
+  });
+};
+
 export const getPreviewDomainLink = (url) => {
   const u = new URL(url, window.location.origin);
   if (u.hostname === 'www.clarkcountynv.gov' || u.hostname === 'localhost') {

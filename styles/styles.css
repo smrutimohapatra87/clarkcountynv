@@ -422,7 +422,7 @@ main .section.details-404 > .default-content-wrapper {
   .desktop {
     display: block;
   }
-  
+
   .mobile {
     display: none;
   }
@@ -459,7 +459,7 @@ main .section.details-404 > .default-content-wrapper {
   main > div.section.desktop.with-background-image.short {
     height: 400px;
   }
-  
+
    /* widget for share */
   .floating-share-btn {
     position:fixed;
@@ -480,7 +480,7 @@ main .section.details-404 > .default-content-wrapper {
   .floating-share-btn-home {
     background:#0094C3!important;
   }
-  
+
   .floating-share-btn span {
     width: 18px;
     display:block;
@@ -488,7 +488,7 @@ main .section.details-404 > .default-content-wrapper {
     font-size:12px;
     line-height:1;
   }
-  
+
   .share-float{
     margin-top:12px;
   }
