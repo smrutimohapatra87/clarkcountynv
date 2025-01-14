@@ -27,7 +27,7 @@ const getPageTitle = async (url) => {
     html.innerHTML = await resp.text();
     const pageTitle = html.querySelector('meta[name="page-title"]');
     if (pageTitle) {
-      return html.querySelector('meta[name="page-title"]').content;
+      return html.querySelector('meta[name="breadcrumbs-title-override"]')?.content || html.querySelector('meta[name="page-title"]').content;
     }
     return html.querySelector('title').innerText;
   }
@@ -64,7 +64,7 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   // TODO: no link on home icon
   const homeUrl = document.querySelector('.nav-brand a[href]')?.href || window.location.origin;
   if (currentUrl !== homeUrl) {
-    crumbs.push({ title: getMetadata('page-title'), url: currentUrl });
+    crumbs.push({ title: getMetadata('breadcrumbs-title-override') || getMetadata('page-title'), url: currentUrl });
   }
 
   // TODO: needs placeholders file
