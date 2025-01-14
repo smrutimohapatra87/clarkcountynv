@@ -55,7 +55,7 @@ export const getImportPagePath = (url) => {
 };
 
 export const getSanitizedPath = (url) => {
-  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4') || url.startsWith('mailto') || url.startsWith('tel:'))) {
+  if (url && (url.endsWith('.pdf') || url.endsWith('.mp3') || url.endsWith('.mp4') || url.endsWith('.MP3') || url.endsWith('.MP4') || url.startsWith('mailto') || url.startsWith('tel:') || url.endsWith('.docx'))) {
     return url;
   }
 
@@ -100,7 +100,7 @@ export const fetchAndParseDocument = async (url) => {
 export const fixPdfLinks = (main, results, pageUrl) => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
-    if (href && href.endsWith('.pdf')) {
+    if (href && (href.endsWith('.pdf') || href.endsWith('.docx') || href.endsWith('.mp3') || href.endsWith('.mp4') || href.endsWith('.MP3') || href.endsWith('.MP4'))) {
       const originalLocation = new URL(href, 'https://webfiles.clarkcountynv.gov');
       const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
       results.push({

@@ -5,7 +5,7 @@ import {
   buildSectionMetadata,
   getMobileBgBlock,
   getDesktopBgBlock,
-  getImportPagePath, fixPdfLinks, fixAudioLinks, setPageTitle,
+  getImportPagePath, fixPdfLinks, setPageTitle, fixLinks,
 } from './utils.js';
 
 function breadcrumbUrl(main, results, newPath) {
@@ -91,7 +91,7 @@ export default {
 
     // Handle all PDFs
     fixPdfLinks(main, results, newPagePath);
-    fixAudioLinks(main);
+    fixLinks(main);
 
     setPageTitle(main, params);
 

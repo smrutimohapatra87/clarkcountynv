@@ -1,7 +1,7 @@
 /* global WebImporter */
 /* eslint-disable no-console */
 import {
-  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks, fixAudioLinks,
+  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
   setPageTitle, fixLinks, getPreviewDomainLink,
 } from './utils.js';
@@ -313,7 +313,6 @@ export default {
     fixPdfLinks(leftNavAsideEl, results, newPagePath);
     fixLinks(main);
     fixLinks(leftNavAsideEl);
-    fixAudioLinks(main);
 
     setPageTitle(main, params);
 
