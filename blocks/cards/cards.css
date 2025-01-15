@@ -248,6 +248,10 @@
     content: "\f09a"
 }
 
+.fa-youtube::before {
+    content: "\f167";
+}
+
 .fa-x-twitter::before {
     content: "\e61b";
     font-family: FontAwesomeBrands, sans-serif

@@ -49,6 +49,7 @@ export default function decorate(block) {
       const phone = row.children[4].querySelector('a[title="phone"]')?.href;
       const email = row.children[4].querySelector('a[title="email"]')?.href;
       const facebookSrc = row.children[4].querySelector('a[title="facebook"]')?.href;
+      const youtubeSrc = row.children[4].querySelector('a[title="youtube"]')?.href;
       const twitterSrc = row.children[4].querySelector('a[title="twitter"]')?.href;
       const instagramSrc = row.children[4].querySelector('a[title="instagram"]')?.href;
 
@@ -73,6 +74,10 @@ export default function decorate(block) {
             facebookSrc ? a(
               { href: facebookSrc, class: 'staff-tile-contact-icon' },
               i({ class: 'fa fa-facebook' }),
+            ) : null,
+            youtubeSrc ? a(
+              { href: youtubeSrc, class: 'staff-tile-contact-icon' },
+              i({ class: 'fa fa-youtube' }),
             ) : null,
             twitterSrc ? a(
               { href: twitterSrc, class: 'staff-tile-contact-icon' },

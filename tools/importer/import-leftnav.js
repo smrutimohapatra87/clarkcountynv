@@ -3,7 +3,7 @@
 import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks,
   getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPreviewDomainLink, fixImageLinks,
+  setPageTitle, fixLinks, getPreviewDomainLink, fixImageLinks, fetchAndParseDocument,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -21,7 +21,6 @@ function buildLeftNavItems(root) {
     listEl.append(aEl);
     parentUl.append(listEl);
     if (li.classList.contains('children')) {
-      // const ulEl = document.createElement('ul');
       listEl.append(buildLeftNavItems(li.querySelector('ul')));
     }
   });
@@ -89,6 +88,110 @@ function buildCardsBlock(main) {
   });
 
   tileBoxEl.replaceWith(cardBlock);
+}
+
+function buildCardsStaffBlock(main, url, contactsDiv) {
+  const staffTilesEl = main.querySelectorAll('.staff-tiles-box');
+  if (!staffTilesEl) {
+    console.log('Cards staff block not found');
+    return;
+  }
+
+  const cards = [];
+  staffTilesEl.forEach((staffTile) => {
+    staffTile.querySelectorAll('.staff-tile').forEach((tile, i) => {
+      const card = {
+        href: new URL(getSanitizedPath(tile.querySelector('.tile-detail')?.href), PREVIEW_DOMAIN).toString(),
+        imageSrc: getCardsImagePath(tile.querySelector('.staff-tile-img-box img')?.src),
+        imageAlt: tile.querySelector('.staff-tile-img-box img')?.alt,
+        name: tile.querySelector('.tile-detail .staff-tile-name').innerText.trim(),
+        title: tile.querySelector('.tile-detail .staff-tile-title').innerText.trim(),
+        phoneSrc: contactsDiv.item(i).querySelector('a[href^="tel:"]')?.href,
+        emailSrc: contactsDiv.item(i).querySelector('a[href^="mailto:"]')?.href,
+        facebookSrc: contactsDiv.item(i).querySelector('a[href*="facebook"]')?.href,
+        youtubeSrc: contactsDiv.item(i).querySelector('a[href*="youtube"]')?.href,
+        xSrc: contactsDiv.item(i).querySelector('a[href*="twitter"]')?.href,
+        instagramSrc: contactsDiv.item(i).querySelector('a[href*="instagram"]')?.href,
+      };
+      cards.push(card);
+    });
+  });
+
+  const cells = [];
+  cards.forEach((card) => {
+    const img = document.createElement('img');
+    const name = document.createElement('p');
+    const title = document.createElement('p');
+    const link = document.createElement('a');
+    const contact = document.createElement('div');
+    if (card.imageSrc) {
+      img.src = card.imageSrc;
+      img.setAttribute('alt', card.imageAlt);
+    }
+    if (card.name) {
+      name.innerText = card.name;
+    }
+    if (card.title) {
+      title.innerText = card.title;
+    }
+    if (card.href) {
+      link.innerText = card.href;
+      link.setAttribute('href', card.href);
+    }
+    if (card.phoneSrc) {
+      const el = document.createElement('a');
+      el.href = card.phoneSrc;
+      el.innerText = 'phone';
+      contact.append(el);
+      contact.append(document.createElement('br'));
+    }
+    if (card.emailSrc) {
+      const el = document.createElement('a');
+      el.href = card.emailSrc;
+      el.innerText = 'email';
+      contact.append(el);
+      contact.append(document.createElement('br'));
+    }
+    if (card.facebookSrc) {
+      const el = document.createElement('a');
+      el.href = card.facebookSrc;
+      el.innerText = 'facebook';
+      contact.append(el);
+      contact.append(document.createElement('br'));
+    }
+    if (card.youtubeSrc) {
+      const el = document.createElement('a');
+      el.href = card.youtubeSrc;
+      el.innerText = 'youtube';
+      contact.append(el);
+      contact.append(el); contact.append(document.createElement('br'));
+    }
+    if (card.xSrc) {
+      const el = document.createElement('a');
+      el.href = card.xSrc;
+      el.innerText = 'twitter';
+      contact.append(el);
+      contact.append(el); contact.append(document.createElement('br'));
+    }
+    if (card.instagramSrc) {
+      const el = document.createElement('a');
+      el.href = card.instagramSrc;
+      el.innerText = 'instagram';
+      contact.append(el);
+      contact.append(el); contact.append(document.createElement('br'));
+    }
+    cells.push([img, name, title, link, contact]);
+  });
+
+  const cardBlock = WebImporter.Blocks.createBlock(document, {
+    name: 'Cards (staff)',
+    cells: [...cells],
+  });
+
+  staffTilesEl[0].replaceWith(cardBlock);
+  for (let i = 1; i < staffTilesEl.length; i += 1) {
+    staffTilesEl[i].remove();
+  }
 }
 
 function buildFaqAccordion(main) {
@@ -281,7 +384,7 @@ function buildCardsTilesBlock(main) {
 
 export default {
 
-  transform: ({
+  transform: async ({
     // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
@@ -354,7 +457,14 @@ export default {
     buildNewsletterAccordion(main, results);
     buildIframeForm(main);
     buildCardsTilesBlock(main);
-    // fixLinks(main);
+
+    const doc = await fetchAndParseDocument(url);
+    let contactsDiv;
+    if (doc) {
+      const { body } = doc;
+      contactsDiv = body.querySelectorAll('.staff-tile-contacts');
+    }
+    buildCardsStaffBlock(main, params.originalURL, contactsDiv);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
 
