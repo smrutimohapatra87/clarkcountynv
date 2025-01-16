@@ -92,7 +92,7 @@ function buildCardsBlock(main) {
 
 function buildCardsStaffBlock(main, url, contactsDiv) {
   const staffTilesEl = main.querySelectorAll('.staff-tiles-box');
-  if (!staffTilesEl) {
+  if (staffTilesEl.length === 0) {
     console.log('Cards staff block not found');
     return;
   }

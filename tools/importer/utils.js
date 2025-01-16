@@ -1,8 +1,20 @@
 /* global WebImporter */
+/* eslint-disable no-console */
 
 export const PREVIEW_DOMAIN = 'https://main--clarkcountynv--aemsites.aem.page';
 const METADATA_ALLOWED_KEYS = ['template', 'breadcrumbs-base', 'page-title', 'breadcrumbs-title-override',
   'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl'];
+
+const videoExtensions = [
+  'mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', '3gp', 'rm',
+  'vob', 'mpeg', 'mpg', 'divx', 'm2ts', 'mts', 'mxf', 'ogv',
+];
+
+const audioExtensions = [
+  'mp3', 'wav', 'aac', 'ogg', 'flac', 'm4a', 'wma', 'alac',
+  'aiff', 'pcm', 'opus', 'amr',
+];
+
 export const createMetadata = (main, document, params) => {
   const meta = {};
 
@@ -100,17 +112,24 @@ export const fetchAndParseDocument = async (url) => {
 export const fixPdfLinks = (main, results, pageUrl) => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
-    if (href && (href.endsWith('.pdf') || href.endsWith('.docx') || href.endsWith('.mp3') || href.endsWith('.mp4') || href.endsWith('.MP3') || href.endsWith('.MP4'))) {
-      const originalLocation = new URL(href, 'https://webfiles.clarkcountynv.gov');
-      const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
-      results.push({
-        path: pageUrl,
-        report: {
-          redirectPdfFrom: newPath.toString(),
-          redirectPdfTo: originalLocation.toString(),
-        },
-      });
-      a.setAttribute('href', newPath.toString());
+
+    if (href) {
+      const isVideo = videoExtensions.some((ext) => href.toLowerCase().endsWith(`.${ext}`));
+      const isAudio = audioExtensions.some((ext) => href.toLowerCase().endsWith(`.${ext}`));
+      if (isVideo || isAudio) {
+        console.log('The URL points to a video/audio file.');
+      } else if (href.endsWith('.pdf') || href.endsWith('.docx')) {
+        const originalLocation = new URL(href, 'https://webfiles.clarkcountynv.gov');
+        const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
+        results.push({
+          path: pageUrl,
+          report: {
+            redirectPdfFrom: newPath.toString(),
+            redirectPdfTo: originalLocation.toString(),
+          },
+        });
+        a.setAttribute('href', newPath.toString());
+      }
     }
   });
 };
