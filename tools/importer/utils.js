@@ -110,6 +110,10 @@ export const fetchAndParseDocument = async (url) => {
 };
 
 export const fixPdfLinks = (main, results, pageUrl) => {
+  if (!main) {
+    return;
+  }
+
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
 
@@ -181,6 +185,9 @@ export const setPageTitle = (main, params) => {
 };
 
 export const fixLinks = (main) => {
+  if (!main) {
+    return;
+  }
   main.querySelectorAll('a').forEach((a) => {
     const href = getSanitizedPath(a.getAttribute('href'));
     a.setAttribute('href', new URL(href, PREVIEW_DOMAIN).toString());

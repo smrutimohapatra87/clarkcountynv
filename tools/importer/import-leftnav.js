@@ -392,7 +392,6 @@ export default {
     const results = [];
 
     const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
-    const leftNavHeading = leftNavAsideEl.querySelector('#flyout-header').textContent.trim();
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -420,38 +419,45 @@ export default {
 
     setPageTitle(main, params);
 
+    /* Start for leftnav */
+    if (leftNavAsideEl) {
+      const leftNavHeading = leftNavAsideEl.querySelector('#flyout-header').textContent.trim();
+      const leftSectionBlock = buildLeftNavAccordionBlock(leftNavAsideEl);
+      const leftSectionHeading = document.createElement('h2');
+      leftSectionHeading.innerText = leftNavHeading;
+      const subMenuToggleEl = document.createElement('p');
+      subMenuToggleEl.innerText = ':submenu: SUB MENU';
+      const leftSectionMetadata = buildSectionMetadata([['Style', 'leftsection']]);
+
+      main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
+      main.insertBefore(leftSectionMetadata, main.firstChild);
+
+      const businessHoursLeftNavCard = buildLeftnavHourCardsBlock(leftNavAsideEl);
+      if (businessHoursLeftNavCard != null) {
+        main.insertBefore(businessHoursLeftNavCard, main.firstChild);
+      }
+
+      const contactUsLeftNavCard = buildLeftnavContactCardsBlock(leftNavAsideEl);
+      if (contactUsLeftNavCard != null) {
+        main.insertBefore(contactUsLeftNavCard, main.firstChild);
+      }
+      main.insertBefore(leftSectionBlock, main.firstChild);
+      main.insertBefore(leftSectionHeading, main.firstChild);
+      main.insertBefore(subMenuToggleEl, main.firstChild);
+    }
+    /* End for leftnav */
+
+    /* Start for hero image */
     const desktopBlock = getDesktopBgBlock();
     const mobileBlock = getMobileBgBlock();
-
-    const leftSectionBlock = buildLeftNavAccordionBlock(leftNavAsideEl);
-    const leftSectionHeading = document.createElement('h2');
-    leftSectionHeading.innerText = leftNavHeading;
-    const subMenuToggleEl = document.createElement('p');
-    subMenuToggleEl.innerText = ':submenu: SUB MENU';
-
-    const contactUsLeftNavCard = buildLeftnavContactCardsBlock(leftNavAsideEl);
-    const businessHoursLeftNavCard = buildLeftnavHourCardsBlock(leftNavAsideEl);
-
-    const leftSectionMetadata = buildSectionMetadata([['Style', 'leftsection']]);
-    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
-
-    main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(leftSectionMetadata, main.firstChild);
-    if (businessHoursLeftNavCard != null) {
-      main.insertBefore(businessHoursLeftNavCard, main.firstChild);
-    }
-    if (contactUsLeftNavCard != null) {
-      main.insertBefore(contactUsLeftNavCard, main.firstChild);
-    }
-    main.insertBefore(leftSectionBlock, main.firstChild);
-    main.insertBefore(leftSectionHeading, main.firstChild);
-    main.insertBefore(subMenuToggleEl, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(desktopBlock, main.firstChild);
+    /* End for hero image */
 
     // add right section
+    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
     buildCardsBlock(main);
     buildFaqAccordion(main);
     buildNewsletterAccordion(main, results);
