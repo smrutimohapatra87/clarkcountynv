@@ -15,6 +15,8 @@ const audioExtensions = [
   'aiff', 'pcm', 'opus', 'amr',
 ];
 
+const WEBFILES_DOMAIN = 'https://webfiles.clarkcountynv.gov';
+
 export const createMetadata = (main, document, params) => {
   const meta = {};
 
@@ -122,8 +124,18 @@ export const fixPdfLinks = (main, results, pageUrl) => {
       const isAudio = audioExtensions.some((ext) => href.toLowerCase().endsWith(`.${ext}`));
       if (isVideo || isAudio) {
         console.log('The URL points to a video/audio file.');
+        try {
+          const originalLink = new URL(href);
+          if (originalLink.origin === 'https://clarkcountynv.gov') {
+            a.setAttribute('href', new URL(originalLink.pathname, WEBFILES_DOMAIN).toString());
+          }
+        } catch (error) {
+          console.error(`Setting domain to ${WEBFILES_DOMAIN} for URL: ${href}`);
+
+          a.setAttribute('href', new URL(href, WEBFILES_DOMAIN).toString());
+        }
       } else if (href.endsWith('.pdf') || href.endsWith('.docx')) {
-        const originalLocation = new URL(href, 'https://webfiles.clarkcountynv.gov');
+        const originalLocation = new URL(href, WEBFILES_DOMAIN);
         const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
         results.push({
           path: pageUrl,
@@ -142,7 +154,7 @@ export const fixAudioLinks = (main) => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
     if (href && (href.toLowerCase().search('.mp3') !== -1 || href.toLowerCase().search('.mp4') !== -1)) {
-      const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+      const u = new URL(href, WEBFILES_DOMAIN);
       a.setAttribute('href', u.toString());
     }
   });
@@ -150,7 +162,7 @@ export const fixAudioLinks = (main) => {
 
 export const getCardsImagePath = (src) => {
   const imagePath = new URL(src).pathname;
-  const u = new URL(imagePath, 'https://webfiles.clarkcountynv.gov');
+  const u = new URL(imagePath, WEBFILES_DOMAIN);
   return u.toString();
 };
 
@@ -197,7 +209,7 @@ export const fixLinks = (main) => {
 export const fixImageLinks = (main) => {
   main.querySelectorAll('img').forEach((image) => {
     const href = image.getAttribute('src');
-    const u = new URL(href, 'https://webfiles.clarkcountynv.gov');
+    const u = new URL(href, WEBFILES_DOMAIN);
 
     image.setAttribute('src', u.toString());
   });
