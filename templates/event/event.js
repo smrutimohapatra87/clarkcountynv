@@ -1,11 +1,24 @@
 // eslint-disable-next-line no-unused-vars,no-empty-function
 
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
+
+function decorateHeroSection(element) {
+  const section = element.querySelector('.section.hero');
+  if (section) {
+    const checkAElement = section.querySelector('a');
+    if (checkAElement) {
+      const backgroundPic = createOptimizedPicture(checkAElement);
+      section.textContent = '';
+      section.append(backgroundPic);
+    }
+  }
+}
 
 export default async function decorate(doc) {
   doc.querySelector('header').remove();
   doc.querySelector('footer').remove();
   doc.body.classList.add('event');
+  decorateHeroSection(doc);
 
   const titleText = getMetadata('featuredtitle');
   doc.querySelector('.title').innerHTML = `<h2>${titleText}</h2>`;
