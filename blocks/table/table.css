@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  padding: 0 50px 50px;
 }
 
 .table table {
@@ -65,3 +66,64 @@
 .table.bordered table td {
   border: 1px solid #dadada;
 }
+
+.table.type2border {
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #e67e23;
+
+        /* stylelint-disable no-descending-specificity */
+        tr {
+            border-collapse: collapse;
+            border-bottom: 1px solid #e67e23;
+            border-top-color: #e67e23 !important;
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+
+                p {
+                    margin-top: 25px;
+                    margin-bottom: 25px;
+                }
+            }
+        }
+
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        td:has(picture) {
+            width: 25%;
+        }
+    }
+}
+
+.table.no-border table {
+    width: 100%;
+    padding-top: 0;
+
+    tbody tr {
+        border-collapse: collapse;
+        border: none;
+
+        td {
+            text-align: left;
+            vertical-align: middle;
+
+            p {
+                margin: 0 0 30px;
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    padding-top: 30px;
+                }
+            }
+        }
+    }
+}
+
+

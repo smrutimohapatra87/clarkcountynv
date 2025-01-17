@@ -1,6 +1,6 @@
 .accordion.block {
     @media (width >= 900px) {
-        padding: 50px 70px 60px 50px;
+        padding: 0 70px 50px 50px;
     }
 
     details {

@@ -116,3 +116,27 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     border-bottom: 5px solid #312422;
     padding-bottom: 5px;
 }
+
+.default-no-padding-bottom .default-content-wrapper {
+    padding-bottom: unset !important;
+}
+
+.default-no-padding-top .default-content-wrapper {
+    padding-top: unset !important;
+}
+
+.image-right .default-content-wrapper p:nth-child(1) img {
+        float: right;
+        width: 20%;
+}
+
+.ul-no-padding ul {
+    margin-bottom: unset;
+    margin-top: unset;
+}
+
+.line-break.block {
+    border: solid #ccc;
+    border-width: 1px 0 0;
+    margin: 0 50px 0 50px;
+}

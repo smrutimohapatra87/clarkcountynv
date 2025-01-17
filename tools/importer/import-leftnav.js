@@ -382,6 +382,21 @@ function buildCardsTilesBlock(main) {
   }
 }
 
+function printBreadcrumbUrl(main, results, newPath) {
+  const parts = [];
+  const breadcrumbsUl = main.querySelectorAll('li');
+  breadcrumbsUl.forEach((li) => {
+    parts.push(li.textContent.trim());
+  });
+  const category = parts.join(' > ');
+  results.push({
+    path: newPath,
+    report: {
+      crumbs: category,
+    },
+  });
+}
+
 export default {
 
   transform: async ({
@@ -391,7 +406,14 @@ export default {
     const main = document.body;
     const results = [];
 
+    const newPagePath = getImportPagePath(params.originalURL);
+
     const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
+    const breadcrumbsEl = main.querySelector('#breadcrumbs');
+
+    if (breadcrumbsEl) {
+      printBreadcrumbUrl(breadcrumbsEl, results, newPagePath);
+    }
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -408,8 +430,6 @@ export default {
       '#goog-gt-tt', // google translation
       '.uwy.userway_p5.utb',
     ]);
-
-    const newPagePath = getImportPagePath(params.originalURL);
 
     fixPdfLinks(main, results, newPagePath);
     fixPdfLinks(leftNavAsideEl, results, newPagePath);
