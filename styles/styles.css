@@ -77,6 +77,10 @@ body {
   display: block;
 }
 
+.center {
+  text-align: center;
+}
+
 body.appear {
   display: block;
   top: 0 !important;

@@ -7,7 +7,7 @@ export default function decorate(block) {
   /* change to ul, li */
   const $ul = ul();
   [...block.children].forEach((row) => {
-    if (block.classList.contains('clickable')) {
+    if (block.classList.contains('clickable') || block.classList.contains('clickable-images')) {
       const $li = li();
       const aEle = a();
       aEle.append($li);

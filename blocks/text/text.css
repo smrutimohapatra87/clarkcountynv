@@ -13,3 +13,7 @@ main .block.text.stacked-left-align {
     display: flex;
     padding-left: 50px;
   }
+
+  main .block.text.mini p {
+    font-size: 12px;
+  }

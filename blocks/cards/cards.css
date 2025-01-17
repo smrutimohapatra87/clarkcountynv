@@ -4,6 +4,12 @@
   margin: 31px 0 29px;
 }
 
+.cards.clickable-images > ul {
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
 .cards > ul > li {
   display: block;
   width: 90%;
@@ -64,6 +70,10 @@
   transition: all 300ms;
 }
 
+.cards.clickable-images .cards-card-body p:last-child {
+  display: none;
+}
+
 .cards .cards-card-image {
   display: inline-flex;
   align-items: center;
@@ -81,6 +91,10 @@
   width: 96px;
 }
 
+.cards.clickable-images > ul > a > li img {
+  width: 100%;
+}
+
 @media (width >= 600px) {
   .cards > ul > li {
     width: 40%;
@@ -88,6 +102,10 @@
 
   .cards.clickable > ul > a {
     width: 40%;
+  }
+
+  .cards.clickable-images > ul > a {
+    width: 80%;
   }
 }
 
@@ -98,6 +116,10 @@
 
   .cards.clickable > ul > a {
     width: 22%;
+  }
+
+  .cards.clickable-images > ul > a {
+    width: 80%;
   }
 }
 
