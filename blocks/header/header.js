@@ -186,7 +186,7 @@ function handleNavTools(navWrapper, expandElement) {
     languageDiv.appendChild(languageDiv1);
     decorateGoogleTranslator(languageTool);
     const languageButton = button({ class: 'translate-button' }, span('US'), img());
-    languageButton.querySelector('img').src = normalizeImage('english');
+    languageButton.querySelector('img').src = normalizeImage('en');
     languageDiv.appendChild(languageButton);
     languageDiv.appendChild(languageTool);
     languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
