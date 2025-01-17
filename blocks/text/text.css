@@ -1,19 +1,29 @@
-main .block.text.half-width-center {
-    margin: auto;
-    width: 50%;
-    padding: 50px 50px 60px;
-  }
+main .block.text {
+    &.half-width-center {
+        margin: auto;
+        width: 50%;
+        padding: 50px 50px 60px;
+    }
 
-main .block.text.left-align {
-    display: flex;
-    padding-left: 50px;
-  }
+    &.left-align {
+        display: flex;
+        padding-left: 50px;
+    }
 
-main .block.text.stacked-left-align {
-    display: flex;
-    padding-left: 50px;
-  }
+    &.stacked-left-align {
+        display: flex;
+        padding-left: 50px;
+    }
 
-  main .block.text.mini p {
-    font-size: 12px;
-  }
+    &.mini p {
+        font-size: 12px;
+    }
+
+    &.color-blue p{
+        color: #236fa1;
+    }
+
+    &.color-orange p{
+        color: #ba372a;
+    }
+}

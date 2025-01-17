@@ -67,12 +67,17 @@
   border: 1px solid #dadada;
 }
 
+.table.col1-50 table tbody tr td{
+  width: 50%;
+}
+
 .table.type2border {
     table {
         border-collapse: collapse;
         border-spacing: 0;
         width: 100%;
         border: 1px solid #e67e23;
+        margin-top: 30px;
 
         /* stylelint-disable no-descending-specificity */
         tr {

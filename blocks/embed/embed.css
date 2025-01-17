@@ -72,3 +72,8 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
   height: 100%;
   vertical-align: middle;
 }
+
+.embed.full-size {
+    margin: 20px 70px 20px 50px;
+    max-width: unset;
+}

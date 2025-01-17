@@ -140,3 +140,15 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     border-width: 1px 0 0;
     margin: 0 50px 0 50px;
 }
+
+.image-1-center .default-content-wrapper {
+
+    picture:first-of-type {
+        display: flex;
+        justify-content: center;
+
+        img{
+            width: 30%;
+        }
+    }
+}
