@@ -111,51 +111,49 @@ export const fetchAndParseDocument = async (url) => {
   return null;
 };
 
-export const fixPdfLinks = (main, results, pageUrl) => {
+/**
+ *
+ * @param main : HTMLDivElement
+ * @param results : Final results array for importer
+ * @param assetType = sub directory to store assets -
+ * Ex. "governement/department", "residents", "residents/dir1"
+ */
+export const fixPdfLinks = (main, results, pagePath, assetType = 'general') => {
   if (!main) {
     return;
   }
+  const EXCLUDE_EXTENSIONS = ['php', 'gov', 'org'];
 
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
-
+    const url = new URL(href, window.location.origin);
+    const extension = url.pathname.split('.').pop();
     if (href) {
-      const isVideo = videoExtensions.some((ext) => href.toLowerCase().endsWith(`.${ext}`));
-      const isAudio = audioExtensions.some((ext) => href.toLowerCase().endsWith(`.${ext}`));
+      const isVideo = videoExtensions.some((ext) => extension === (`${ext}`));
+      const isAudio = audioExtensions.some((ext) => extension === (`${ext}`));
       if (isVideo || isAudio) {
         console.log('The URL points to a video/audio file.');
-        try {
-          const originalLink = new URL(href);
-          if (originalLink.origin === 'https://clarkcountynv.gov') {
-            a.setAttribute('href', new URL(originalLink.pathname, WEBFILES_DOMAIN).toString());
-          }
-        } catch (error) {
-          console.error(`Setting domain to ${WEBFILES_DOMAIN} for URL: ${href}`);
-
-          a.setAttribute('href', new URL(href, WEBFILES_DOMAIN).toString());
+        if (['https://clarkcountynv.gov', 'localhost'].find((domain) => url.origin.includes(domain))) {
+          a.setAttribute('href', new URL(url.pathname, WEBFILES_DOMAIN).toString());
         }
-      } else if (href.endsWith('.pdf') || href.endsWith('.docx')) {
-        const originalLocation = new URL(href, WEBFILES_DOMAIN);
-        const newPath = new URL(WebImporter.FileUtils.sanitizePath(href), PREVIEW_DOMAIN);
+      } else if (extension === 'pdf' || extension === 'docx') {
+        const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
+        const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType}/${originalLocation.pathname.split('/').pop()}`);
+
         results.push({
-          path: pageUrl,
+          path: newPath,
+          from: originalLocation.toString(),
+        });
+        a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN).toString());
+      } else if (!EXCLUDE_EXTENSIONS.includes(extension)) {
+        console.log(`File with extension-${extension} found. Skipping import`);
+        results.push({
+          path: pagePath,
           report: {
-            redirectPdfFrom: newPath.toString(),
-            redirectPdfTo: originalLocation.toString(),
+            unknown: url.toString(),
           },
         });
-        a.setAttribute('href', newPath.toString());
       }
-    }
-  });
-};
-
-export const fixAudioLinks = (main) => {
-  main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
-    if (href && (href.toLowerCase().search('.mp3') !== -1 || href.toLowerCase().search('.mp4') !== -1)) {
-      const u = new URL(href, WEBFILES_DOMAIN);
-      a.setAttribute('href', u.toString());
     }
   });
 };

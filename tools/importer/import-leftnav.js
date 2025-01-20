@@ -431,8 +431,15 @@ export default {
       '.uwy.userway_p5.utb',
     ]);
 
-    fixPdfLinks(main, results, newPagePath);
-    fixPdfLinks(leftNavAsideEl, results, newPagePath);
+    let assetsPath;
+    if (newPagePath.startsWith('/') && newPagePath.split('/').length > 2) {
+      assetsPath = newPagePath.split('/').slice(1, 3).join('/');
+    } else if (newPagePath.startsWith('/') && newPagePath.split('/').length === 2) {
+      [, assetsPath] = newPagePath.split('/');
+    }
+
+    fixPdfLinks(main, results, newPagePath, assetsPath);
+    fixPdfLinks(leftNavAsideEl, results, newPagePath, assetsPath);
     fixLinks(main);
     fixLinks(leftNavAsideEl);
     fixImageLinks(main);
