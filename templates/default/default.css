@@ -30,7 +30,6 @@ main .mainmenu .leftsection>.default-content-wrapper>p {
 }
 
 body > main .section.rightsection.biography {
-
   img {
     padding-right: 10px;
     width: 265px;
@@ -62,7 +61,6 @@ body > main .section.rightsection.biography {
 
 main .section.rightsection.no-button a:any-link {
     color: var(--no-button-link);
-    text-decoration: none;
     background-color: transparent;
     text-decoration: underline;
 }
@@ -73,6 +71,10 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 }
 
 @media (width >=900px) {
+    main .rightsection {
+        padding: 50px 50px 60px;
+    }
+    
     main .mainmenu {
         display: flex;
         flex-direction: row;
@@ -105,9 +107,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection {
         width: 100%;
         flex: 100%;
-    }
-
-    main .mainmenu .rightsection .default-content-wrapper {
         padding: 50px 50px 60px;
     }
 }
@@ -138,11 +137,10 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 .line-break.block {
     border: solid #ccc;
     border-width: 1px 0 0;
-    margin: 0 50px 0 50px;
+    margin: 0 50px;
 }
 
 .image-1-center .default-content-wrapper {
-
     picture:first-of-type {
         display: flex;
         justify-content: center;
