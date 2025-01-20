@@ -3,17 +3,26 @@ import {
   ul, li, a, div, img, h4, i, br,
 } from '../../scripts/dom-helpers.js';
 
+let cardImage = '';
+
 export default function decorate(block) {
   /* change to ul, li */
   const $ul = ul();
   [...block.children].forEach((row) => {
+    [...row.children].forEach((col, index) => {
+      if (index === 0) {
+        cardImage = createOptimizedPicture(col.querySelector('a').href);
+        col.textContent = '';
+        col.append(cardImage);
+      }
+    });
     if (block.classList.contains('clickable') || block.classList.contains('clickable-images')) {
       const $li = li();
       const aEle = a();
       aEle.append($li);
       while (row.firstElementChild) $li.append(row.firstElementChild);
       [...$li.children].forEach((divEl) => {
-        if (divEl.children.length === 1 && divEl.querySelector('picture')) divEl.className = 'cards-card-image';
+        if (divEl.children.length === 1 && cardImage && block.classList.contains('clickable')) divEl.className = 'cards-card-image';
         else {
           divEl.className = 'cards-card-body';
           if (divEl.querySelector('a')) {
