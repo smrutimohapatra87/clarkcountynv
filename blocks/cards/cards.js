@@ -10,9 +10,14 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     [...row.children].forEach((col, index) => {
       if (index === 0) {
-        const imgSrc = col.querySelector('a').href;
-        cardImage = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
-        col.replaceWith(cardImage);
+        const imageLinkEl = col.querySelector('a');
+        if (imageLinkEl) {
+          const imgSrc = imageLinkEl.getAttribute('href');
+          cardImage = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
+          col.replaceWith(cardImage);
+        } else {
+          cardImage = col.querySelector('picture');
+        }
       }
     });
     if (block.classList.contains('clickable') || block.classList.contains('clickable-images')) {
