@@ -204,12 +204,23 @@ export const fixLinks = (main) => {
   });
 };
 
-export const fixImageLinks = (main) => {
-  main.querySelectorAll('img').forEach((image) => {
-    const href = image.getAttribute('src');
-    const u = new URL(href, WEBFILES_DOMAIN);
+export const fixImageSrcPath = (src, results, imagePath = 'general') => {
+  const url = new URL(src, window.location.origin);
+  const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
+  const newPath = WebImporter.FileUtils.sanitizePath(`/assets/images/${imagePath}/${originalLocation.pathname.split('/').pop()}`);
 
-    image.setAttribute('src', u.toString());
+  results.push({
+    path: newPath,
+    from: originalLocation.toString(),
+  });
+  return new URL(newPath, PREVIEW_DOMAIN).toString();
+};
+
+export const fixImageLinks = (main, results, imagePath = 'general') => {
+  main.querySelectorAll('img').forEach((image) => {
+    const src = image.getAttribute('src');
+    const newSrcPath = fixImageSrcPath(src, results, imagePath);
+    image.setAttribute('src', newSrcPath);
   });
 };
 
@@ -219,4 +230,27 @@ export const getPreviewDomainLink = (url) => {
     return `${PREVIEW_DOMAIN}${u.pathname}`;
   }
   return url;
+};
+
+export const rightSectionFixes = (main) => {
+  // change subheader to h2
+  main.querySelectorAll('p.subheader, span.subheader').forEach((el) => {
+    const allowedTags = ['STRONG', 'P'];
+    const hasInvalidChildren = Array.from(el.children).some(
+      (child) => !allowedTags.includes(child.tagName),
+    );
+    if (hasInvalidChildren) {
+      return;
+    }
+    const h2El = document.createElement('h2');
+    h2El.innerText = el.textContent.trim();
+    el.replaceWith(h2El);
+  });
+
+  main.querySelectorAll('img').forEach((el) => {
+    const aEl = document.createElement('a');
+    aEl.href = el.src;
+    aEl.innerText = el.src;
+    el.replaceWith(aEl);
+  });
 };

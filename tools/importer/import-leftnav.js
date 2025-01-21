@@ -1,9 +1,10 @@
 /* global WebImporter */
 /* eslint-disable no-console */
 import {
-  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, getCardsImagePath, fixPdfLinks,
-  getImportPagePath, getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator,
-  setPageTitle, fixLinks, getPreviewDomainLink, fixImageLinks, fetchAndParseDocument,
+  PREVIEW_DOMAIN, createMetadata, getSanitizedPath, fixPdfLinks, getImportPagePath,
+  getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator, setPageTitle,
+  fixLinks, getPreviewDomainLink, fixImageLinks, fetchAndParseDocument, fixImageSrcPath,
+  rightSectionFixes,
 } from './utils.js';
 
 function buildLeftNavItems(root) {
@@ -37,7 +38,7 @@ function buildLeftNavAccordionBlock(asideEl) {
   });
 }
 
-function buildCardsBlock(main) {
+function buildCardsClickableBlock(main, results, imagePath) {
   const tileBoxEl = main.querySelector('.tiles-box');
   if (!tileBoxEl) {
     console.log('Cards block not found');
@@ -47,8 +48,7 @@ function buildCardsBlock(main) {
   [...tileBoxEl.children].forEach((a) => {
     const card = {
       href: new URL(getSanitizedPath(a.href), PREVIEW_DOMAIN).toString(),
-      imageSrc: getCardsImagePath(a.querySelector('.tile-icon-box img').src),
-      imageAlt: a.querySelector('.tile-icon-box img').alt,
+      imageSrc: fixImageSrcPath(a.querySelector('.tile-icon-box img').src, results, imagePath),
       title: a.querySelector('.tile-link').innerText.trim(),
       brief: a.querySelector('.tile-brief').innerText.trim(),
     };
@@ -57,11 +57,11 @@ function buildCardsBlock(main) {
 
   const cells = [];
   cards.forEach((card) => {
-    const img = document.createElement('img');
+    const imgLink = document.createElement('a');
     const info = document.createElement('div');
     if (card.imageSrc) {
-      img.src = card.imageSrc;
-      img.setAttribute('alt', card.imageAlt);
+      imgLink.href = card.imageSrc;
+      imgLink.innerText = card.imageSrc;
     }
     if (card.title) {
       const el = document.createElement('strong');
@@ -79,7 +79,7 @@ function buildCardsBlock(main) {
       el.innerText = card.href;
       info.append(el);
     }
-    cells.push([img, info]);
+    cells.push([imgLink, info]);
   });
 
   const cardBlock = WebImporter.Blocks.createBlock(document, {
@@ -90,7 +90,7 @@ function buildCardsBlock(main) {
   tileBoxEl.replaceWith(cardBlock);
 }
 
-function buildCardsStaffBlock(main, url, contactsDiv) {
+function buildCardsStaffBlock(main, contactsDiv, results, assetsPath) {
   const staffTilesEl = main.querySelectorAll('.staff-tiles-box');
   if (staffTilesEl.length === 0) {
     console.log('Cards staff block not found');
@@ -102,8 +102,7 @@ function buildCardsStaffBlock(main, url, contactsDiv) {
     staffTile.querySelectorAll('.staff-tile').forEach((tile, i) => {
       const card = {
         href: new URL(getSanitizedPath(tile.querySelector('.tile-detail')?.href), PREVIEW_DOMAIN).toString(),
-        imageSrc: getCardsImagePath(tile.querySelector('.staff-tile-img-box img')?.src),
-        imageAlt: tile.querySelector('.staff-tile-img-box img')?.alt,
+        imageSrc: fixImageSrcPath(tile.querySelector('.staff-tile-img-box img')?.src, results, assetsPath),
         name: tile.querySelector('.tile-detail .staff-tile-name').innerText.trim(),
         title: tile.querySelector('.tile-detail .staff-tile-title').innerText.trim(),
         phoneSrc: contactsDiv.item(i).querySelector('a[href^="tel:"]')?.href,
@@ -119,14 +118,14 @@ function buildCardsStaffBlock(main, url, contactsDiv) {
 
   const cells = [];
   cards.forEach((card) => {
-    const img = document.createElement('img');
+    const imgLink = document.createElement('a');
     const name = document.createElement('p');
     const title = document.createElement('p');
     const link = document.createElement('a');
     const contact = document.createElement('div');
     if (card.imageSrc) {
-      img.src = card.imageSrc;
-      img.setAttribute('alt', card.imageAlt);
+      imgLink.href = card.imageSrc;
+      imgLink.innerText = card.imageSrc;
     }
     if (card.name) {
       name.innerText = card.name;
@@ -180,7 +179,7 @@ function buildCardsStaffBlock(main, url, contactsDiv) {
       contact.append(el);
       contact.append(el); contact.append(document.createElement('br'));
     }
-    cells.push([img, name, title, link, contact]);
+    cells.push([imgLink, name, title, link, contact]);
   });
 
   const cardBlock = WebImporter.Blocks.createBlock(document, {
@@ -348,7 +347,7 @@ function buildIframeForm(main) {
   console.log('Iframe form not found');
 }
 
-function buildCardsTilesBlock(main) {
+function buildCardsTilesBlock(main, results, imagePath = 'general') {
   const tilesEl = main.querySelector('#visitors-tiles');
   if (tilesEl) {
     const cells = [];
@@ -359,18 +358,17 @@ function buildCardsTilesBlock(main) {
       const imgSrc = tile.querySelector('.visitors-tile-banner').style['background-image'];
       const urlMatch = imgSrc ? imgSrc.match(/url\(["']?(.*?)["']?\)/) : '';
       const url = urlMatch ? urlMatch[1] : null;
+      const fixedImgLink = fixImageSrcPath(url, results, imagePath);
 
-      const container = document.createElement('div');
-      const aEl = document.createElement('a');
-      aEl.href = link;
-      aEl.innerText = title;
-      container.append(aEl);
+      const titleAEl = document.createElement('a');
+      titleAEl.href = link;
+      titleAEl.innerText = title;
 
-      const img = document.createElement('img');
-      img.src = new URL(url, 'https://webfiles.clarkcountynv.gov').toString();
-      container.append(img);
+      const imageAEl = document.createElement('a');
+      imageAEl.href = fixedImgLink;
+      imageAEl.innerText = fixedImgLink;
 
-      cells.push([container]);
+      cells.push([imageAEl, titleAEl]);
     });
     const block = WebImporter.Blocks.createBlock(document, {
       name: 'cards (tiles)',
@@ -442,7 +440,7 @@ export default {
     fixPdfLinks(leftNavAsideEl, results, newPagePath, assetsPath);
     fixLinks(main);
     fixLinks(leftNavAsideEl);
-    fixImageLinks(main);
+    fixImageLinks(main, results, assetsPath);
 
     setPageTitle(main, params);
 
@@ -485,11 +483,11 @@ export default {
 
     // add right section
     const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
-    buildCardsBlock(main);
+    buildCardsClickableBlock(main, results, assetsPath);
     buildFaqAccordion(main);
     buildNewsletterAccordion(main, results);
     buildIframeForm(main);
-    buildCardsTilesBlock(main);
+    buildCardsTilesBlock(main, results, assetsPath);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;
@@ -497,7 +495,8 @@ export default {
       const { body } = doc;
       contactsDiv = body.querySelectorAll('.staff-tile-contacts');
     }
-    buildCardsStaffBlock(main, params.originalURL, contactsDiv);
+    buildCardsStaffBlock(main, contactsDiv, results, assetsPath);
+    rightSectionFixes(main);
     main.append(rightSectionMetadata);
     main.append(blockSeparator().cloneNode(true));
 

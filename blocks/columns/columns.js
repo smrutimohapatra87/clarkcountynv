@@ -4,10 +4,10 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     [...row.children].forEach((col, i) => {
       if (i === 0 && col.querySelector('a')) {
-        const pic = createOptimizedPicture(col.querySelector('a').href);
+        const imgSrc = col.querySelector('a').href;
+        const pic = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
         if (pic) {
-          col.textContent = '';
-          col.append(pic);
+          col.replaceWith(pic);
         }
       }
     });

@@ -2,6 +2,7 @@
 import {
   div,
 } from '../../scripts/dom-helpers.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
@@ -23,8 +24,13 @@ export default async function decorate(doc) {
   });
 
   const $rightsection = document.querySelector('.rightsection');
-  const $mainmenu = div({ class: 'mainmenu' });
 
-  $mainmenu.append($leftsection, $rightsection);
+  // change all image anchor links to img tag
+  $rightsection.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"]').forEach((aEl) => {
+    const picture = createOptimizedPicture(aEl.href, aEl.href.split('/').pop());
+    aEl.replaceWith(picture);
+  });
+
+  const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
   $main.append($mainmenu);
 }
