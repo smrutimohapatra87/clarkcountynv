@@ -1,0 +1,179 @@
+.document-center.block {
+    @media (width >= 900px) {
+        padding-right: 10px;
+    }
+
+    details {
+        position: relative;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 7px rgb(0 0 0 / 15%);
+        border-radius: 4px;
+        border: 1px solid #a0a0a0;
+        overflow: hidden;
+        background: #fff;
+
+        summary {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            font-size: 17px;
+            font-weight: bold;
+            letter-spacing: .025em;
+            color: #f3f3f3;
+            background: #5f5f5f;
+            border-bottom: 1px solid #5f5f5f;
+            padding: 8px 20px;
+            line-height: 1;
+
+            p {
+                padding: unset;
+                margin: unset;
+            }
+
+            p::after {
+                margin-left: 7px;
+                font-family: FontAwesome, sans-serif;
+                font-size: inherit;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                content: "\f0d7";
+                display: inline-block;
+                transition: transform 0.2s ease;
+            }
+
+            small.doc-center-counter {
+                font-size: var(--body-font-size-xs);
+                color: #d9d9d9;
+                line-height: 1;
+            }
+        }
+
+        .content {
+            padding: 10px 0;
+            position: relative;
+            border-top: 1px solid #a0a0a0;
+        }
+    }
+
+    .content, .search-results {
+        ul {
+            padding: 10px 15px;
+            list-style-type: none;
+            margin: unset;
+
+            li {
+                margin: unset;
+                line-height: normal;
+                position: relative;
+                padding: 12px 10px 12px 0;
+                border-bottom: 1px solid #efeaea;
+
+                .file-item {
+                    display: flex;
+                    flex-direction: column;
+
+                    a {
+                        text-decoration: none;
+                        color: #092750;
+                        font-weight: 700;
+                        font-size: var(--body-font-size-s);
+                        display: inline-flex;
+                        align-items: center;
+                    }
+
+                    a::before {
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 10px;
+                        font-family: FontAwesome, sans-serif;
+                        font-size: var(--body-font-size-xs);
+                    }
+
+                    a.fa-file-text-o::before {
+                        content: "\f0f6";
+                        color: #5f5f5f;
+                    }
+
+                    a.fa-file-pdf-o::before {
+                        content: "\f1c1";
+                        color: #c0392b;
+                    }
+
+                    span.doc-file-desc {
+                        margin-left: 20px;
+                        font-size: var(--body-font-size-xs);
+                    }
+                }
+            }
+
+            li:last-of-type {
+                border: 0;
+            }
+        }
+    }
+
+    details[open] {
+        summary {
+            list-style: none;
+
+            p {
+                color: #fff;
+            }
+
+            p::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        .content {
+            border-top: 1px solid #dadada;
+            background-color: var(--background-color);
+        }
+    }
+}
+
+.search-form {
+    label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+
+        h2 {
+            font-size: var(--heading-font-size-l);
+        }
+    }
+
+    input {
+        flex: 1;
+        height: 44px;
+        border-radius: 4px;
+        width: 90%;
+        padding: 10px 129px 10px 14px;
+        font-size: 16px;
+        border: 1px solid #22497d;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        background: #0094C3;
+        color: #fff;
+        border: 0;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+    .reset-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #C52E2E;
+        color: #fff;
+        border: 0;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+    }
+}
