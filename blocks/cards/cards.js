@@ -26,7 +26,7 @@ export default function decorate(block) {
       aEle.append($li);
       while (row.firstElementChild) $li.append(row.firstElementChild);
       [...$li.children].forEach((divEl) => {
-        if (divEl.children.length === 1 && cardImage && block.classList.contains('clickable')) divEl.className = 'cards-card-image';
+        if (divEl.children.length === 1 && divEl.querySelector('picture')) divEl.className = 'cards-card-image';
         else {
           divEl.className = 'cards-card-body';
           if (divEl.querySelector('a')) {
