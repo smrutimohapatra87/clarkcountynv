@@ -1,7 +1,6 @@
 .table {
   width: 100%;
   overflow-x: auto;
-  padding: 0 50px 50px;
 }
 
 .table table {
@@ -131,4 +130,30 @@
     }
 }
 
+.table.colored {
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        border-style: solid;
+        border-width: 3px;
 
+        tr > td:first-child {
+            width: 25%;
+        }
+
+        tr > td {
+            width: 75%;
+        }
+    }
+}
+
+.table.green {
+    table {
+        background-color: #d5ebce;
+        border-color: #169179;
+
+        td, th {
+            border: 1px solid #169179;
+        }
+    }
+}
