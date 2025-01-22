@@ -215,7 +215,7 @@ function buildFaqAccordion(main) {
   faqsEl.replaceWith(accordionBlock);
 }
 
-function buildNewsletterAccordion(main) {
+function buildDocumentCenterBlock(main) {
   const newsletterEl = main.querySelector('#categorties-wrap');
   if (!newsletterEl) {
     console.log('Newsletter accordion not found');
@@ -240,8 +240,9 @@ function buildNewsletterAccordion(main) {
       const elem = document.createElement('a');
       elem.href = href;
       elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-      files.append(elem);
-      files.append(document.createElement('br'));
+      const newLi = document.createElement('li');
+      newLi.append(elem);
+      files.append(newLi);
     });
 
     cells.push([summary, files]);
@@ -485,7 +486,7 @@ export default {
     const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
     buildCardsClickableBlock(main, results, assetsPath);
     buildFaqAccordion(main);
-    buildNewsletterAccordion(main, results);
+    buildDocumentCenterBlock(main);
     buildIframeForm(main);
     buildCardsTilesBlock(main, results, assetsPath);
 
