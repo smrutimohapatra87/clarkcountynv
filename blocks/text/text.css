@@ -26,4 +26,8 @@ main .block.text {
     &.color-orange p{
         color: #ba372a;
     }
+
+    &.img-medium img{
+        width: 50%;
+    }
 }

@@ -74,7 +74,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .rightsection {
         padding: 50px 50px 60px;
     }
-    
+
     main .mainmenu {
         display: flex;
         flex-direction: row;
@@ -107,7 +107,8 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection {
         width: 100%;
         flex: 100%;
-        padding: 50px 50px 60px;
+        padding: 50px 70px 50px 50px;
+        box-sizing: border-box;
     }
 }
 
@@ -141,6 +142,18 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 }
 
 .image-1-center .default-content-wrapper {
+    picture:first-of-type {
+        display: flex;
+        justify-content: center;
+
+        img{
+            width: 30%;
+        }
+    }
+}
+
+.image-1-center .default-content-wrapper {
+
     picture:first-of-type {
         display: flex;
         justify-content: center;

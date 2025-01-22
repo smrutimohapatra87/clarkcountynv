@@ -5,20 +5,8 @@ import {
   blockSeparator,
   getMobileBgBlock,
   getDesktopBgBlock,
-  buildSectionMetadata, getImportPagePath, fixPdfLinks, setPageTitle,
+  buildSectionMetadata, getImportPagePath, fixPdfLinks, setPageTitle, fixImageSrcPath,
 } from './utils.js';
-
-function getBackgroundUrl(element) {
-  if (!element || !element.style) {
-    return null; // Return null if the element is invalid or doesn't have a style property
-  }
-
-  const backgroundStyle = element.style.background;
-  const urlMatch = backgroundStyle.match(/url\(['"]?(.*?)['"]?\)/);
-
-  // If a match is found, return the URL; otherwise, return null
-  return urlMatch ? urlMatch[1] : null;
-}
 
 const extractPageInfo = async (url, href, results) => {
   const doc = await fetchAndParseDocument(url);
@@ -29,16 +17,10 @@ const extractPageInfo = async (url, href, results) => {
     const container = a.closest('.news');
 
     const bannerEl = container.querySelector('.news-banner');
-    const backgroundImageUrl = getBackgroundUrl(bannerEl);
+    const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
     let bannerUrl;
-    if (backgroundImageUrl) {
-      const u = new URL(backgroundImageUrl, 'https://webfiles.clarkcountynv.gov');
-      const newPath = WebImporter.FileUtils.sanitizePath(`/assets/images/news/${u.pathname.split('/').pop()}`);
-      bannerUrl = newPath;
-      results.push({
-        path: newPath,
-        from: u.toString(),
-      });
+    if (backgroundImage) {
+      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, 'general/news');
     }
     const publishDateEl = container.querySelector('.news-date');
     const categoryEl = publishDateEl.querySelector('span.news-category');

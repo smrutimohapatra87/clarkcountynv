@@ -212,6 +212,10 @@ export const fixImageSrcPath = (src, results, imagePath = 'general') => {
   results.push({
     path: newPath,
     from: originalLocation.toString(),
+    report: {
+      'img-new-sp': newPath,
+      'img-original': originalLocation.toString(),
+    },
   });
   return new URL(newPath, PREVIEW_DOMAIN).toString();
 };
