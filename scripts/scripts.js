@@ -21,6 +21,8 @@ import { h3 } from './dom-helpers.js';
 
 import { getViewPort, externalLinks } from './utils.js';
 
+const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
+
 const getPageTitle = async (url) => {
   // TODO: check if URL is valid, shouldn't be empty or null or need trailing slash
   const resp = await fetch(url); // invalid URL will return 404 in console
@@ -155,17 +157,21 @@ function decorateSectionsWithBackgrounds(element) {
     const bgImageDesktop = section.getAttribute('data-bg-image-desktop');
     const bgImageMobile = section.getAttribute('data-bg-image-mobile');
     const bgImageTablet = section.getAttribute('data-bg-image-tablet');
+
+    if (!(bgImage || bgImageDesktop || bgImageMobile || bgImageTablet)) {
+      section.setAttribute('data-bg-image', DEFAULT_BACKGROUND_IMAGE);
+    }
     const viewPort = getViewPort();
-    let background;
+    let background = DEFAULT_BACKGROUND_IMAGE;
     switch (viewPort) {
       case 'Mobile':
-        background = bgImageMobile || bgImageTablet || bgImageDesktop || bgImage;
+        background = bgImageMobile || bgImageTablet || bgImageDesktop || bgImage || background;
         break;
       case 'Tablet':
-        background = bgImageTablet || bgImageDesktop || bgImage || bgImageMobile;
+        background = bgImageTablet || bgImageDesktop || bgImage || bgImageMobile || background;
         break;
       default:
-        background = bgImageDesktop || bgImage || bgImageTablet || bgImageMobile;
+        background = bgImageDesktop || bgImage || bgImageTablet || bgImageMobile || background;
         break;
     }
     if (background) {

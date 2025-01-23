@@ -7,6 +7,20 @@ import {
   rightSectionFixes,
 } from './utils.js';
 
+function extractBackgroundImageUrl(element) {
+  const dataStyle = element.getAttribute('data-style');
+  const urlMatch = dataStyle.match(/url\(['"]?([^'")]+)['"]?\)/);
+
+  if (urlMatch && urlMatch[1]) {
+    const backgroundImageUrl = urlMatch[1];
+    console.log('Background Image URL:', backgroundImageUrl);
+    return backgroundImageUrl;
+  }
+  console.log('No background image URL found.');
+
+  return null;
+}
+
 function buildLeftNavItems(root) {
   const parentUl = document.createElement('ul');
   [...root.children].forEach((li) => {
@@ -381,7 +395,7 @@ function buildCardsTilesBlock(main, results, imagePath = 'general') {
   }
 }
 
-function printBreadcrumbUrl(main, results, newPath) {
+function printBreadcrumbUrl(main, results, newPath, pageTitle, params) {
   const parts = [];
   const breadcrumbsUl = main.querySelectorAll('li');
   breadcrumbsUl.forEach((li) => {
@@ -394,6 +408,10 @@ function printBreadcrumbUrl(main, results, newPath) {
       crumbs: category,
     },
   });
+
+  if (parts[parts.length - 1].toLowerCase() !== pageTitle.toLowerCase()) {
+    params['breadcrumbs-title-override'] = parts[parts.length - 1];
+  }
 }
 
 export default {
@@ -406,12 +424,14 @@ export default {
     const results = [];
 
     const newPagePath = getImportPagePath(params.originalURL);
-
+    setPageTitle(main, params);
     const leftNavAsideEl = main.querySelector('aside#freeform-left-box');
     const breadcrumbsEl = main.querySelector('#breadcrumbs');
+    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
+    const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
     if (breadcrumbsEl) {
-      printBreadcrumbUrl(breadcrumbsEl, results, newPagePath);
+      printBreadcrumbUrl(breadcrumbsEl, results, newPagePath, params['page-title'], params);
     }
 
     // use helper method to remove header, footer, etc.
@@ -432,9 +452,9 @@ export default {
 
     let assetsPath;
     if (newPagePath.startsWith('/') && newPagePath.split('/').length > 2) {
-      assetsPath = newPagePath.split('/').slice(1, 3).join('/');
-    } else if (newPagePath.startsWith('/') && newPagePath.split('/').length === 2) {
-      [, assetsPath] = newPagePath.split('/');
+      assetsPath = newPagePath.split('/').slice(1, -1).join('/');
+    } else {
+      assetsPath = '';
     }
 
     fixPdfLinks(main, results, newPagePath, assetsPath);
@@ -474,12 +494,17 @@ export default {
     /* End for leftnav */
 
     /* Start for hero image */
-    const desktopBlock = getDesktopBgBlock();
-    const mobileBlock = getMobileBgBlock();
+    let imagePath = '';
+    if (backgroundImageUrl.search('slide-1') === -1) {
+      imagePath = fixImageSrcPath(backgroundImageUrl, results);
+    }
+    const desktopBlock = getDesktopBgBlock(imagePath);
+    const mobileBlock = getMobileBgBlock(imagePath);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(desktopBlock, main.firstChild);
+
     /* End for hero image */
 
     // add right section

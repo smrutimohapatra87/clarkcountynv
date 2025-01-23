@@ -127,9 +127,8 @@
 .cards.tiles.block{
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 40px 0 20px;
+    margin: 30px 0;
     background-color: white;
-    padding: 35px 50px 50px 35px;
 
     ul {
         list-style: none;

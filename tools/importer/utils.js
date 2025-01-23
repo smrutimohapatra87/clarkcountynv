@@ -115,10 +115,10 @@ export const fetchAndParseDocument = async (url) => {
  *
  * @param main : HTMLDivElement
  * @param results : Final results array for importer
- * @param assetType = sub directory to store assets -
+ * @param assetPath = sub directory to store assets -
  * Ex. "governement/department", "residents", "residents/dir1"
  */
-export const fixPdfLinks = (main, results, pagePath, assetType = 'general') => {
+export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
   if (!main) {
     return;
   }
@@ -138,7 +138,7 @@ export const fixPdfLinks = (main, results, pagePath, assetType = 'general') => {
         }
       } else if (extension === 'pdf' || extension === 'docx') {
         const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
-        const newPath = WebImporter.FileUtils.sanitizePath(`/assets/documents/${assetType}/${originalLocation.pathname.split('/').pop()}`);
+        const newPath = `/assets/documents/${assetPath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
 
         results.push({
           path: newPath,
@@ -169,13 +169,13 @@ export const buildSectionMetadata = (cells) => WebImporter.Blocks.createBlock(do
   cells: [...cells],
 });
 
-export const getDesktopBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
-  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+export const getDesktopBgBlock = (imagePath) => buildSectionMetadata([
+  ['Bg-image', imagePath !== '' ? `${PREVIEW_DOMAIN}${imagePath}` : imagePath],
   ['Style', 'Desktop, homepage, short'],
 ]);
 
-export const getMobileBgBlock = (imageName = 'slide1.jpg') => buildSectionMetadata([
-  ['Bg-image', `${PREVIEW_DOMAIN}/assets/images/${imageName}`],
+export const getMobileBgBlock = (imagePath) => buildSectionMetadata([
+  ['Bg-image', imagePath !== '' ? `${PREVIEW_DOMAIN}${imagePath}` : imagePath],
   ['Style', 'Mobile, homepage, short'],
 ]);
 
@@ -207,7 +207,7 @@ export const fixLinks = (main) => {
 export const fixImageSrcPath = (src, results, imagePath = 'general') => {
   const url = new URL(src, window.location.origin);
   const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
-  const newPath = WebImporter.FileUtils.sanitizePath(`/assets/images/${imagePath}/${originalLocation.pathname.split('/').pop()}`);
+  const newPath = `/assets/images/${imagePath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
 
   results.push({
     path: newPath,
