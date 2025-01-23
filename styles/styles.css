@@ -308,10 +308,6 @@ main div.section.mobile.short {
     }
 }
 
-main div.section.mobile.short.details-404 h3 {
-  bottom: 200px;
-}
-
 main div.section.mobile.short::before {
     background: unset;
 }
