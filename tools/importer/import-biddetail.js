@@ -5,7 +5,7 @@ import {
   blockSeparator,
   getMobileBgBlock,
   getDesktopBgBlock,
-  buildSectionMetadata, getImportPagePath, setPageTitle,
+  buildSectionMetadata, getImportPagePath, setPageTitle, extractBackgroundImageUrl, fixImageSrcPath,
 } from './utils.js';
 
 export default {
@@ -16,6 +16,8 @@ export default {
   }) => {
     const main = document.body;
     const results = [];
+    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
+    const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -37,11 +39,19 @@ export default {
 
     setPageTitle(main, params);
 
+    /* Start for hero image */
+    let imagePath = '';
+    if (backgroundImageUrl.search('slide-1') === -1) {
+      imagePath = fixImageSrcPath(backgroundImageUrl, results);
+    }
+    const desktopBlock = getDesktopBgBlock(imagePath);
+    const mobileBlock = getMobileBgBlock(imagePath);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getMobileBgBlock(), main.firstChild);
+    main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getDesktopBgBlock(), main.firstChild);
+    main.insertBefore(desktopBlock, main.firstChild);
 
+    /* End for hero image */
     main.append(buildSectionMetadata([['Style', 'biddetail']]));
     main.append(blockSeparator().cloneNode(true));
 

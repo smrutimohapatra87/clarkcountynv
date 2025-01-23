@@ -33,7 +33,7 @@
 
             p::after {
                 margin-left: 7px;
-                font-family: FontAwesome, sans-serif;
+                font-family: var(--icon-font-family);
                 font-size: inherit;
                 text-rendering: auto;
                 -webkit-font-smoothing: antialiased;
@@ -86,7 +86,7 @@
                         display: inline-block;
                         vertical-align: middle;
                         margin-right: 10px;
-                        font-family: FontAwesome, sans-serif;
+                        font-family: var(--icon-font-family);;
                         font-size: var(--body-font-size-xs);
                     }
 

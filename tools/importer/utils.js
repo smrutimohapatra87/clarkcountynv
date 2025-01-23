@@ -258,3 +258,17 @@ export const rightSectionFixes = (main) => {
     el.replaceWith(aEl);
   });
 };
+
+export const extractBackgroundImageUrl = (element) => {
+  const dataStyle = element.getAttribute('data-style');
+  const urlMatch = dataStyle.match(/url\(['"]?([^'")]+)['"]?\)/);
+
+  if (urlMatch && urlMatch[1]) {
+    const backgroundImageUrl = urlMatch[1];
+    console.log('Background Image URL:', backgroundImageUrl);
+    return backgroundImageUrl;
+  }
+  console.log('No background image URL found.');
+
+  return null;
+};

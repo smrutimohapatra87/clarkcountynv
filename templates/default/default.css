@@ -36,7 +36,7 @@ body > main .section.rightsection.biography {
     float: left;
   }
 
-  h4 + p {
+  h2 + p {
     margin-top: 0 !important;
   }
 
@@ -44,8 +44,8 @@ body > main .section.rightsection.biography {
     margin-top: 3em;
   }
 
-  h4 {
-    font: 500 35px 'Neue Montreal',sans-serif;
+  h2 {
+    font-weight: 500;
     color: #000;
   }
 }
@@ -78,12 +78,6 @@ body > main .section.rightsection.biography-right {
   img {
     margin-block: -5px;
   }
-}
-
-main .section.rightsection.no-button a:any-link {
-    color: var(--no-button-link);
-    background-color: transparent;
-    text-decoration: underline;
 }
 
 main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordion-ml-wrapper > .block.accordion-ml.active {

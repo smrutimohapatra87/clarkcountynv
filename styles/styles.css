@@ -30,6 +30,8 @@
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
   --heading-font-family: 'Neue Montreal', sans-serif;
+  --icon-font-family: 'FontAwesome', sans-serif;
+  --icon-fa-brands-font-family: 'FontAwesomeBrands', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 18px;
@@ -89,7 +91,7 @@ body.appear {
 h1, h2, h3,
 h4, h5, h6 {
   font-family: var(--heading-font-family);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.25;
   margin-top: 1em;
   margin-bottom: .5em;
@@ -213,14 +215,6 @@ main .section-top {
   padding: 0 15px;
 }
 
-.newsletter > div {
-  background: #F8F7EE;
-  padding: 26px 34px 24px;
-  display: inline-block;
-  padding-top: 37px;
-  width: 332px;
-}
-
 main .section-top > div {
   display: flex;
   flex-wrap: wrap;
@@ -238,12 +232,6 @@ main .section-top > div {
 body:not(:has('sidekick-library')) main > div:nth-child(1) > div, body:not(.event) > main > div:nth-child(1) > div {
   background-color: var(--text-color);
   overflow: hidden;
-}
-
-body > main > div.section.newsletter > div {
-  border-top: 35px solid rgb(179 70 40);
-  border-bottom: 55px solid rgb(179 70 40);
-  padding: 3%;
 }
 
 body > main > div.section.section-top-container.top-topics-container > div.section-top-wrapper > div {
@@ -282,7 +270,7 @@ main div.section.desktop.short {
         position: relative;
         right: 0;
         bottom: 280px;
-        font: 700 44px 'Open Sans', sans-serif;
+        font: 700 44px var(--icon-font-family);
         color: #fff;
         line-height: 1;
         text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
@@ -422,6 +410,31 @@ main .section.details-404 > .default-content-wrapper {
   box-sizing: border-box;
 }
 
+/* widget for share */
+
+.floating-share-btn {
+    position: fixed;
+    z-index: 99999;
+    width: 53px;
+    border-radius: 0;
+    border: 0;
+    color: #fff!important;
+    padding: 7px 8px;
+    box-shadow: 0 0 10px rgba(0 0 0 0.3);
+    text-align: center;
+    line-height:1.5;
+
+    span {
+        width: 18px;
+        display:block;
+        text-transform:uppercase;
+        font-size:12px;
+        line-height:1;
+    }
+}
+
+
+
 @media (width >= 900px) {
   .desktop {
     display: block;
@@ -475,35 +488,13 @@ main .section.details-404 > .default-content-wrapper {
 
    /* widget for share */
   .floating-share-btn {
-    position:fixed;
-    z-index:99999;
     top:40%;
     right:0;
-    width:53px;
-    border-radius:0;
-    border:0;
     background:#C54B2A!important;
-    color:#fff!important;
-    padding:7px 8px;
-    box-shadow:0 0 10px rgba(0 0 0 0.3);
-    text-align:center;
-    line-height:1.5;
   }
 
   .floating-share-btn-home {
-    background:#0094C3!important;
-  }
-
-  .floating-share-btn span {
-    width: 18px;
-    display:block;
-    text-transform:uppercase;
-    font-size:12px;
-    line-height:1;
-  }
-
-  .share-float{
-    margin-top:12px;
+    background:#0094C3 !important;
   }
 
   /* BEGIN BUSINESS PAGES STYLES */
@@ -750,4 +741,10 @@ main > div.section.newsdetail > .default-content-wrapper > p {
         position:relative;
         text-decoration:none;
     }
+}
+
+.no-button a:any-link {
+    color: var(--no-button-link);
+    background-color: transparent;
+    text-decoration: underline;
 }

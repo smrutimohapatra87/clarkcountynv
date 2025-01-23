@@ -5,7 +5,12 @@ import {
   blockSeparator,
   getMobileBgBlock,
   getDesktopBgBlock,
-  buildSectionMetadata, getImportPagePath, fixPdfLinks, setPageTitle, fixImageSrcPath,
+  buildSectionMetadata,
+  getImportPagePath,
+  fixPdfLinks,
+  setPageTitle,
+  fixImageSrcPath,
+  extractBackgroundImageUrl,
 } from './utils.js';
 
 const extractPageInfo = async (url, href, results) => {
@@ -65,17 +70,27 @@ export default {
     ]);
 
     const newPagePath = getImportPagePath(params.originalURL);
+    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
+    const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
     // Handle all PDFs
     fixPdfLinks(main, results, newPagePath, 'general/news');
 
     setPageTitle(main, params);
 
+    /* Start for hero image */
+    let imagePath = '';
+    if (backgroundImageUrl.search('slide-1') === -1) {
+      imagePath = fixImageSrcPath(backgroundImageUrl, results);
+    }
+    const desktopBlock = getDesktopBgBlock(imagePath);
+    const mobileBlock = getMobileBgBlock(imagePath);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getMobileBgBlock(), main.firstChild);
+    main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getDesktopBgBlock(), main.firstChild);
+    main.insertBefore(desktopBlock, main.firstChild);
 
+    /* End for hero image */
     main.append(buildSectionMetadata([['Style', 'newsdetail']]));
     main.append(blockSeparator().cloneNode(true));
 

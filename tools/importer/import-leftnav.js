@@ -4,22 +4,8 @@ import {
   PREVIEW_DOMAIN, createMetadata, getSanitizedPath, fixPdfLinks, getImportPagePath,
   getDesktopBgBlock, getMobileBgBlock, buildSectionMetadata, blockSeparator, setPageTitle,
   fixLinks, getPreviewDomainLink, fixImageLinks, fetchAndParseDocument, fixImageSrcPath,
-  rightSectionFixes,
+  rightSectionFixes, extractBackgroundImageUrl,
 } from './utils.js';
-
-function extractBackgroundImageUrl(element) {
-  const dataStyle = element.getAttribute('data-style');
-  const urlMatch = dataStyle.match(/url\(['"]?([^'")]+)['"]?\)/);
-
-  if (urlMatch && urlMatch[1]) {
-    const backgroundImageUrl = urlMatch[1];
-    console.log('Background Image URL:', backgroundImageUrl);
-    return backgroundImageUrl;
-  }
-  console.log('No background image URL found.');
-
-  return null;
-}
 
 function buildLeftNavItems(root) {
   const parentUl = document.createElement('ul');

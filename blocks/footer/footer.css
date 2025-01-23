@@ -7,6 +7,8 @@
     .default-content-wrapper {
         border: none;
         padding: 52px 59px 49px 40px;
+        display: inline-block;
+        background: #F8F7EE;
     }
 
     h2 {
@@ -19,7 +21,6 @@
         color: #000;
         text-decoration: underline;
     }
-    
 }
 
 footer {
@@ -61,13 +62,13 @@ footer {
             padding-right: 20px;
 
             h3 {
-                font: 400 32px 'open sans',sans-serif;
+                font: 400 32px var(--heading-font-family);;
                 color: #fff;
                 margin: 18px 0;
             }
 
             p {
-                font: 400 18px 'Open Sans',sans-serif;
+                font: 400 18px var(--heading-font-family);;
                 color: #fff;
                 margin-bottom: 4%;
             }
@@ -100,7 +101,7 @@ footer {
         }
 
         p {
-            font: 350 24px 'Open Sans',sans-serif;
+            font: 350 24px var(--heading-font-family);;
             color: #fff;
             margin: 2% 0%;
         }
@@ -117,7 +118,7 @@ footer {
     .footer-bottom {
         @media (width >= 900px) {
             padding: 15px 10px 10px 80px;
-            font: 400 18px 'Open Sans',sans-serif;
+            font: 400 18px var(--heading-font-family);
 
             ul {
                 list-style: none;
@@ -217,7 +218,6 @@ footer .footer > div {
 
 /* eslint-disable no-descending-specificity */
 
-
 @media (width >= 900px) {
     .newsletter h2 {
         font: 400 24px var(--body-font-family);
@@ -232,37 +232,8 @@ footer .footer > div {
 @media only screen and (width <= 900px) {
     /* widget for share */
   .floating-share-btn {
-    position:fixed;
-    z-index:99999;
     top:92%;
     right:2%;
-    width:53px;
-    border-radius:0;
-    border:0;
     background:#0094C3!important;
-    color:#fff!important;
-    padding:7px 8px;
-    box-shadow:0 0 10px rgba(0 0 0 0.3);
-    text-align:center;
-    line-height:1.5;
   }
-  
-  .floating-share-btn span {
-    width: 18px;
-    display:block;
-    text-transform:uppercase;
-    font-size:12px;
-    line-height:1;
-  }
-  
-  .share-float{
-    margin-top:12px;
-  }
-  
-
-  .share-btn {
-        inset: auto;
-    }
-
-    
 }

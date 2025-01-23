@@ -5,7 +5,12 @@ import {
   buildSectionMetadata,
   getMobileBgBlock,
   getDesktopBgBlock,
-  getImportPagePath, fixPdfLinks, setPageTitle, fixLinks,
+  getImportPagePath,
+  fixPdfLinks,
+  setPageTitle,
+  fixLinks,
+  extractBackgroundImageUrl,
+  fixImageSrcPath,
 } from './utils.js';
 
 function breadcrumbUrl(main, results, newPath) {
@@ -73,6 +78,8 @@ export default {
     const results = [];
 
     const breadcrumbsEl = main.querySelector('#breadcrumbs');
+    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
+    const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -95,11 +102,21 @@ export default {
 
     setPageTitle(main, params);
 
+    /* Start for hero image */
+    let imagePath = '';
+    if (backgroundImageUrl.search('slide-1') === -1) {
+      imagePath = fixImageSrcPath(backgroundImageUrl, results);
+    }
+    const desktopBlock = getDesktopBgBlock(imagePath);
+    const mobileBlock = getMobileBgBlock(imagePath);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getMobileBgBlock(), main.firstChild);
+    main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
-    main.insertBefore(getDesktopBgBlock(), main.firstChild);
-    main.append(buildSectionMetadata([['Style', 'agendadetail']]));
+    main.insertBefore(desktopBlock, main.firstChild);
+
+    /* End for hero image */
+
+    main.append(buildSectionMetadata([['Style', 'agendadetail, no button']]));
     main.append(blockSeparator().cloneNode(true));
 
     params.template = 'agenda';

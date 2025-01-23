@@ -243,7 +243,7 @@
 
         i.fa {
             color: #FFF;
-            font-family: FontAwesome, sans-serif;
+            font-family: var(--icon-font-family);
             font-style: normal;
         }
     }
@@ -275,7 +275,7 @@
 
 .fa-x-twitter::before {
     content: "\e61b";
-    font-family: FontAwesomeBrands, sans-serif
+    font-family: var(--icon-fa-brands-font-family);
 }
 
 .fa-instagram::before {

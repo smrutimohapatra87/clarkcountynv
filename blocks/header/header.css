@@ -315,7 +315,7 @@ header .tabs-panel ul > li > a {
 header .tabs-panel a:any-link {
   padding: 0;
   margin-bottom: 24px;
-  font: normal 16px 'Open Sans',sans-serif;
+  font: normal 16px var(--heading-font-family);
   color: #000;
   text-decoration: underline;
 }
