@@ -15,8 +15,6 @@ import {
   createOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
 
-import assetsInit from './aem-assets-plugin-support.js';
-
 import { h3 } from './dom-helpers.js';
 
 import { getViewPort, externalLinks } from './utils.js';
@@ -419,5 +417,4 @@ async function loadPage() {
   loadDelayed();
 }
 
-await assetsInit();
 loadPage();
