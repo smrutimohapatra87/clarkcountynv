@@ -31,6 +31,15 @@ export default async function decorate(doc) {
     aEl.replaceWith(picture);
   });
 
+  $rightsection.querySelectorAll('.rightsection.special-words p').forEach((section) => {
+    const match = section.innerHTML.match(/\[\[[a-zA-Z 0-9]*\]\]/);
+    if (match) {
+      // remove the first and last character of the string
+      const str = match[0].slice(2, -2);
+      section.innerHTML = section.innerHTML.replace(/\[\[[a-zA-Z 0-9]*\]\]/, `<span class="special"> ${str} </span>`);
+    }
+  });
+
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
   $main.append($mainmenu);
 }

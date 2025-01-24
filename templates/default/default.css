@@ -201,14 +201,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     }
 }
 
-.image-1-center .default-content-wrapper {
-
-    picture:first-of-type {
-        display: flex;
-        justify-content: center;
-
-        img{
-            width: 30%;
-        }
-    }
+main .mainmenu .rightsection.special-words.red span.special {
+    color: var(--special-red);
+    font-weight: 600;
 }
