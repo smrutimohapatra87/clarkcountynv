@@ -157,3 +157,46 @@
         }
     }
 }
+
+.table.agenda {
+    table {
+        font-size: var(--body-font-size-xs);
+
+        td {
+            padding: 0;
+
+            &:nth-child(1) {
+                width: 40%;
+            }
+
+            &:nth-child(2) {
+                width: 10%;
+            }
+
+            &:nth-child(3) {
+                width: 10%;
+            }
+
+            &:nth-child(4) {
+                width: 10%;
+            }
+
+            &:nth-child(5) {
+                width: 10%;
+            }
+
+            &:nth-child(6) {
+                width: 10%;
+            }
+
+            &:nth-child(7) {
+                width: 10%;
+            }
+        }
+
+        a {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}

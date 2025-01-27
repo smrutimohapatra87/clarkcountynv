@@ -136,7 +136,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
         if (['https://clarkcountynv.gov', 'localhost'].find((domain) => url.origin.includes(domain))) {
           a.setAttribute('href', new URL(url.pathname, WEBFILES_DOMAIN).toString());
         }
-      } else if (extension === 'pdf' || extension === 'docx') {
+      } else if (extension === 'pdf' || extension === 'docx' || extension === 'pptx') {
         const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
         const newPath = `/assets/documents/${assetPath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
 
