@@ -147,6 +147,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     main .mainmenu .rightsection.contact-us .map-embed.block, main .mainmenu .rightsection.contact-us .map-embed.block iframe {
         border: 0;
         height: 350px;
+        width: 350px;
     }
 
     main .mainmenu .rightsection.contact-us .map-embed.block iframe + div {
@@ -159,6 +160,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 
     main .mainmenu .rightsection.contact-us .map-embed.block  p {
         margin: 0;
+        text-align: center;
     }
 }
 
