@@ -2,22 +2,77 @@ import {
   div, input, li, p, ul,
 } from '../../scripts/dom-helpers.js';
 
+function searchBlocks(searchValue, searchTarget) {
+  const blocks = document.querySelectorAll('.business-block');
+  blocks.forEach((block) => {
+    const elToSearch = block.querySelector(searchTarget);
+    if (elToSearch) {
+      const text = elToSearch.textContent.toUpperCase();
+      if (text.indexOf(searchValue.toUpperCase()) === -1) {
+        block.style.display = 'none';
+      } else {
+        block.style.display = 'block';
+      }
+    }
+  });
+}
+
+function displayAllBlocks() {
+  const blocks = document.querySelectorAll('.business-block');
+  blocks.forEach((block) => {
+    block.style.display = 'block';
+  });
+}
+
+function handleTagSearch(element) {
+  if (element.classList.contains('selected-category')) {
+    element.classList.remove('selected-category');
+    displayAllBlocks();
+    return;
+  }
+
+  document.querySelectorAll('.selected-category').forEach((el) => {
+    el.classList.remove('selected-category');
+  });
+
+  element.classList.add('selected-category');
+
+  const searchValue = element.textContent.trim();
+  if (searchValue != null && searchValue.length > 0) {
+    searchBlocks(searchValue, '.business-row .business-image p.category');
+  }
+}
+
+function handleTextSearch() {
+  const searchValue = document.querySelector('.search-input').value.trim();
+  if (searchValue != null && searchValue.length === 0) {
+    displayAllBlocks();
+  }
+  searchBlocks(searchValue, '.business-row .business-info h2');
+}
+
 function buildCategoryTags(categories) {
   const container = ul({ class: 'tag-container' });
   categories.forEach((category) => {
-    const categoryTag = li({ class: `category-tag ${category.toLowerCase().replace(' ', '-')}` }, category);
+    const categoryTag = li({ class: `category-tag ${category.toLowerCase().replace(' ', '-')}`, onclick(e) { handleTagSearch(this, e); } }, category);
     container.append(categoryTag);
   });
   return container;
 }
 
 function buildSearchForm() {
-  return div(
+  const form = div(
     { class: 'search-form' },
     input({
       class: 'search-input', placeholder: 'Search...', name: 'business-search', type: 'text',
     }),
   );
+
+  const searchInput = form.querySelector('input');
+  searchInput.addEventListener('input', handleTextSearch);
+  searchInput.addEventListener('click', handleTextSearch);
+
+  return form;
 }
 
 export default function decorate(block) {
@@ -37,7 +92,7 @@ export default function decorate(block) {
         { class: 'business-row' },
         div(
           { class: 'business-image', style: `background: url(${backgroundImage}) center center / cover no-repeat;` },
-          p({ class: 'category' }, category),
+          p({ class: `category ${category.toLowerCase().replace(' ', '-')}` }, category),
         ),
         div(
           { class: 'business-info' },
