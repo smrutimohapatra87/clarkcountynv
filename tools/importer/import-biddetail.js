@@ -55,7 +55,6 @@ export default {
     main.append(buildSectionMetadata([['Style', 'biddetail']]));
     main.append(blockSeparator().cloneNode(true));
 
-    params.template = 'agenda';
     params['breadcrumbs-base'] = '/bid-detail/bid-detail-breadcrumbs';
     createMetadata(main, document, params);
 

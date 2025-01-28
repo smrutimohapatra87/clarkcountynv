@@ -119,8 +119,6 @@ export default {
     main.append(buildSectionMetadata([['Style', 'agendadetail, no button']]));
     main.append(blockSeparator().cloneNode(true));
 
-    params.template = 'agenda';
-
     const breadcrumbsUrl = breadcrumbUrl(breadcrumbsEl, results, newPagePath);
     params['breadcrumbs-base'] = `/agenda/${breadcrumbsUrl}`;// '/agenda/agenda-breadcrumbs';
     createMetadata(main, document, params);

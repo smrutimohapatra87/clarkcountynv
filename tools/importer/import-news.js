@@ -94,7 +94,6 @@ export default {
     main.append(buildSectionMetadata([['Style', 'newsdetail']]));
     main.append(blockSeparator().cloneNode(true));
 
-    params.template = 'agenda';
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';
     params['breadcrumbs-title-override'] = 'News Post';
     const listMetadata = await extractPageInfo(

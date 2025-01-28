@@ -1,7 +1,6 @@
 export default async function decorate(doc) {
-  const aElems = doc.querySelectorAll('.agendadetail a');
+  const aElems = doc.querySelectorAll('a.button');
   aElems.forEach((aElem) => {
     aElem.classList.remove('button');
-    aElem.setAttribute('target', '_blank');
   });
 }
