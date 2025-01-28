@@ -32,11 +32,11 @@ export default async function decorate(doc) {
   });
 
   $rightsection.querySelectorAll('.rightsection.special-words p').forEach((section) => {
-    const match = section.innerHTML.match(/\[\[[a-zA-Z 0-9]*\]\]/);
+    const match = section.innerHTML.match(/\[\[.*\]\]/);
     if (match) {
       // remove the first and last character of the string
       const str = match[0].slice(2, -2);
-      section.innerHTML = section.innerHTML.replace(/\[\[[a-zA-Z 0-9]*\]\]/, `<span class="special"> ${str} </span>`);
+      section.innerHTML = section.innerHTML.replace(/\[\[.*\]\]/, `<span class="special"> ${str} </span>`);
     }
   });
 
