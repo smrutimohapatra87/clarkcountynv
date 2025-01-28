@@ -381,6 +381,57 @@ function buildCardsTilesBlock(main, results, imagePath = 'general') {
   }
 }
 
+function buildAgendaTable(main) {
+  const els = main.querySelectorAll('table div.age-editbtns');
+  if (!els) {
+    return;
+  }
+
+  const tables = Array.from(els).map((aEl) => aEl.closest('table'));
+
+  let parent = null;
+  let currentTable = null;
+  let newTable = null;
+  const trEl = document.createElement('tr');
+  const tdEl = document.createElement('td');
+  tdEl.setAttribute('colspan', '7');
+  tdEl.innerText = 'Table (agenda, no-header)';
+  trEl.append(tdEl);
+
+  tables.forEach((table, index) => {
+    if (!currentTable || currentTable.nextElementSibling !== table) {
+      if (newTable) {
+        let sibling = currentTable.previousElementSibling;
+        parent.replaceChild(newTable, currentTable);
+        while (sibling && sibling.tagName === 'TABLE') {
+          const nextSibling = sibling.previousElementSibling;
+          sibling.remove();
+          sibling = nextSibling;
+        }
+      }
+      newTable = document.createElement('table');
+      newTable.appendChild(trEl.cloneNode(true));
+      parent = table.parentElement;
+    }
+
+    Array.from(table.rows).forEach((row) => {
+      newTable.appendChild(row.cloneNode(true));
+    });
+
+    currentTable = table;
+
+    if (index === tables.length - 1 && newTable) {
+      let sibling = currentTable.previousElementSibling;
+      parent.replaceChild(newTable, currentTable);
+      while (sibling && sibling.tagName === 'TABLE') {
+        const nextSibling = sibling.previousElementSibling;
+        sibling.remove();
+        sibling = nextSibling;
+      }
+    }
+  });
+}
+
 function printBreadcrumbUrl(main, results, newPath, pageTitle, params) {
   const parts = [];
   const breadcrumbsUl = main.querySelectorAll('li');
@@ -500,6 +551,7 @@ export default {
     buildDocumentCenterBlock(main);
     buildIframeForm(main);
     buildCardsTilesBlock(main, results, assetsPath);
+    buildAgendaTable(main);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;

@@ -207,7 +207,7 @@ export const fixLinks = (main) => {
 export const fixImageSrcPath = (src, results, imagePath = 'general') => {
   const url = new URL(src, window.location.origin);
   const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
-  const newPath = `/assets/images/${imagePath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
+  const newPath = `/assets/images/${imagePath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`.toLowerCase();
 
   results.push({
     path: newPath,
