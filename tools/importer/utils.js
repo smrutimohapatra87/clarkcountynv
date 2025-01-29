@@ -127,7 +127,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
     const url = new URL(href, window.location.origin);
-    const extension = url.pathname.split('.').pop();
+    const extension = url.pathname.split('.').pop().toLowerCase();
     if (href) {
       const isVideo = videoExtensions.some((ext) => extension === (`${ext}`));
       const isAudio = audioExtensions.some((ext) => extension === (`${ext}`));
@@ -146,7 +146,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
         });
         a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN).toString());
       } else if (!EXCLUDE_EXTENSIONS.includes(extension)) {
-        console.log(`File with extension-${extension} found. Skipping import`);
+        console.log(`File with extension - ${extension} found. Skipping import`);
         results.push({
           path: pagePath,
           report: {

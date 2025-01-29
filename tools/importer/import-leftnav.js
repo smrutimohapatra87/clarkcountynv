@@ -39,55 +39,58 @@ function buildLeftNavAccordionBlock(asideEl) {
 }
 
 function buildCardsClickableBlock(main, results, imagePath) {
-  const tileBoxEl = main.querySelector('.tiles-box');
-  if (!tileBoxEl) {
+  const tileBoxEls = main.querySelectorAll('.tiles-box');
+  if (!tileBoxEls) {
     console.log('Cards block not found');
     return;
   }
-  const cards = [];
-  [...tileBoxEl.children].forEach((a) => {
-    const card = {
-      href: new URL(getSanitizedPath(a.href), PREVIEW_DOMAIN).toString(),
-      imageSrc: fixImageSrcPath(a.querySelector('.tile-icon-box img').src, results, imagePath),
-      title: a.querySelector('.tile-link').innerText.trim(),
-      brief: a.querySelector('.tile-brief').innerText.trim(),
-    };
-    cards.push(card);
-  });
 
-  const cells = [];
-  cards.forEach((card) => {
-    const imgLink = document.createElement('a');
-    const info = document.createElement('div');
-    if (card.imageSrc) {
-      imgLink.href = card.imageSrc;
-      imgLink.innerText = card.imageSrc;
-    }
-    if (card.title) {
-      const el = document.createElement('strong');
-      el.innerText = card.title;
-      info.append(el);
-    }
-    if (card.brief) {
-      const el = document.createElement('p');
-      el.innerText = card.brief;
-      info.append(el);
-    }
-    if (card.href) {
-      const el = document.createElement('a');
-      el.href = card.href;
-      el.innerText = card.href;
-      info.append(el);
-    }
-    cells.push([imgLink, info]);
-  });
+  tileBoxEls.forEach((tileBoxEl) => {
+    const cards = [];
+    [...tileBoxEl.children].forEach((a) => {
+      const card = {
+        href: new URL(getSanitizedPath(a.href), PREVIEW_DOMAIN).toString(),
+        imageSrc: fixImageSrcPath(a.querySelector('.tile-icon-box img').src, results, imagePath),
+        title: a.querySelector('.tile-link').innerText.trim(),
+        brief: a.querySelector('.tile-brief').innerText.trim(),
+      };
+      cards.push(card);
+    });
 
-  const cardBlock = WebImporter.Blocks.createBlock(document, {
-    name: 'Cards (Clickable)',
-    cells: [...cells],
-  });
+    const cells = [];
+    cards.forEach((card) => {
+      const imgLink = document.createElement('a');
+      const info = document.createElement('div');
+      if (card.imageSrc) {
+        imgLink.href = card.imageSrc;
+        imgLink.innerText = card.imageSrc;
+      }
+      if (card.title) {
+        const el = document.createElement('strong');
+        el.innerText = card.title;
+        info.append(el);
+      }
+      if (card.brief) {
+        const el = document.createElement('p');
+        el.innerText = card.brief;
+        info.append(el);
+      }
+      if (card.href) {
+        const el = document.createElement('a');
+        el.href = card.href;
+        el.innerText = card.href;
+        info.append(el);
+      }
+      cells.push([imgLink, info]);
+    });
 
-  tileBoxEl.replaceWith(cardBlock);
+    const cardBlock = WebImporter.Blocks.createBlock(document, {
+      name: 'Cards (Clickable)',
+      cells: [...cells],
+    });
+
+    tileBoxEl.replaceWith(cardBlock);
+  });
 }
 
 function buildCardsStaffBlock(main, contactsDiv, results, assetsPath) {
@@ -432,11 +435,38 @@ function buildAgendaTable(main) {
   });
 }
 
+function buildTables(main) {
+  const TABLE_HEADERS = ['Section Metadata', 'Accordion', 'table', 'Leftnav', 'cards', 'carousel', 'document-center', 'embed', 'featured-events', 'hero', 'hotline', 'text', 'modal', 'video'];
+
+  const tables = main.querySelectorAll('table');
+  tables.forEach((table) => {
+    const top = table.querySelector('tr');
+    if (top) {
+      let heading = top.querySelector('th');
+      if (heading && TABLE_HEADERS.some(
+        (header) => heading.textContent.toLowerCase().includes(header.toLowerCase()),
+      )) {
+        return;
+      }
+      heading = top.querySelector('td');
+      if (heading && TABLE_HEADERS.some(
+        (header) => heading.textContent.toLowerCase().includes(header.toLowerCase()),
+      )) {
+        return;
+      }
+    }
+    const newRow = table.insertRow(0);
+    const newCell = newRow.insertCell(0);
+    const newText = document.createTextNode('table (no-header)');
+    newCell.appendChild(newText);
+  });
+}
+
 function printBreadcrumbUrl(main, results, newPath, pageTitle, params) {
   const parts = [];
   const breadcrumbsUl = main.querySelectorAll('li');
   breadcrumbsUl.forEach((li) => {
-    parts.push(li.textContent.trim());
+    parts.push(li.textContent.replace(/\u00A0/g, ' ').trim());
   });
   const category = parts.join(' > ');
   results.push({
@@ -552,6 +582,7 @@ export default {
     buildIframeForm(main);
     buildCardsTilesBlock(main, results, assetsPath);
     buildAgendaTable(main);
+    buildTables(main);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;
