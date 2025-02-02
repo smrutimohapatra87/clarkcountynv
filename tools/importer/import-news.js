@@ -10,7 +10,7 @@ import {
   fixPdfLinks,
   setPageTitle,
   fixImageSrcPath,
-  extractBackgroundImageUrl,
+  extractBackgroundImageUrl, fixLinks,
 } from './utils.js';
 
 const extractPageInfo = async (url, href, results) => {
@@ -19,30 +19,34 @@ const extractPageInfo = async (url, href, results) => {
   if (doc) {
     const { body } = doc;
     const a = body.querySelector(`a[href="${page}"]`);
-    const container = a.closest('.news');
 
-    const bannerEl = container.querySelector('.news-banner');
-    const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
-    let bannerUrl;
-    if (backgroundImage) {
-      bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, 'general/news');
-    }
-    const publishDateEl = container.querySelector('.news-date');
-    const categoryEl = publishDateEl.querySelector('span.news-category');
-    let category;
-    if (categoryEl) {
-      category = categoryEl.textContent.trim();
-      categoryEl.remove();
-    }
-    const publishDate = publishDateEl.textContent.replace(/-\s+/g, '').trim();
-    const brief = container.querySelector('.news-brief').textContent.trim();
+    // if article is present in list
+    if (a) {
+      const container = a.closest('.news');
 
-    return {
-      bannerUrl,
-      category,
-      publishDate,
-      brief,
-    };
+      const bannerEl = container.querySelector('.news-banner');
+      const backgroundImage = WebImporter.DOMUtils.replaceBackgroundByImg(bannerEl, document);
+      let bannerUrl;
+      if (backgroundImage) {
+        bannerUrl = fixImageSrcPath(backgroundImage.getAttribute('src'), results, 'general/news');
+      }
+      const publishDateEl = container.querySelector('.news-date');
+      const categoryEl = publishDateEl.querySelector('span.news-category');
+      let category;
+      if (categoryEl) {
+        category = categoryEl.textContent.trim();
+        categoryEl.remove();
+      }
+      const publishDate = publishDateEl.textContent.replace(/-\s+/g, '').trim();
+      const brief = container.querySelector('.news-brief').textContent.trim();
+
+      return {
+        bannerUrl,
+        category,
+        publishDate,
+        brief,
+      };
+    }
   }
   return {};
 };
@@ -55,6 +59,9 @@ export default {
   }) => {
     const main = document.body;
     const results = [];
+    const newPagePath = getImportPagePath(params.originalURL);
+    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
+    const backgroundImageUrl = heroBackgroundEl ? extractBackgroundImageUrl(heroBackgroundEl) : 'slide-1';
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -69,14 +76,10 @@ export default {
       '.uwy.userway_p5.utb',
     ]);
 
-    const newPagePath = getImportPagePath(params.originalURL);
-    const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
-    const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
-
     // Handle all PDFs
     fixPdfLinks(main, results, newPagePath, 'general/news');
-
     setPageTitle(main, params);
+    fixLinks(main);
 
     /* Start for hero image */
     let imagePath = '';
@@ -89,9 +92,9 @@ export default {
     main.insertBefore(mobileBlock, main.firstChild);
     main.insertBefore(blockSeparator().cloneNode(true), main.firstChild);
     main.insertBefore(desktopBlock, main.firstChild);
-
     /* End for hero image */
-    main.append(buildSectionMetadata([['Style', 'newsdetail']]));
+
+    main.append(buildSectionMetadata([['Style', 'newsdetail, no-button']]));
     main.append(blockSeparator().cloneNode(true));
 
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';

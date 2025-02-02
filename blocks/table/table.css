@@ -191,6 +191,17 @@
   }
 }
 
+.table.gray {
+  table {
+      background-color: #ced4d9;
+      border-color: gray;
+
+      td, th {
+          border: 1px solid gray;
+      }
+  }
+}
+
 .table.agenda {
   table {
       font-size: var(--body-font-size-xs);
@@ -233,4 +244,33 @@
           margin: 0;
       }
   }
+}
+
+.table.no-boundary table tr{
+    border: none;
+}
+
+.table.align-top table td{
+    vertical-align: top;
+}
+
+.table.width-50 table td{
+    width: 50%;
+}
+
+.table.ai-assistant-text table {
+    font-size: 36px;
+    color: #c64b2a;
+    font-weight: bold;
+
+    img {
+        width: 100%;
+    }
+
+    a {
+        font-size: 24px;
+        color: #c64b2a !important;
+        margin: 0;
+        padding: 0;
+    }
 }

@@ -30,8 +30,15 @@ export default function decorate(block) {
         else {
           divEl.className = 'cards-card-body';
           if (divEl.querySelector('a')) {
-            aEle.href = divEl.querySelector('a').href;
-            divEl.querySelector('a').remove();
+            const cardsLinkEl = divEl.querySelector('a');
+            if (cardsLinkEl) {
+              aEle.href = cardsLinkEl.href;
+              if (cardsLinkEl.parentElement.tagName === 'P') {
+                cardsLinkEl.parentElement.remove();
+              } else {
+                cardsLinkEl.remove();
+              }
+            }
           }
         }
       });

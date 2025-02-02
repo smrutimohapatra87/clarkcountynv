@@ -230,26 +230,31 @@ function buildDocumentCenterBlock(main) {
   for (let i = 0; i < elems.length;) {
     const files = document.createElement('div');
     const summary = elems[i].childNodes[0].nodeValue.trim();
-    const liEls = elems[i + 1].querySelectorAll('li');
-    liEls.forEach((li) => {
-      const a = li.querySelector('a');
-      const fileName = a.textContent.trim();
-      const { href } = a;
-      let description;
-      if (li.querySelector('.doc-file-desc')) {
-        description = li.querySelector('.doc-file-desc').textContent.trim() || '';
-      }
+    const liEls = elems[i + 1]?.querySelectorAll('li');
+    if (liEls && liEls.length > 0) {
+      liEls.forEach((li) => {
+        const a = li.querySelector('a');
+        const fileName = a.textContent.trim();
+        const { href } = a;
+        let description;
+        if (li.querySelector('.doc-file-desc')) {
+          description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+        }
 
-      const elem = document.createElement('a');
-      elem.href = href;
-      elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-      const newLi = document.createElement('li');
-      newLi.append(elem);
-      files.append(newLi);
-    });
-
-    cells.push([summary, files]);
+        const elem = document.createElement('a');
+        elem.href = href;
+        elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+        const newLi = document.createElement('li');
+        newLi.append(elem);
+        files.append(newLi);
+      });
+    } else {
+      i += 1;
+      // eslint-disable-next-line no-continue
+      continue;
+    }
     i += 2;
+    cells.push([summary, files]);
   }
 
   const docCenterBlock = WebImporter.Blocks.createBlock(document, {
@@ -497,7 +502,7 @@ export default {
     const heroBackgroundEl = main.querySelector('div.tns-bg-slide');
     const backgroundImageUrl = extractBackgroundImageUrl(heroBackgroundEl);
 
-    if (breadcrumbsEl) {
+    if (breadcrumbsEl && params['page-title']) {
       printBreadcrumbUrl(breadcrumbsEl, results, newPagePath, params['page-title'], params);
     }
 
@@ -526,8 +531,8 @@ export default {
 
     fixPdfLinks(main, results, newPagePath, assetsPath);
     fixPdfLinks(leftNavAsideEl, results, newPagePath, assetsPath);
-    fixLinks(main);
-    fixLinks(leftNavAsideEl);
+    fixLinks(main, true);
+    fixLinks(leftNavAsideEl, false);
     fixImageLinks(main, results, assetsPath);
 
     setPageTitle(main, params);

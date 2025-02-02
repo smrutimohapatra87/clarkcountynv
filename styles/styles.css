@@ -740,7 +740,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
     }
 }
 
-.no-button a:any-link {
+.no-button a:any-link:not(.cards a, .cards * a) {
     color: var(--no-button-link);
     background-color: transparent;
     text-decoration: underline;

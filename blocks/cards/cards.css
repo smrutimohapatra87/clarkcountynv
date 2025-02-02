@@ -49,26 +49,34 @@
   color: white;
 }
 
-.cards .cards-card-body p:first-child {
-  margin-top: 0;
-  display: block;
-    padding: 10px 20px;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.2;
-    text-align: center;
-    text-transform: uppercase;
-    transition: all 300ms;
-}
+.cards .cards-card-body {
+    p {
+        padding: 10px 20px;
+    }
 
-.cards .cards-card-body p:last-child {
-  display: inline-block;
-  padding: 10px 20px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.2;
-  text-align: center;
-  transition: all 300ms;
+    p:first-child {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: block;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.2;
+        text-align: center;
+        text-transform: uppercase;
+        transition: all 300ms;
+    }
+
+    p:last-child {
+        display: inline-block;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 1.2;
+        text-align: center;
+        transition: all 300ms;
+        margin: 0;
+    }
 }
 
 .cards.clickable-images .cards-card-body p:last-child {
@@ -247,6 +255,18 @@
             font-style: normal;
         }
     }
+}
+
+.cards.staff.block.min-height-3-title .staff-tile-title{
+    display: block;
+    min-height: calc(1.2em * 3);
+    line-height: 1.2em;
+}
+
+.cards.staff.block.min-height-2-title .staff-tile-title{
+    display: block;
+    min-height: calc(1.2em * 2);
+    line-height: 1.2em;
 }
 
 .team .cards.staff.block .staff-tile-title   {
