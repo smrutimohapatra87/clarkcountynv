@@ -216,3 +216,10 @@ main .mainmenu .rightsection.special-words.red span.special {
     color: var(--special-red);
     font-weight: 600;
 }
+
+main .mainmenu .rightsection.image-center picture {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
