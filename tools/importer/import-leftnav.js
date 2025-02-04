@@ -580,7 +580,7 @@ export default {
     /* End for hero image */
 
     // add right section
-    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection']]);
+    const rightSectionMetadata = buildSectionMetadata([['Style', 'rightsection, no-button']]);
     buildCardsClickableBlock(main, results, assetsPath);
     buildFaqAccordion(main);
     buildDocumentCenterBlock(main);

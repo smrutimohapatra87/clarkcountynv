@@ -20,7 +20,7 @@ export default function decorate(block) {
         }
       }
     });
-    if (block.classList.contains('clickable') || block.classList.contains('clickable-images')) {
+    if (block.classList.contains('clickable')) {
       const $li = li();
       const aEle = a();
       aEle.append($li);
@@ -42,6 +42,19 @@ export default function decorate(block) {
           }
         }
       });
+      $ul.append(aEle);
+    } else if (block.classList.contains('clickable-images')) {
+      const $li = li();
+      const aEle = a();
+      aEle.append($li);
+
+      $li.append(row.children[0]);
+
+      const cardsLinkEl = row.children[0].querySelector('a') || row.children[0].querySelector('img');
+      aEle.href = cardsLinkEl?.tagName === 'A' ? cardsLinkEl.href : cardsLinkEl.src;
+      aEle.setAttribute('target', '_blank');
+      cardsLinkEl.remove();
+
       $ul.append(aEle);
     } else if (block.classList.contains('tiles')) {
       const $a = row.querySelector('a');

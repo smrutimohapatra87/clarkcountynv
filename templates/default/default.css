@@ -185,9 +185,9 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     padding-top: unset !important;
 }
 
-.image-right .default-content-wrapper p:nth-child(1) img {
+.image-right .default-content-wrapper img:first-of-type {
         float: right;
-        width: 20%;
+        width: 40%;
 }
 
 .ul-no-padding ul {
@@ -198,7 +198,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 .line-break.block {
     border: solid #ccc;
     border-width: 1px 0 0;
-    margin: 0 50px;
 }
 
 .image-1-center .default-content-wrapper {

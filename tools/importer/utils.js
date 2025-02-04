@@ -170,12 +170,12 @@ export const buildSectionMetadata = (cells) => WebImporter.Blocks.createBlock(do
 });
 
 export const getDesktopBgBlock = (imagePath) => buildSectionMetadata([
-  ['Bg-image', imagePath !== '' ? `${PREVIEW_DOMAIN}${imagePath}` : imagePath],
+  ['Bg-image', imagePath !== '' ? imagePath : ''],
   ['Style', 'Desktop, homepage, short'],
 ]);
 
 export const getMobileBgBlock = (imagePath) => buildSectionMetadata([
-  ['Bg-image', imagePath !== '' ? `${PREVIEW_DOMAIN}${imagePath}` : imagePath],
+  ['Bg-image', imagePath !== '' ? imagePath : ''],
   ['Style', 'Mobile, homepage, short'],
 ]);
 

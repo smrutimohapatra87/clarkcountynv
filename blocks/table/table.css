@@ -50,6 +50,10 @@
   margin-top: 0.25em;
 }
 
+.table.no-boundary table tbody tr,.table.no-boundary table thead tr{
+    border: none;
+}
+
 /* no header variant */
 .table.no-header table tbody tr {
   border-top: 1px solid #dadada;
@@ -246,9 +250,7 @@
   }
 }
 
-.table.no-boundary table tr{
-    border: none;
-}
+
 
 .table.align-top table td{
     vertical-align: top;
@@ -272,5 +274,23 @@
         color: #c64b2a !important;
         margin: 0;
         padding: 0;
+    }
+}
+
+.table.same-height-img table img {
+    height: 325px;
+    width: auto;
+    margin: 5px;
+}
+
+.table.fees table {
+    width: 50%;
+
+    tbody tr td {
+        padding: 0;
+
+        p {
+            margin: unset;
+        }
     }
 }

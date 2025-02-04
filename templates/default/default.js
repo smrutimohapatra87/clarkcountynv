@@ -30,7 +30,7 @@ export default async function decorate(doc) {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext))) {
       const picture = createOptimizedPicture(aEl.href, aEl.href.split('/').pop());
       const parent = aEl.parentElement;
-      if (parent.tagName === 'P') {
+      if (parent.tagName === 'P' && parent.children.length === 1) {
         parent.replaceWith(picture);
       } else {
         aEl.replaceWith(picture);
