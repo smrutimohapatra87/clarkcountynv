@@ -221,7 +221,7 @@ main .mainmenu .rightsection.special-words.orange span.special {
     font-weight: 600;
 }
 
-main .mainmenu .rightsection.image-center picture, main .mainmenu .rightsection.image-center picture img {
+main .mainmenu .rightsection.image-center picture img {
   display: block;
   margin-left: auto;
   margin-right: auto;

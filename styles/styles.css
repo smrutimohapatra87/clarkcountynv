@@ -748,3 +748,11 @@ main > div.section.newsdetail > .default-content-wrapper > p {
     text-decoration: underline;
     border: 0;
 }
+
+.image-full-width img {
+    width: 100% !important;
+}
+
+.image-half-width img {
+    width: 50% !important;
+}

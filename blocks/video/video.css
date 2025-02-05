@@ -79,3 +79,8 @@
     margin-top: 50px;
     margin-bottom: 0;
   }
+
+.video.right-align {
+    width: 560px;
+    float: inline-end;
+}

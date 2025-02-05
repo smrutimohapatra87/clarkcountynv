@@ -30,4 +30,8 @@ main .block.text {
     &.img-medium img{
         width: 50%;
     }
+
+    &.highlight-color-yellow {
+        background-color: #f1c40f;
+    }
 }
