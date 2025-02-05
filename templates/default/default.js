@@ -38,12 +38,25 @@ export default async function decorate(doc) {
     }
   });
 
-  $rightsection.querySelectorAll('.rightsection.special-words p').forEach((section) => {
-    const match = section.innerHTML.match(/\[\[.*\]\]/);
-    if (match) {
+  $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul').forEach((section) => {
+    const match1 = section.innerHTML.match(/\[\[.*\]\]/);
+    const match2 = section.innerHTML.match(/\[2\[.*\]2\]/);
+    const match3 = section.innerHTML.match(/\[3\[.*\]3\]/);
+
+    if (match1) {
       // remove the first and last character of the string
-      const str = match[0].slice(2, -2);
+      const str = match1[0].slice(2, -2);
       section.innerHTML = section.innerHTML.replace(/\[\[.*\]\]/, `<span class="special"> ${str} </span>`);
+    }
+    if (match2) {
+      // remove the first and last character of the string
+      const str = match2[0].slice(3, -3);
+      section.innerHTML = section.innerHTML.replace(/\[2\[.*\]2\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+    }
+    if (match3) {
+      // remove the first and last character of the string
+      const str = match3[0].slice(3, -3);
+      section.innerHTML = section.innerHTML.replace(/\[3\[.*\]3\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
     }
   });
 
