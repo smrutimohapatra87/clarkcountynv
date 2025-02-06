@@ -5,12 +5,6 @@
   padding: unset;
 }
 
-.cards.clickable-images > ul {
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-}
-
 .cards > ul > li {
   display: block;
   width: 90%;
@@ -79,10 +73,6 @@
     }
 }
 
-.cards.clickable-images .cards-card-body p:last-child {
-  display: none;
-}
-
 .cards.size-50 {
     text-align: center;
 
@@ -109,10 +99,6 @@
   width: 96px;
 }
 
-.cards.clickable-images > ul > a > li img {
-  width: 100%;
-}
-
 @media (width >= 600px) {
   .cards > ul > li {
     width: 40%;
@@ -120,10 +106,6 @@
 
   .cards.clickable > ul > a {
     width: 40%;
-  }
-
-  .cards.clickable-images > ul > a {
-    width: 80%;
   }
 }
 
@@ -134,10 +116,6 @@
 
   .cards.clickable > ul > a {
     width: 22%;
-  }
-
-  .cards.clickable-images > ul > a {
-    width: 80%;
   }
 }
 
@@ -309,4 +287,59 @@
 
 .fa-instagram::before {
     content: "\f16d"
+}
+
+.cards.clickable-images {
+    &.width-half img {
+        width: 50%;
+    }
+
+    &.width-20p li { /* for 5 images */
+        width: 19%;
+    }
+
+    &.width-25p li { /* for 4 images */
+        width: 24%;
+    }
+
+    &.width-auto img {
+        width: auto;
+    }
+
+    &.width-200 img {
+        width: 200px;
+    }
+
+    &.width-275 img {
+        width: 275px;
+    }
+
+    &.width-300 img {
+        width: 300px;
+    }
+
+    &.width-375 img {
+        width: 375px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        text-align: center;
+        margin: 0;
+
+        li {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: white;
+            width: unset;
+        }
+    }
 }
