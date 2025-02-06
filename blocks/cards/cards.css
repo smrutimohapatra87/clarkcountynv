@@ -326,6 +326,11 @@
         width: 100%;
     }
 
+    &.align-right {
+        width: 20%;
+        float: right;
+    }
+
     ul {
         display: flex;
         justify-content: center;

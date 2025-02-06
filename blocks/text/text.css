@@ -34,4 +34,8 @@ main .block.text {
     &.highlight-color-yellow {
         background-color: #f1c40f;
     }
+
+    &.highlight-color-pink {
+        background-color: #fcc;
+    }
 }
