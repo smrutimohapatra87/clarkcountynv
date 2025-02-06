@@ -747,6 +747,8 @@ main > div.section.newsdetail > .default-content-wrapper > p {
     background-color: transparent;
     text-decoration: underline;
     border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .image-full-width img {
