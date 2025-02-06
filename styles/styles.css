@@ -742,7 +742,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
     }
 }
 
-.no-button a:any-link:not(.cards a, .cards * a) {
+.no-button a:any-link:not(.block a, .block * a) {
     color: var(--no-button-link);
     background-color: transparent;
     text-decoration: underline;
@@ -757,4 +757,8 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 
 .image-half-width img {
     width: 50% !important;
+}
+
+.image-right img {
+    float: right;
 }

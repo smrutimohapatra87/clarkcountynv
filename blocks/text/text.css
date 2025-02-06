@@ -38,4 +38,15 @@ main .block.text {
     &.highlight-color-pink {
         background-color: #fcc;
     }
+
+    &.align-right-small {
+        float: right;
+        display: block;
+        width: 20%;
+
+        p {
+            margin: 0;
+            text-align: center;
+        }
+    }
 }

@@ -51,7 +51,7 @@ body > main .section.rightsection.biography {
 }
 
 body > main .section.rightsection.biography-right {
-      img:not(.cards img, .cards * img) {
+      img:not(.block img, .block * img) {
         padding-left: 10px;
         width: 265px;
         float: right;
@@ -61,7 +61,7 @@ body > main .section.rightsection.biography-right {
         margin-top: 0 !important;
       }
     
-      p:not(:first-child):not(.cards p, .cards * p) {
+      p:not(:first-child):not(.block p, .block * p) {
         margin-top: 3em;
       }
     

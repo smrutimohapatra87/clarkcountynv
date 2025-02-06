@@ -331,6 +331,17 @@
         float: right;
     }
 
+    &.align-left {
+        ul {
+            justify-content: start !important;
+            text-align: left;
+
+            li {
+                text-align: left;
+            }
+        }
+    }
+
     ul {
         display: flex;
         justify-content: center;
@@ -345,6 +356,7 @@
             border: none;
             background-color: white;
             width: unset;
+            min-height: unset;
         }
     }
 }
