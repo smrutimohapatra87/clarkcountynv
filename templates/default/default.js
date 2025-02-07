@@ -38,7 +38,7 @@ export default async function decorate(doc) {
     }
   });
 
-  $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul').forEach((section) => {
+  $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2').forEach((section) => {
     const match1 = section.innerHTML.match(/\[\[.*\]\]/);
     const match2 = section.innerHTML.match(/\[2\[.*\]2\]/);
     const match3 = section.innerHTML.match(/\[3\[.*\]3\]/);
