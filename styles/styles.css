@@ -28,7 +28,7 @@
   --no-button-link: #007bff;
   --special-red: #e03e2d;
   --special-orange: #e67e23;
-  
+  --special-blue: #3598db;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
@@ -757,6 +757,10 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 
 .image-half-width img {
     width: 50% !important;
+}
+
+.image-20p-width img:not(.block img, .block * img) {
+    width: 20% !important;
 }
 
 .image-right img {

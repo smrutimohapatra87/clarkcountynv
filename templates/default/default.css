@@ -62,7 +62,7 @@ body > main .section.rightsection.biography-right {
       }
     
       p:not(:first-child):not(.block p, .block * p) {
-        margin-top: 3em;
+        margin-top: 1em;
       }
     
       h4 {
@@ -218,6 +218,11 @@ main .mainmenu .rightsection.special-words.red span.special {
 
 main .mainmenu .rightsection.special-words.orange span.special {
     color: var(--special-orange);
+    font-weight: 600;
+}
+
+main .mainmenu .rightsection.special-words.blue span.special {
+    color: var(--special-blue);
     font-weight: 600;
 }
 

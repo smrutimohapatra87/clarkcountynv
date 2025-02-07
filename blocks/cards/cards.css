@@ -307,24 +307,36 @@
     }
 
     &.width-200 img {
-        width: 200px;
+        width: 200px !important;
     }
 
     &.width-275 img {
-        width: 275px;
+        width: 275px !important;
     }
 
     &.width-300 img {
-        width: 300px;
+        width: 300px !important;
     }
 
     &.width-375 img {
-        width: 375px;
+        width: 375px !important;
     }
 
     &.full-height img {
         height: 100%;
         object-fit: cover;
+    }
+
+    &.social-icons {
+        ul{
+            flex-flow: row;
+            justify-content: flex-start;
+
+            li {
+                width: 60px;
+                text-align: left;
+            }
+        }
     }
 
     img {
