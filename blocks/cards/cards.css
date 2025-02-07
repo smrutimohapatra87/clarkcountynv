@@ -289,6 +289,14 @@
     content: "\f16d"
 }
 
+.cards.clickable-images:not(:has(ul)) {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
+}
+
 .cards.clickable-images {
     &.width-half img {
         width: 50%;
@@ -375,5 +383,11 @@
             width: unset;
             min-height: unset;
         }
+    }
+}
+
+@media (width >= 900px) {
+    .cards.clickable-images:not(:has(ul)) {
+        flex-direction: row;
     }
 }
