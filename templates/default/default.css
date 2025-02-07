@@ -56,6 +56,10 @@ body > main .section.rightsection.biography-right {
         width: 265px;
         float: right;
       }
+
+      &.image-bigger img:not(.block img, .block * img) {
+        width: 500px;
+      }
     
       h4 + p {
         margin-top: 0 !important;
