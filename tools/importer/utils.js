@@ -61,7 +61,7 @@ export const fixRelativeLinks = (document) => {
 export const getImportPagePath = (url) => {
   let path = new URL(url).pathname;
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
-  path = path.replaceAll(',', '');
+  path = path.replaceAll(/[,!]/g, '');
   const pathParts = path.split('/');
   pathParts[pathParts.length - 1] = WebImporter.FileUtils.sanitizeFilename(
     pathParts[pathParts.length - 1],
@@ -90,7 +90,7 @@ export const getSanitizedPath = (url) => {
   let path = url;
 
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
-  path = path.replaceAll(',', '');
+  path = path.replaceAll(/[,!]/g, '');
   const pathParts = path.split('/');
   if (pathParts[pathParts.length - 1] === 'index') {
     pathParts.pop();
@@ -136,7 +136,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
     if (!href) {
       return;
     }
-    href = href.replaceAll(',', '');
+    href = href.replaceAll(/[,!]/g, '');
     const url = new URL(href, window.location.origin);
     const extension = url.pathname.split('.').pop().toLowerCase();
     if (href) {
@@ -241,7 +241,7 @@ export const fixImageSrcPath = (src, results, imagePath = 'general') => {
 export const fixImageLinks = (main, results, imagePath = 'general') => {
   main.querySelectorAll('img').forEach((image) => {
     let src = image.getAttribute('src');
-    src = src.replaceAll(',', '');
+    src = src.replaceAll(/[,!]/g, '');
     const newSrcPath = fixImageSrcPath(src, results, imagePath);
     image.setAttribute('src', newSrcPath);
   });
