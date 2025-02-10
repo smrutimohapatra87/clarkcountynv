@@ -330,6 +330,10 @@
         width: 375px !important;
     }
 
+    &.width-500 img {
+        width: 500px !important;
+    }
+
     &.full-height img {
         height: 100%;
         object-fit: cover;
