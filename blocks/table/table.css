@@ -59,6 +59,12 @@
   border-top: 1px solid #dadada;
 }
 
+/* cards behavior */
+.table.no-header.cards table tbody tr {
+    border-top: 0;
+    border-bottom: 0;
+}
+
 /* striped variant */
 .table.striped tbody tr:nth-child(odd) {
   background-color: var(--light-color);
