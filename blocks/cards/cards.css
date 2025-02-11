@@ -298,12 +298,20 @@
 }
 
 .cards.clickable-images {
+    &.width-full img {
+        width: 100% !important;
+    }
+
     &.width-half img {
-        width: 50%;
+        width: 50% !important;
+    }
+
+    &.width-15p li {
+        width: 15% !important;
     }
 
     &.width-20p li { /* for 5 images */
-        width: 19%;
+        width: 19% !important;
     }
 
     &.width-25p li { /* for 4 images */
@@ -332,6 +340,10 @@
 
     &.width-500 img {
         width: 500px !important;
+    }
+
+    &.width-600 img {
+        width: 600px !important;
     }
 
     &.full-height img {

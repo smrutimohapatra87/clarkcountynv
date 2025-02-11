@@ -42,7 +42,18 @@ main .block.text {
     &.align-right-small {
         float: right;
         display: block;
-        width: 20%;
+        width: 20% !important;
+
+        p {
+            margin: 0;
+            text-align: center;
+        }
+    }
+
+    &.align-right-medium {
+        float: right;
+        display: block;
+        width: 40% !important;
 
         p {
             margin: 0;
