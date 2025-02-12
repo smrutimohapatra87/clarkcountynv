@@ -246,3 +246,20 @@ main .mainmenu .rightsection.no-button .table a:any-link {
     margin: 0 !important;
 }
 
+main .mainmenu .rightsection a:any-link.button.default {
+    margin: 5px 0 !important;
+    padding: .375rem .75rem !important;
+    background: var(--default-button);
+    color: #fff;
+    border: 0;
+    border-radius: 0;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.5;
+    vertical-align: top;
+    transition: all .3s;
+  }
+

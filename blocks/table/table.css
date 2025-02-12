@@ -35,8 +35,8 @@
   font-weight: 700;
 }
 
-.table table th,
-.table table td {
+.table:not(:has('center')) table th,
+.table:not(:has('center')) table td {
   padding: 0.5em;
   text-align: left;
 }

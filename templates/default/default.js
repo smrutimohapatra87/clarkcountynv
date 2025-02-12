@@ -4,6 +4,29 @@ import {
 } from '../../scripts/dom-helpers.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
+/** allow for link attributes to be added by authors
+ * example usage = Text [class:button,target:_blank,title:Title goes here]
+ * @param main
+ */
+export function decorateLinks(element) {
+  element.querySelectorAll('a').forEach((a) => {
+    // match text inside [] and split by '|'
+    const match = a.textContent.match(/(.*)\[([^\]]*)]/);
+    if (match) {
+      // eslint-disable-next-line no-unused-vars
+      const [_, linkText, attrs] = match;
+      a.textContent = linkText.trim();
+      a.setAttribute('title', a.textContent);
+      attrs.split(',').forEach((attr) => {
+        let [key, ...value] = attr.trim().split(':');
+        key = key.trim().toLowerCase();
+        value = value.join().trim();
+        if (key) a.setAttribute(key, value);
+      });
+    }
+  });
+}
+
 export default async function decorate(doc) {
   const $main = doc.querySelector('main');
   const $leftsection = document.querySelector('.leftsection');
@@ -37,6 +60,8 @@ export default async function decorate(doc) {
       }
     }
   });
+
+  decorateLinks($rightsection);
 
   $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2').forEach((section) => {
     const match1 = section.innerHTML.match(/\[\[.*\]\]/);
