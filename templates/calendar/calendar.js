@@ -243,7 +243,7 @@ function createEventList(importedData, eventsList) {
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
-    timeZone: 'America/Vancouver',
+    timeZone: 'local',
     initialView: 'dayGridMonth',
     views: {
       listMonth: { buttonText: 'list' },
