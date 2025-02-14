@@ -64,24 +64,21 @@ export default async function decorate(doc) {
   decorateLinks($rightsection);
 
   $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2').forEach((section) => {
-    const match1 = section.innerHTML.match(/\[\[.*\]\]/);
-    const match2 = section.innerHTML.match(/\[2\[.*\]2\]/);
-    const match3 = section.innerHTML.match(/\[3\[.*\]3\]/);
-
+    const myReg = /\[\[.*\]\]/g;
+    const match1 = section.innerHTML.match(myReg);
     if (match1) {
       // remove the first and last character of the string
       const str = match1[0].slice(2, -2);
-      section.innerHTML = section.innerHTML.replace(/\[\[.*\]\]/, `<span class="special"> ${str} </span>`);
+      section.innerHTML = section.innerHTML.replace(myReg, `<span class="special"> ${str} </span>`);
     }
-    if (match2) {
-      // remove the first and last character of the string
-      const str = match2[0].slice(3, -3);
-      section.innerHTML = section.innerHTML.replace(/\[2\[.*\]2\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
-    }
-    if (match3) {
-      // remove the first and last character of the string
-      const str = match3[0].slice(3, -3);
-      section.innerHTML = section.innerHTML.replace(/\[3\[.*\]3\]/, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+    for (let i = 2; i < 100; i += 1) {
+      const myVarReg = new RegExp(`\\[${i}\\[.*\\]${i}\\]`, 'g');
+      const match = section.innerHTML.match(myVarReg);
+      if (match) {
+        // remove the first and last character of the string
+        const str = match[0].slice(3, -3);
+        section.innerHTML = section.innerHTML.replace(myVarReg, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+      }
     }
   });
 
