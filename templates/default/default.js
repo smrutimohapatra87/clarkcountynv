@@ -76,8 +76,13 @@ export default async function decorate(doc) {
       const match = section.innerHTML.match(myVarReg);
       if (match) {
         // remove the first and last character of the string
-        const str = match[0].slice(3, -3);
-        section.innerHTML = section.innerHTML.replace(myVarReg, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+        if (i > 9 && i < 100) {
+          const str = match[0].slice(4, -4);
+          section.innerHTML = section.innerHTML.replace(myVarReg, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+        } else {
+          const str = match[0].slice(3, -3);
+          section.innerHTML = section.innerHTML.replace(myVarReg, `<span class="special"> ${str} </span>`); // eslint-disable-line no-useless-escape
+        }
       }
     }
   });
