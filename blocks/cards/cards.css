@@ -300,14 +300,16 @@
 .cards.clickable-images {
     &.biography {
         float: left;
+        padding-right: 20px;
     }
 
     &.biography-right {
         float: right;
+        padding-left: 20px;
     }
     
-    &.width-full img {
-        width: 100% !important;
+    &.width-full li {
+        width: 90% !important;
     }
 
     &.width-half img {
@@ -328,6 +330,10 @@
 
     &.width-auto img {
         width: auto;
+    }
+
+    &.width-130 img {
+        width: 130px !important;
     }
 
     &.width-200 img {
@@ -357,6 +363,14 @@
     &.full-height img {
         height: 100%;
         object-fit: cover;
+    }
+
+    &.height-200 img {
+        height: 200px;
+    }
+
+    &.height-300 img {
+        height: 200px;
     }
 
     &.social-icons {
