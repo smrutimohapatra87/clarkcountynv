@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/aem.js';
+import { fetchPlaceholders, createOptimizedPicture } from '../../scripts/aem.js';
 
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
@@ -98,6 +98,22 @@ function createSlide(row, slideIndex, carouselId) {
 
 let carouselId = 0;
 export default async function decorate(block) {
+  let cardImage;
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((col, index) => {
+      if (index === 0) {
+        const imageLinkEl = col.querySelector('a');
+        if (imageLinkEl) {
+          const imgSrc = imageLinkEl.getAttribute('href');
+          cardImage = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
+          col.innerHTML = '';
+          col.append(cardImage);
+        } else {
+          cardImage = col.querySelector('picture');
+        }
+      }
+    });
+  });
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
