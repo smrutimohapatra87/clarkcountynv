@@ -11,7 +11,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 export function decorateLinks(element) {
   element.querySelectorAll('a').forEach((a) => {
     // match text inside [] and split by '|'
-    const match = a.textContent.match(/(.*)\[([^\]]*)]/);
+    const match = a.textContent.match(/(.*)\[\[([^\]\]]*)]/);
     if (match) {
       // eslint-disable-next-line no-unused-vars
       const [_, linkText, attrs] = match;
