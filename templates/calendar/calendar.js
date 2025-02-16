@@ -2,7 +2,7 @@ import {
   div, iframe, section, p, button, a, ul, li,
 } from '../../scripts/dom-helpers.js';
 
-import { normalizeString } from '../../scripts/utils.js';
+import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
@@ -22,6 +22,14 @@ class Obj {
     this.excludeDates = excludeDates;
     this.duration = duration;
   }
+}
+
+export function mobilecheck() {
+  const { width } = getWindowSize();
+  if (width >= 900) {
+    return false;
+  }
+  return true;
 }
 
 let calendar = null;
@@ -72,7 +80,7 @@ function createModal(doc) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
   ));
   doc.body.append(modal);
 }
@@ -108,7 +116,6 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   const modal = document.querySelector('.event-modal');
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer button.ics').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer').classList.add('off');
@@ -245,6 +252,7 @@ function createCalendar() {
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
     initialView: 'dayGridMonth',
+    dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
       listMonth: { buttonText: 'list' },
     },
@@ -257,7 +265,6 @@ function createCalendar() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
-    dayMaxEvents: true,
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
     eventClick: (info) => {

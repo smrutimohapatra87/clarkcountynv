@@ -65,7 +65,6 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   const modal = document.querySelector('.event-modal');
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer button.ics').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer').classList.add('off');
@@ -200,7 +199,7 @@ function createModal(block) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'ics' }, 'ICS'), button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
   ));
   block.append(modal);
 }
