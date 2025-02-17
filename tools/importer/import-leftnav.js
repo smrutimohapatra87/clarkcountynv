@@ -486,6 +486,35 @@ function printBreadcrumbUrl(main, results, newPath, pageTitle, params) {
   }
 }
 
+function buildPhotoGallery(main) {
+  const images = main.querySelectorAll('#photo-galley .isotop-element > img');
+  if (images.length === 0) {
+    console.log('Photo gallery not found');
+    return;
+  }
+
+  const cells = [];
+  images.forEach((image) => {
+    const link = document.createElement('a');
+    link.href = image.getAttribute('src');
+    link.textContent = image.getAttribute('src');
+
+    const altTextSibling = image.nextElementSibling;
+    const altText = altTextSibling?.querySelector('a[title]')?.getAttribute('title').trim() || '';
+    const altTextEl = document.createElement('p');
+    altTextEl.textContent = altText;
+
+    cells.push([link, altTextEl]);
+  });
+
+  const block = WebImporter.Blocks.createBlock(document, {
+    name: 'photo-gallery',
+    cells: [...cells],
+  });
+
+  main.querySelector('#photo-galley').replaceWith(block);
+}
+
 export default {
 
   transform: async ({
@@ -588,6 +617,7 @@ export default {
     buildCardsTilesBlock(main, results, assetsPath);
     buildAgendaTable(main);
     buildTables(main);
+    buildPhotoGallery(main);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;
