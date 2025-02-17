@@ -6,7 +6,7 @@ import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, classNames, readMore, divisionid, excludeDates, duration) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -16,6 +16,7 @@ class Obj {
     this.endTime = endTime;
     this.url = url;
     this.backgroundColor = backgroundColor;
+    this.textColor = textColor;
     this.classNames = classNames;
     this.readMore = readMore;
     this.divisionid = divisionid;
@@ -186,6 +187,7 @@ function createEvents(eventsList) {
           exdate: event.excludeDates,
           url: event.url,
           backgroundColor: event.backgroundColor,
+          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
@@ -204,6 +206,7 @@ function createEvents(eventsList) {
           duration: eventDuration,
           url: event.url,
           backgroundColor: event.backgroundColor,
+          textColor: event.textColor,
           classNames: event.classNames,
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
@@ -218,6 +221,7 @@ function createEvents(eventsList) {
         allDay: false,
         url: event.url,
         backgroundColor: event.backgroundColor,
+        textColor: event.textColor,
         classNames: event.classNames,
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
@@ -236,11 +240,12 @@ function createEventList(importedData, eventsList) {
     divisions.forEach((division) => {
       if (normalizeString(division.name) === normalizeString(event.divisionname)) {
         event['division-color'] = division.color;
+        event['division-textColor'] = division.textColor;
         event.divisionid = division.id;
         event.classNames = normalizeString(event.divisionname);
       }
     });
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
