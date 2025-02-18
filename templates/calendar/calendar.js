@@ -25,6 +25,14 @@ class Obj {
   }
 }
 
+let deepLinkDay = 0;
+let deepLinkMonth = 0;
+let deepLinkYear = 0;
+let deepLinkView = '';
+const today = new Date();
+const mm = String(today.getMonth() + 1).padStart(2, '0');
+const yyyy = today.getFullYear();
+
 export function mobilecheck() {
   const { width } = getWindowSize();
   if (width >= 900) {
@@ -252,11 +260,63 @@ function createEventList(importedData, eventsList) {
   return eventsList;
 }
 
+function getInfo(view) {
+  deepLinkDay = view.currentStart.getDate();
+  deepLinkMonth = view.currentStart.getMonth() + 1;
+  deepLinkYear = view.currentStart.getFullYear();
+  if (view.type === 'dayGridMonth') {
+    deepLinkView = 'month';
+  } else if (view.type === 'timeGridWeek') {
+    deepLinkView = 'week';
+  } else if (view.type === 'timeGridDay') {
+    deepLinkView = 'day';
+  } else if (view.type === 'listMonth') {
+    deepLinkView = 'list';
+  }
+  if (deepLinkDay < 10) {
+    deepLinkDay = `0${deepLinkDay}`;
+  }
+  if (deepLinkMonth < 10) {
+    deepLinkMonth = `0${deepLinkMonth}`;
+  }
+  const windowHref = window.location.href;
+  const url = new URL(windowHref);
+  if (url.searchParams.get('view') !== deepLinkView) {
+    url.searchParams.set('view', deepLinkView);
+    url.searchParams.set('day', deepLinkDay);
+    url.searchParams.set('month', deepLinkMonth);
+    url.searchParams.set('year', deepLinkYear);
+    window.history.pushState({}, '', url);
+  }
+}
+
+/* get the view and accordingly target the calendar */
+function getView() {
+  const windowHref = window.location.href;
+  if (windowHref.includes('?')) {
+    const url = new URL(windowHref);
+    const view = url.searchParams.get('view');
+    if (view === 'month') {
+      return 'dayGridMonth';
+    }
+    if (view === 'week') {
+      return 'timeGridWeek';
+    }
+    if (view === 'day') {
+      return 'timeGridDay';
+    }
+    if (view === 'list') {
+      return 'listMonth';
+    }
+  }
+  return 'dayGridMonth';
+}
+
 function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
-    initialView: 'dayGridMonth',
+    initialView: getView(),
     dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
       listMonth: { buttonText: 'list' },
@@ -270,6 +330,9 @@ function createCalendar() {
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     selectable: true,
+    datesSet: (dateInfo) => {
+      getInfo(dateInfo.view);
+    },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
     eventClick: (info) => {
@@ -281,6 +344,23 @@ function createCalendar() {
     },
   });
   calendar.render();
+  const windowHref = window.location.href;
+  const url = new URL(windowHref);
+  const view = url.searchParams.get('view');
+  const day = url.searchParams.get('day');
+  const month = url.searchParams.get('month');
+  const year = url.searchParams.get('year');
+  const ricksDate = new Date(year, month - 1, day);
+  if (view === 'month') {
+    calendar.changeView('dayGridMonth');
+  } else if (view === 'week') {
+    calendar.changeView('timeGridWeek');
+  } else if (view === 'day') {
+    calendar.changeView('timeGridDay');
+  } else if (view === 'list') {
+    calendar.changeView('listMonth');
+  }
+  calendar.gotoDate(ricksDate);
 }
 
 async function getFeaturedEvents() {
@@ -408,7 +488,17 @@ function implementSearch(searchDiv) {
   });
 }
 
+function changeURL() {
+  const windowHref = window.location.href;
+  if (!windowHref.includes('?')) {
+    const queryParam = `?view=month&day=01&month=${mm}&year=${yyyy}`;
+    const newUrl = windowHref + queryParam;
+    window.location.replace(newUrl);
+  }
+}
+
 export default async function decorate(doc) {
+  changeURL();
   doc.body.classList.add('calendar');
   const $main = doc.querySelector('main');
   const $searchSection = section({ class: 'fc-search' });
