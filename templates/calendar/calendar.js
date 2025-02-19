@@ -135,6 +135,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.style.display = 'block';
   if (readMore.length > 1) {
     modal.querySelector('.event-modal-footer a').href = readMore;
+    modal.querySelector('.event-modal-footer a').setAttribute('target', '_blank');
     modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
   } else {
     modal.querySelector('.event-modal-footer a').classList.add('displayoff');
