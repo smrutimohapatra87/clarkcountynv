@@ -168,6 +168,33 @@ function disableSpinner() {
   spinnerDiv.style.display = 'none';
 }
 
+function disableRightClick() {
+  document.querySelectorAll('.noReadMore').forEach((element) => {
+    element.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+    });
+  });
+}
+
+async function getfromDOM(element) {
+  const currentURL = element.href;
+  const resp = await fetch(currentURL);
+  const htmlBody = await resp.text();
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(htmlBody, 'text/html');
+  dom.querySelectorAll('p a').forEach((ele) => {
+    if (ele.textContent === 'readmore') {
+      element.href = ele.href;
+    }
+  });
+}
+
+async function changehref() {
+  document.querySelectorAll('.yesReadMore').forEach(async (element) => {
+    await getfromDOM(element);
+  });
+}
+
 function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
@@ -237,6 +264,8 @@ function createEvents(eventsList) {
       });
     }
   });
+  disableRightClick();
+  changehref();
 }
 
 function createEventList(importedData, eventsList) {
@@ -250,7 +279,11 @@ function createEventList(importedData, eventsList) {
         event['division-color'] = division.color;
         event['division-textColor'] = division.textColor;
         event.divisionid = division.id;
-        event.classNames = normalizeString(event.divisionname);
+        if (event.readMore.length > 1) {
+          event.classNames = `${normalizeString(event.divisionname)} yesReadMore`;
+        } else {
+          event.classNames = `${normalizeString(event.divisionname)} noReadMore`;
+        }
       }
     });
     const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);

@@ -26,6 +26,11 @@ export default async function decorate(doc) {
   const featuredImage = getMetadata('featuredimage');
   doc.querySelector('.image').innerHTML = `<img src="${featuredImage}">`;
 
+  const readMoreData = getMetadata('readmore');
+  if (readMoreData.length > 0) {
+    doc.querySelector('.event-footer p a').href = readMoreData;
+  }
+
   // Configuring a POST Message on scrolling to send the event title to the parent window
   window.onscroll = function funcScroll() {
     if (window.scrollY > 100) {

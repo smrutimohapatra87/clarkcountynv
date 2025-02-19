@@ -152,11 +152,12 @@ body.event main .section.locations {
 body.event main .section.event-footer .default-content-wrapper p > a {
     line-height: 1 !important;
     padding: 8px 12px 6px;
-    display: block;
     float: right;
+    display: block;
     font-weight: 600 !important;
     border-radius: 3px;
     margin-left: 5px;
+    visibility: hidden;
 }
 
 body.event main .section.locations .default-content-wrapper > ul > li > a {
