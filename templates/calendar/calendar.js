@@ -160,6 +160,10 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
+      const windowHref = window.location.href;
+      const urlObj = new URL(windowHref);
+      urlObj.searchParams.delete('id');
+      window.history.pushState({}, '', urlObj);
     }
   };
 }
@@ -228,6 +232,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
+          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       } else {
         calendar.addEvent({
@@ -247,6 +252,7 @@ function createEvents(eventsList) {
           groupId: event.divisionid,
           borderColor: event.backgroundColor,
           extendedProps: { readMore: event.readMore },
+          id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       }
     } else {
@@ -262,6 +268,7 @@ function createEvents(eventsList) {
         groupId: event.divisionid,
         extendedProps: { readMore: event.readMore },
         borderColor: event.backgroundColor,
+        id: `${event.divisionid}-${event.title.length}${event.start.length}`,
       });
     }
   });
@@ -369,9 +376,21 @@ function createCalendar() {
     },
     // events: importedData,
     eventTimeFormat: { hour: 'numeric', minute: '2-digit' },
+    eventDidMount: (info) => {
+      info.el.setAttribute('id', info.event.id);
+    },
     eventClick: (info) => {
       info.jsEvent.preventDefault(); // don't let the browser navigate
       if (info.event.url) {
+        const windowHref = window.location.href;
+        const url = new URL(windowHref);
+        if (URLSearchParams && !url.searchParams.get('id')) {
+          url.searchParams.append('id', info.event.id);
+          window.history.pushState({}, '', url);
+        } else {
+          url.searchParams.set('id', info.event.id);
+          window.history.pushState({}, '', url);
+        }
         // eslint-disable-next-line max-len
         popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
@@ -395,6 +414,16 @@ function createCalendar() {
     calendar.changeView('listMonth');
   }
   calendar.gotoDate(ricksDate);
+  const eventID = url.searchParams.get('id');
+  /* Get Pop up window of the event automatically if event ID is mentioned in the URL */
+  setTimeout(() => {
+    if (eventID) {
+      const element = document.getElementById(eventID);
+      if (element) {
+        element.click();
+      }
+    }
+  }, 1);
 }
 
 async function getFeaturedEvents() {
