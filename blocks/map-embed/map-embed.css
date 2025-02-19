@@ -3,3 +3,8 @@
     border: 1px solid #3787d8;
     height: 500px;
 }
+
+body.event .map-embed {
+    border: 0;
+    height: 200px;
+}
