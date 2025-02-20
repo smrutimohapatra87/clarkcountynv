@@ -328,6 +328,15 @@ function getInfo(view) {
     url.searchParams.set('month', deepLinkMonth);
     url.searchParams.set('year', deepLinkYear);
     window.history.pushState({}, '', url);
+  } else if (url.searchParams.get('day') !== deepLinkDay) {
+    url.searchParams.set('day', deepLinkDay);
+    url.searchParams.set('month', deepLinkMonth);
+    url.searchParams.set('year', deepLinkYear);
+    window.history.pushState({}, '', url);
+  } else if (url.searchParams.get('month') !== deepLinkMonth) {
+    url.searchParams.set('month', deepLinkMonth);
+    url.searchParams.set('year', deepLinkYear);
+    window.history.pushState({}, '', url);
   }
 }
 
