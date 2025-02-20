@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { fetchPlaceholders, getMetadata } from '../../scripts/aem.js';
+import { fetchPlaceholders, getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
 
 let autoInterval;
 const autoDuration = 8000; // default if not set in block
@@ -161,6 +161,22 @@ function initAuto(block) {
 
 let carouselId = 0;
 export default async function decorate(block) {
+  let cardImage;
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((col, index) => {
+      if (index === 0) {
+        const imageLinkEl = col.querySelector('a');
+        if (imageLinkEl) {
+          const imgSrc = imageLinkEl.getAttribute('href');
+          cardImage = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
+          col.innerHTML = '';
+          col.append(cardImage);
+        } else {
+          cardImage = col.querySelector('picture');
+        }
+      }
+    });
+  });
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
