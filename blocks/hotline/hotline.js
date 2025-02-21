@@ -80,7 +80,7 @@ export default function decorate(block) {
   const categories = [];
 
   [...block.children].forEach((row) => {
-    const backgroundImage = row.children[0].querySelector('a').getAttribute('href');
+    const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];

@@ -15,6 +15,11 @@
     }
 }
 
+main > div.agendadetail.spaced > .default-content-wrapper > p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 @media only screen and (max-width: 991px) {
     .agendadetail {
         padding: 10px 34px;

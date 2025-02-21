@@ -332,6 +332,10 @@
         width: auto;
     }
 
+    &.width-125 img {
+        width: 125px !important;
+    }
+
     &.width-130 img {
         width: 130px !important;
     }

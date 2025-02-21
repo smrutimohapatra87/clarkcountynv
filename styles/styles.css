@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+/* stylelint-disable no-descending-specificity */
  :root {
   /* colors */
   --link-color: #035fe6;
@@ -303,13 +304,13 @@ main div.section.desktop.short::before {
   background: unset;
 }
 
-main > div.section.mobile.with-background-image img {
-  object-fit: cover;
-  height: 700px;
-}
+main div.section.mobile {
+    object-fit: cover;
+    height: 700px;
+    background-color: #bbb7b7;
 
-main div.section.mobile.short {
     img {
+        mix-blend-mode: multiply;
         position: absolute;
         width: 100%;
         height: 500px;
@@ -319,7 +320,7 @@ main div.section.mobile.short {
 
     h3 {
         position: absolute;
-        right: 0;
+        left: 20px;
         bottom: 0;
         font: 700 44px 'Open Sans', sans-serif;
         color: #fff;
@@ -327,10 +328,19 @@ main div.section.mobile.short {
         text-shadow: 0 2px 0.99px rgb(0 0 0 / 90%);
         padding: 0 15px;
     }
-}
 
-main div.section.mobile.short::before {
-    background: unset;
+    &::before {
+        background: unset;
+    }
+
+    &.with-background-image.short {
+        height: 350px;
+        position: relative;
+
+        img {
+            height: 350px;
+        }
+    }
 }
 
 body:not(:has('sidekick-library')) main > div:first-child:not(.short)::before, body:not(.event) main > div:first-child:not(.short)::before {
@@ -372,18 +382,7 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
-main > div.mobile.with-background-image {
-  height: 700px;
-}
 
-main > div.section.mobile.with-background-image.short {
-  height: 350px;
-  position: relative;
-}
-
-main > div.section.mobile.with-background-image.short img {
-  height: 350px;
-}
 
 main .section.details-404 > .default-content-wrapper {
   height: 350px;
@@ -488,19 +487,15 @@ main .section.details-404 > .default-content-wrapper {
 
   main > div.section.desktop.with-background-image {
     height: 667px;
+    background-color: #bbb7b7;
+
+    img {
+        mix-blend-mode: multiply;
+    }
   }
 
   main > div.section.desktop.with-background-image.short {
     height: 400px;
-  }
-
-  /* /residents/community_housing_fund/ pages */
-  div.section.desktop.with-background-image.image-overlay {
-      background-color: #bbb7b7;
-
-      img {
-          mix-blend-mode: multiply;
-      }
   }
 
    /* widget for share */
@@ -562,7 +557,7 @@ main .section.details-404 > .default-content-wrapper {
   .coulums-2-cols strong {
     font: 500 45px 'Neue Montreal', sans-serif;
   }
-/* stylelint-disable no-descending-specificity */
+
   .columns > div > div.column1 {
     display: inline-block;
     width: 50%;
@@ -783,4 +778,16 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 
 .image-right img {
     float: right;
+}
+
+.team-list {
+    h2 {
+        padding-top: 30px;
+        padding-bottom: 0;
+        margin: unset;
+    }
+
+    p {
+        margin-top: 0;
+    }
 }

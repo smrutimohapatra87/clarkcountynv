@@ -91,4 +91,12 @@ main .block.text {
         padding: 0;
         margin: 0;
     }
+
+    &.new-line {
+        clear: both;
+    }
+
+    &.large-font-size {
+        font-size: var(--heading-font-size-m);
+    }
 }

@@ -8,3 +8,17 @@ body.event .map-embed {
     border: 0;
     height: 200px;
 }
+
+.district-map.map-embed {
+    display: inline-block;
+    width: unset ;
+    height: unset ;
+    border: none !important;
+
+    iframe {
+        width: 275px ;
+        height: 225px ;
+        display: block ;
+        border: none ;
+    }
+}
