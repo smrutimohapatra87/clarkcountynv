@@ -83,6 +83,13 @@ main .block.text {
         margin-right: 20px;
     }
 
+    &.align-left-video-title {
+        /* float: left; */
+        display: block;
+        width: 50% !important;
+        margin-left: 50px;
+    }
+
     &.no-button a {
         color: var(--no-button-link);
         background-color: transparent;
