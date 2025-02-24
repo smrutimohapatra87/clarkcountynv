@@ -8,7 +8,7 @@ export default function decorate(block) {
     const cells = [...row.children];
 
     // Check if this is a section header (single cell with strong/bold text)
-    if (cells.length === 1 && cells[0].querySelector('strong')) {
+    if (cells.length === 1) {
       // Create new section
       currentSection = {
         title: cells[0].textContent.trim(),
@@ -27,7 +27,6 @@ export default function decorate(block) {
 
   block.textContent = '';
 
-  // Add search box
   const searchContainer = div({ class: 'search-container' });
   const searchBox = input({
     type: 'text',
@@ -81,26 +80,15 @@ export default function decorate(block) {
 
   Object.values(sections).forEach((section) => {
     const sectionContainer = div({ class: 'section' });
-    const sectionTitle = div({ class: 'section-title' }, section.title);
+    const sectionTitle = div({ class: 'section-title active' }, section.title);
     const sectionContent = div({
-      class: 'section-content',
+      class: 'section-content show',
       'data-section': section.title,
     });
 
     sectionTitle.addEventListener('click', () => {
-      const isActive = sectionTitle.classList.contains('active');
-
       sectionTitle.classList.toggle('active');
       sectionContent.classList.toggle('show');
-
-      if (!isActive) {
-        block.querySelectorAll('.section-title').forEach((otherTitle) => {
-          if (otherTitle !== sectionTitle) {
-            otherTitle.classList.remove('active');
-            otherTitle.nextElementSibling.classList.remove('show');
-          }
-        });
-      }
     });
 
     sectionContainer.appendChild(sectionTitle);
@@ -114,17 +102,8 @@ export default function decorate(block) {
       const answerEl = div({ class: 'answer' }, item.answer);
 
       questionEl.addEventListener('click', () => {
-        const isActive = questionEl.classList.contains('active');
-
-        sectionContent.querySelectorAll('.question').forEach((q) => {
-          q.classList.remove('active');
-          q.nextElementSibling.classList.remove('show');
-        });
-
-        if (!isActive) {
-          questionEl.classList.add('active');
-          answerEl.classList.add('show');
-        }
+        questionEl.classList.toggle('active');
+        answerEl.classList.toggle('show');
       });
 
       sectionContent.appendChild(questionEl);

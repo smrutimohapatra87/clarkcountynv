@@ -515,6 +515,34 @@ function buildPhotoGallery(main) {
   main.querySelector('#photo-galley').replaceWith(block);
 }
 
+function buildMultilevelFaqAccordion(main) {
+  const accordionContainer = main.querySelectorAll('.faq-container');
+  if (accordionContainer.length === 0) {
+    console.log('FAQ Accordion not found');
+    return;
+  }
+
+  const cells = [];
+  accordionContainer.forEach((accordion) => {
+    accordion.querySelectorAll('.faq-category').forEach((section) => {
+      const sectionHeading = section.querySelector('.faq-header').textContent.trim();
+      cells.push([sectionHeading]);
+      section.querySelectorAll('.faq-questions .faq-item').forEach((item) => {
+        const question = item.querySelector('.faq-question').textContent.trim();
+        const answer = item.querySelector('.faq-answer');
+        cells.push([question, answer]);
+      });
+    });
+
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: 'faq-accordion',
+      cells: [...cells],
+    });
+
+    accordion.replaceWith(block);
+  });
+}
+
 export default {
 
   transform: async ({
@@ -618,6 +646,7 @@ export default {
     buildAgendaTable(main);
     buildTables(main);
     buildPhotoGallery(main);
+    buildMultilevelFaqAccordion(main);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;
