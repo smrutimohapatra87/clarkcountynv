@@ -235,6 +235,11 @@ main .mainmenu .rightsection.special-words.green span.special {
     font-weight: 600;
 }
 
+main .mainmenu .rightsection.special-words.purple span.special {
+    color: var(--special-purple);
+    font-weight: 600;
+}
+
 main .mainmenu .rightsection.image-center picture img {
   display: block;
   margin-left: auto;
