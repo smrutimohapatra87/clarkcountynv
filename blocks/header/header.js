@@ -161,15 +161,40 @@ function letsTranslate(ele) {
   hideGoogleTranslateBar();
 }
 
+function decorateSearchBox(searchBox) {
+  searchBox.innerHTML = `<div class="search-top">
+  <div class="searchHeaderBtn">
+              </div>
+              <div class="search-top-left">What would you like to search?</div>
+              <div class="search-top-right"><span class="close-search">Close</span></div>
+            </div><!--/#search-top-->
+            <div class="search-form-wrap">
+              <form class="search-form" method="GET" action="search.php" role="search" aria-label="sitewide">
+                <label for="search-input"><span class="sr-only">Search</span></label>
+                <input name="q" class="form-control search-input" placeholder="Search" type="search" id="search-input">
+                <button>Go</button>
+              </form>
+            </div><!--/#search-form-wrap-->
+            <div class="search-middle">
+              <div class="search-middle-left">
+              <div class="searchHeaderBtn">
+              </div>
+                <h2>Popular Searches</h2>
+              </div><!--/#search-middle-left-->
+            </div><!--/#search-middle-->`;
+}
+
 function handleNavTools(navWrapper, expandElement) {
   let buttonInnerText = 'English';
   let imgSrc = normalizeImage('english');
   const tools = [];
   tools[0] = navWrapper.querySelector('.nav-tools .default-content-wrapper p');
-  tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul');
-  if (tools && tools.length === 2) {
+  tools[1] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul:first-of-type');
+  tools[2] = navWrapper.querySelector('.nav-tools .default-content-wrapper ul:last-of-type');
+  if (tools && tools.length === 3) {
     const searchTool = tools[0];
-    const languageTool = tools[1];
+    const searchPopularList = tools[1];
+    const languageTool = tools[2];
     const nav = document.querySelector('.nav-wrapper nav');
     const searchDiv = div({ class: 'nav-search' });
     const searchIcon = img({ class: 'nav-search-icon' });
@@ -179,6 +204,29 @@ function handleNavTools(navWrapper, expandElement) {
     const searchText = span();
     searchText.textContent = searchTool.innerText;
     searchDiv.appendChild(searchText);
+    const searchBox = div({ class: 'search-box' });
+    decorateSearchBox(searchBox);
+    searchBox.querySelector('.search-middle-left').appendChild(searchPopularList);
+    searchPopularList.classList.add('popular-searches-list');
+    searchBox.classList.add('hidden');
+    searchDiv.appendChild(searchBox);
+    searchIcon.addEventListener('click', () => {
+      if (searchBox.classList.contains('hidden')) {
+        searchBox.classList.remove('hidden');
+      } else {
+        searchBox.classList.add('hidden');
+      }
+    });
+    searchText.addEventListener('click', () => {
+      if (searchBox.classList.contains('hidden')) {
+        searchBox.classList.remove('hidden');
+      } else {
+        searchBox.classList.add('hidden');
+      }
+    });
+    searchBox.querySelector('.search-top-right').addEventListener('click', () => {
+      searchBox.classList.add('hidden');
+    });
     const languageDiv = div({ class: 'nav-language' });
     languageDiv.setAttribute('id', 'google-translate-wrap');
     const languageDiv1 = div({ class: 'google-translate' });
