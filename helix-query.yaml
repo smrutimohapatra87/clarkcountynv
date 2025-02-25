@@ -70,5 +70,35 @@ indices:
       image:
         select: head > meta[name="featuredimage"]
         value: attribute(el, 'content')
-        
+  news:
+    include:
+      - /news/**
+    exclude:
+      - /news/
+    target: /news/query-index.json
+    properties:
+      page-title:
+        select: head > meta[name="page-title"]
+        value: textContent(el)
+      breadcrumbs-base:
+        select: head > meta[name="breadcrumbs-base"]
+        value: textContent(el)
+      breadcrumbs-title-override:
+        select: head > meta[name="breadcrumbs-title-override"]
+        value: textContent(el)
+      category:
+        select: head > meta[name="category"]
+        value: textContent(el)
+      brief:
+        select: head > meta[name="brief"]
+        value: textContent(el)
+      publishDate:
+        select: head > meta[name="publishDate"]
+        value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, 'content')
+      bannerUrl:
+        select: head > meta[property="bannerUrl"]
+        value: textContent(el)      
 
