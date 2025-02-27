@@ -606,6 +606,58 @@ main .section.details-404 > .default-content-wrapper {
       padding: 0%;
       color: #000;
     }
+    
+  }
+
+  .drivers > div > div.column1 {
+    display: inline-block;
+    max-width: 30%;
+    text-wrap: wrap;
+
+    a {
+      text-decoration: underline;
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1;
+      display: inline-block;
+      font-size: 16px;
+      color: #000;
+      padding: 0;
+      background-color: none !important;
+      box-sizing: none;
+
+    }
+
+    p {
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      line-height: 1.1;
+      display: block;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0;
+      padding: 0%;
+      color: #000;
+      width: auto;
+    }
+    
+    picture {
+      display: inline-block;
+      height: 100%;
+      object-fit: cover;
+    }
+
+  }
+
+  .drivers {
+    border-bottom: solid #ccc 1px;
   }
 
   div:has(.row1cols) {
