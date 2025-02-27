@@ -34,7 +34,6 @@
 }
 
 .banner-carousel .carousel-slide .carousel-slide-image picture > img {
-    height: 30rem;
     object-fit: fill;
     display: flex;
     opacity: .99;
