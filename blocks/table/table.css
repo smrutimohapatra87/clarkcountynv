@@ -218,6 +218,28 @@
   }
 }
 
+.table.seashell {
+    table {
+        background-color: #ecf0f1;
+        border-color: gray;
+  
+        td, th {
+            border: 1px solid gray;
+        }
+    }
+}
+
+.table.almond {
+    table {
+        background-color: #F5DFC3;
+        border-color: gray;
+  
+        td, th {
+            border: 1px solid gray;
+        }
+    }
+}
+
 .table.agenda {
   table {
       font-size: var(--body-font-size-xs);

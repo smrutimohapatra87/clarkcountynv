@@ -40,6 +40,10 @@ main .block.text {
         color: #0ac2bf;
     }
 
+    &.color-spring-brown {
+        color: #814924;
+    }
+
     &.img-medium img{
         width: 50%;
     }
@@ -52,6 +56,26 @@ main .block.text {
         background-color: #fcc;
     }
 
+    &.highlight-color-light-blue {
+        background-color: #c2e0f4;
+    }
+
+    &.highlight-color-light-brown {
+        background-color: #efe6dc;
+    }
+
+    &.highlight-color-desert-brown {
+        background-color: #e7d0b5;
+    }
+
+    &.highlight-color-green {
+        background-color: #d5ebce;
+    }
+
+    &.highlight-color-gray {
+        background-color: #ced4d9;
+    }
+    
     &.align-right-small {
         float: right;
         display: block;
@@ -111,4 +135,25 @@ main .block.text {
     &.large-font-size {
         font-size: var(--heading-font-size-m);
     }
+
+    &.biography {
+        img {
+          padding-right: 10px;
+          width: 265px;
+          float: left;
+        }
+    }
+
+    &.biography-large {
+        img {
+          padding-left: 1px;
+          padding-right: 10px; 
+          padding-top: 10px;
+          margin-right: 20px;
+          margin-bottom: 20px;
+          width: 500px;
+          float: left;
+        }
+    }
+    
 }
