@@ -79,19 +79,19 @@ indices:
     properties:
       page-title:
         select: head > meta[name="page-title"]
-        value: textContent(el)
+        value: attribute(el, 'content')
       breadcrumbs-base:
         select: head > meta[name="breadcrumbs-base"]
-        value: textContent(el)
+        value: attribute(el, 'content')
       breadcrumbs-title-override:
         select: head > meta[name="breadcrumbs-title-override"]
-        value: textContent(el)
+        value: attribute(el, 'content')
       category:
         select: head > meta[name="category"]
-        value: textContent(el)
+        value: attribute(el, 'content')
       brief:
         select: head > meta[name="brief"]
-        value: textContent(el)
+        value: attribute(el, 'content'))
       publishDate:
         select: head > meta[name="publishDate"]
         value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
@@ -100,5 +100,5 @@ indices:
         value: attribute(el, 'content')
       bannerUrl:
         select: head > meta[property="bannerUrl"]
-        value: textContent(el)      
+        value: attribute(el, 'content')      
 
