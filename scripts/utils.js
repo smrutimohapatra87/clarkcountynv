@@ -38,3 +38,9 @@ export function externalLinks(main) {
     }
   });
 }
+
+// Get all siblings of an element
+export function getAllSiblings(element, parent) {
+  const children = [...parent.children];
+  return children.filter((child) => child !== element);
+}
