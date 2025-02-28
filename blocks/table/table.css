@@ -70,6 +70,16 @@
     border-bottom: 0;
 }
 
+main .mainmenu .rightsection .table.no-header.cards.withimages {
+    background-color: var(--table-backgroubd-color1);
+}
+
+main .mainmenu .rightsection .table.no-header.cards.withimages table tbody tr img {
+    min-width: 8vw;
+    width: 100%;
+    height: 100%;
+}
+
 /* bordered variant */
 .table.bordered table th,
 .table.bordered table td {

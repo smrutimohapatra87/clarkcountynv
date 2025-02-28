@@ -48,6 +48,12 @@ export default async function decorate(doc) {
 
   const $rightsection = document.querySelector('.rightsection');
 
+  /* Adding logic for contacf us section */
+  const $contactus = document.querySelector('.contact-us');
+  if (!$contactus.classList.contains('rightsection')) {
+    $rightsection.prepend($contactus);
+  }
+
   // change all image anchor links to img tag
   $rightsection.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"], a[href$=".gif"]').forEach((aEl) => {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext))) {

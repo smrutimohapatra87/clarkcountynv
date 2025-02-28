@@ -140,29 +140,29 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
 
     /* CSS for Contact-us pages */
 
-    main .mainmenu .rightsection.contact-us {
+    main .mainmenu .rightsection.contact-us, main .mainmenu .contact-us {
         display: flex;
         flex-direction: row;
     }
 
-    main .mainmenu .rightsection.contact-us .default-content-wrapper,  main .mainmenu .rightsection.contact-us .default-content-wrapper a {
+    main .mainmenu .rightsection.contact-us .default-content-wrapper, main .mainmenu .contact-us .default-content-wrapper,  main .mainmenu .rightsection.contact-us .default-content-wrapper a, main .mainmenu .contact-us .default-content-wrapper a {
         margin: 0;
     }
 
-    main .mainmenu .rightsection.contact-us .map-embed-wrapper {
+    main .mainmenu .rightsection.contact-us .map-embed-wrapper, main .mainmenu .contact-us .map-embed-wrapper {
         margin-top: 1em;
         height: 400px;
         margin-bottom: 0;
         font-family: var(--heading-font-family);
     }
 
-    main .mainmenu .rightsection.contact-us .map-embed.block, main .mainmenu .rightsection.contact-us .map-embed.block iframe {
+    main .mainmenu .rightsection.contact-us .map-embed.block, main .mainmenu .contact-us .map-embed.block, main .mainmenu .rightsection.contact-us .map-embed.block iframe, main .mainmenu .contact-us .map-embed.block iframe {
         border: 0;
         height: 350px;
         width: 400px;
     }
 
-    main .mainmenu .rightsection.contact-us .map-embed.block iframe + div {
+    main .mainmenu .rightsection.contact-us .map-embed.block iframe + div, main .mainmenu .contact-us .map-embed.block iframe + div {
         margin: 0;
         background: #C54B2A;
         color: #fff;
@@ -170,7 +170,7 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         line-height: 1.778;
     }
 
-    main .mainmenu .rightsection.contact-us .map-embed.block  p {
+    main .mainmenu .rightsection.contact-us .map-embed.block  p, main .mainmenu .contact-us .map-embed.block  p {
         margin: 0;
         text-align: center;
     }
