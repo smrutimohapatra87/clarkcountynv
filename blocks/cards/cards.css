@@ -360,6 +360,10 @@
         width: 300px !important;
     }
 
+    &.width-350 img {
+        width: 350px !important;
+    }
+
     &.width-375 img {
         width: 375px !important;
     }
@@ -382,7 +386,11 @@
     }
 
     &.height-300 img {
-        height: 200px;
+        height: 300px;
+    }
+
+    &.height-400 img {
+        height: 400px;
     }
 
     &.social-icons {
