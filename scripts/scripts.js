@@ -17,7 +17,7 @@ import {
 
 import { h3 } from './dom-helpers.js';
 
-import { getViewPort, externalLinks } from './utils.js';
+import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
 
 const DEFAULT_BACKGROUND_IMAGE = `${window.location.origin}/assets/images/general/slide1.jpg`;
 
@@ -416,5 +416,7 @@ async function loadPage() {
   await loadLazy(document);
   loadDelayed();
 }
+
+ScrolltoTop();
 
 loadPage();

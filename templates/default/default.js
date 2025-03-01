@@ -54,6 +54,19 @@ export default async function decorate(doc) {
     $rightsection.prepend($contactus);
   }
 
+  if ($contactus && !$contactus.classList.contains('rightsection')) {
+    $rightsection.prepend($contactus);
+  }
+
+  /* Adding logic for toc-sections section */
+
+  const $tocSections = document.querySelectorAll('.toc-section');
+  if ($tocSections.length > 1) {
+    $tocSections.forEach(($tocSection) => {
+      $rightsection.append($tocSection);
+    });
+  }
+
   // change all image anchor links to img tag
   $rightsection.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"], a[href$=".gif"]').forEach((aEl) => {
     if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext))) {
@@ -92,7 +105,6 @@ export default async function decorate(doc) {
       }
     }
   });
-
   const $mainmenu = div({ class: 'mainmenu' }, $leftsection, $rightsection);
   $main.append($mainmenu);
 }

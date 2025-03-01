@@ -159,6 +159,31 @@ a:hover {
   color: var(--link-hover-color);
 }
 
+div.top-arrow picture {
+  position: fixed;
+  right: 30px;
+  bottom: -10px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  padding: 12px;
+  padding-left: 14px;
+  z-index: 10000000;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+}
+
+div.top-arrow picture img {
+  width: auto;
+  height: auto;
+  max-width: 300%;
+}
+
+div.top-arrow picture.visible {
+  transform: translateY(-20px);
+  opacity: 1;
+}
+
 /* buttons */
 a.button:any-link, button {
   font-family: var(--body-font-family);
