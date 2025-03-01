@@ -71,7 +71,14 @@
 }
 
 main .mainmenu .rightsection .table.no-header.cards.withimages {
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 30px;
     background-color: var(--table-backgroubd-color1);
+}
+
+main .mainmenu .rightsection .table.no-header.cards.withimages td p {
+    padding: 5px;
 }
 
 main .mainmenu .rightsection .table.no-header.cards.withimages table tbody tr img {

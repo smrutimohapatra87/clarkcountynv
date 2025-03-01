@@ -302,7 +302,7 @@ main div.section.desktop.short {
     h3 {
         position: relative;
         right: 0;
-        bottom: 280px;
+        bottom: 180px;
         font: 700 44px var(--icon-font-family);
         color: #fff;
         line-height: 1;
@@ -767,7 +767,7 @@ main > div.section.newsdetail > .default-content-wrapper > p {
 }
 
 .section .breadcrumbs {
-    position: relative;
+    position: absolute;
     left: 0;
     right: 0;
     top: 150px;

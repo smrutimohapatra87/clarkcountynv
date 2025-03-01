@@ -50,7 +50,7 @@ export default async function decorate(doc) {
 
   /* Adding logic for contacf us section */
   const $contactus = document.querySelector('.contact-us');
-  if (!$contactus.classList.contains('rightsection')) {
+  if ($contactus && !$contactus.classList.contains('rightsection')) {
     $rightsection.prepend($contactus);
   }
 
