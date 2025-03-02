@@ -46,6 +46,17 @@ main .hero.text p {
   line-height: 1;
 }
 
+main .hero.text.homepage div div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 2vw;
+}
+
+main .hero.text.homepage div div a {
+  display: none;
+}
+
 @media (width >= 900px) {
   .hero {
     padding: 40px 32px;
@@ -54,5 +65,18 @@ main .hero.text p {
   main .hero.text {
     min-height: 128px;
     top: 0;
+  }
+
+  main .hero.text.homepage div div a {
+    display: inline-flex;
+      align-items: center;
+      font: 400 24px var(--heading-font-family);
+      color: #000;
+      background: #fff;
+      padding: 20px 60px;
+      text-transform: capitalize;
+      text-decoration: none;
+      text-align: center;
+      margin-top: 4px;
   }
 }

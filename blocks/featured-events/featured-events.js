@@ -1,5 +1,6 @@
 import {
   div, h3, iframe, p, button, a,
+  img,
 } from '../../scripts/dom-helpers.js';
 
 import {
@@ -216,9 +217,11 @@ export default async function decorate(block) {
   // Sort via dates
   yesArray.sort((x, y) => new Date(x.start) - new Date(y.start));
   divisions = placeholders.divisions.data;
-  const blockContents = resultParsers.columns(yesArray);
+  const blockContents = resultParsers.columns(yesArray.slice(0, 4));
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
+  const seeMoreButton = div({ class: 'see-more' }, a({ href: '/calendar' }, 'See More', img({ src: '/assets/images/general/white-arrow-right.png' })));
+  block.appendChild(seeMoreButton);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);
   createModal(block);

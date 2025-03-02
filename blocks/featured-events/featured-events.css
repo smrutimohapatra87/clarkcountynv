@@ -40,6 +40,27 @@
     height: 263px;
 }
 
+.block.featured-events div.see-more {
+    background: var(--dark-orange);
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    margin: 2vh;
+}
+
+.block.featured-events div.see-more a {
+    display: inline-flex;
+    align-items: center;
+    font-size: 20px;
+    background: var(--dark-orange);
+    color: #fff;
+    padding: 9px 13px 9px 20px;
+}
+
+.block.featured-events div.see-more a img {
+    margin-left: 10px;
+}
+
 
 .block.featured-events .block.columns .event-image img {
     height: 100%;
@@ -226,7 +247,6 @@
     line-height: 1;
     transition: opacity .25s ease-in-out;
 }
-
 
 
 @media (width >= 900px) {
