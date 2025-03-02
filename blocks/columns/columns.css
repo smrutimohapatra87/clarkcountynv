@@ -19,6 +19,83 @@
   display: block;
 }
 
+.columns-wrapper:has(.columns.highlight) {
+ padding: 0;
+}
+
+.columns.highlight .explore-item {
+  padding: 20px;
+}
+
+.columns.highlight .explore-img {
+  height: auto;
+  position: relative;
+}
+
+.columns.highlight a.explore-video-play {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 27px);
+  color: #fff;
+  text-decoration: underline;
+  border: 2px solid #fff;
+  font-size: 30px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.columns.highlight a.explore-video-play i {
+  display: inline-block;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.columns.highlight a.explore-video-play i::before {
+  content: "\f04b";
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font: normal normal normal 14px / 1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+}
+
+.columns.highlight .explore-item h3 {
+  font: 400 18px var(--heading-font-family);
+  color: #6E6E6E;
+  margin: 10px 0 20px;
+  letter-spacing: 0.1em;
+}
+
+.columns.highlight .explore-item h2 {
+  font: 400 32px var(--heading-font-family);
+  color: var(--dark-orange);
+  margin: 41px 0 44px;
+  line-height: 1;
+}
+
+.columns.highlight .explore-item p {
+  margin: 0 0 30px;
+  line-height: 1.5;
+  font-family: 400 18px var(--heading-font-family);
+}
+
+.columns.highlight .explore-item a:any-link.button.section {
+  margin: 0;
+  font: 400 24px var(--heading-font-family);
+  padding: 14px 30px;
+  font-size: 16px !important;
+  background: var(--dark-orange);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 @media (width >= 900px) {
   .columns > div {
     align-items: center;
@@ -29,5 +106,15 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  .columns.highlight .explore-item {
+    padding-left: calc(50% - 815px);
+    padding-right: 140px;
+  }
+
+  .columns.highlight .explore-img {
+    height: auto;
+    position: relative;
   }
 }
