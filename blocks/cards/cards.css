@@ -376,6 +376,10 @@
         width: 600px !important;
     }
 
+    &.width-650 img {
+        width: 650px !important;
+    }
+
     &.full-height img {
         height: 100%;
         object-fit: cover;
@@ -391,6 +395,14 @@
 
     &.height-400 img {
         height: 400px;
+    }
+
+    &.height-500 img {
+        height: 500px;
+    }
+
+    &.height-550 img {
+        height: 550px;
     }
 
     &.social-icons {
