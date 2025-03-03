@@ -80,13 +80,13 @@ indices:
       url:
         select: head > meta[name="og:url"]
         value: attribute(el, 'content')
-      page-title:
+      pagetitle:
         select: head > meta[name="page-title"]
         value: attribute(el, 'content')
-      breadcrumbs-base:
+      breadcrumbsbase:
         select: head > meta[name="breadcrumbs-base"]
         value: attribute(el, 'content')
-      breadcrumbs-title-override:
+      breadcrumbstitleoverride:
         select: head > meta[name="breadcrumbs-title-override"]
         value: attribute(el, 'content')
       category:
