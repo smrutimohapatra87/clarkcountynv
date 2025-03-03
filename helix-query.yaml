@@ -94,7 +94,7 @@ indices:
         value: attribute(el, 'content')
       brief:
         select: head > meta[name="brief"]
-        value: attribute(el, 'content'))
+        value: attribute(el, 'content')
       publishDate:
         select: head > meta[name="publishdate"]
         value: parseTimestamp(attribute(el, "content"), "ddd, DD MMM YYYY hh:mm:ss GMT")
