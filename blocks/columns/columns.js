@@ -32,37 +32,57 @@ export function decorateLinks(element) {
   });
 }
 
-export default function decorate(block) {
-  [...block.children].forEach((row) => {
-    [...row.children].forEach((col) => {
-      if (col.querySelectorAll('a') && col.querySelectorAll('p:not(:has(a)), h1, h2, h3, h4, h5, h6, div').length === 0) {
-        const imgSrc = col.querySelectorAll('a')[0].href;
-        const pic = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
-        if (col.querySelectorAll('a')[1]) {
-          const redirectElement = col.querySelectorAll('a')[1];
-          if (pic) {
-            col.innerHTML = '';
-            if (redirectElement.href.includes('youtube.com') || redirectElement.href.includes('youtu.be')) {
-              enablePlaybutton(col, pic, redirectElement.href);
-            } else {
-              const redirect = a({ class: 'redirect' });
-              redirect.href = redirectElement.href;
-              redirect.append(pic);
-              col.append(pic);
-              col.classList.add('explore-img');
-            }
-          }
-        } else if (pic) {
-          col.innerHTML = '';
-          col.append(pic);
-          col.classList.add('explore-img');
-        }
+function decorateImage(col) {
+  let pic = col.querySelector('picture');
+  let redirectElement = '';
+  if (!pic) {
+    const imgSrc = col.querySelectorAll('a')[0].href;
+    pic = createOptimizedPicture(imgSrc, imgSrc.split('/').pop());
+    // eslint-disable-next-line prefer-destructuring
+    redirectElement = col.querySelectorAll('a')[1];
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    redirectElement = col.querySelectorAll('a')[0];
+  }
+  if (pic) {
+    col.innerHTML = '';
+    if (redirectElement) {
+      if (redirectElement.href.includes('youtube.com') || redirectElement.href.includes('youtu.be')) {
+        enablePlaybutton(col, pic, redirectElement.href);
       } else {
-        col.classList.add('explore-item');
-        decorateLinks(col);
+        const redirect = a({ class: 'redirect' });
+        redirect.href = redirectElement.href;
+        redirect.append(pic);
+        col.append(redirect);
       }
+    } else {
+      col.append(pic);
+    }
+  }
+}
+
+export default function decorate(block) {
+  if (block.classList.contains('clickable-image-left') || block.classList.contains('clickable-image-right')) {
+    [...block.children].forEach((row) => {
+      [...row.children].forEach((col, index) => {
+        if (block.classList.contains('clickable-image-left') && index === 0) {
+          col.classList.add('explore-img');
+          decorateImage(col);
+        } else if (block.classList.contains('clickable-image-right') && index === 1) {
+          col.classList.add('explore-img');
+          decorateImage(col);
+        }
+        if (block.classList.contains('clickable-image-left') && index === 1) {
+          col.classList.add('explore-item');
+          decorateLinks(col);
+        } else if (block.classList.contains('clickable-image-right') && index === 0) {
+          col.classList.add('explore-item');
+          decorateLinks(col);
+        }
+      });
     });
-  });
+  }
+
   const cols = [...block.firstElementChild.children];
 
   block.classList.add(`columns-${cols.length}-cols`);
@@ -78,6 +98,7 @@ export default function decorate(block) {
   // setup image columns
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
+      decorateLinks(col);
       const pic = col.querySelector('picture');
       if (pic) {
         const picWrapper = pic.closest('div');
