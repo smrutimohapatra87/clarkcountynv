@@ -22,3 +22,14 @@ body.event .map-embed {
         border: none ;
     }
 }
+
+.business-map {
+    /* width: 30%; */
+    margin: 0 0 80px 25px;
+    translate: 0 5%;
+  }
+
+  .business-map-bottom {
+    width: 30%;
+    margin: 25px 0 80px 0;
+  }
