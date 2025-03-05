@@ -240,6 +240,11 @@ main .mainmenu .rightsection.special-words.purple span.special {
     font-weight: 600;
 }
 
+main .mainmenu .rightsection.special-words.solid-pink span.special {
+    color: var(--special-solid-pink);
+    font-weight: 600;
+}
+
 main .mainmenu .rightsection.image-center picture img {
   display: block;
   margin-left: auto;
