@@ -352,6 +352,10 @@
         width: 200px !important;
     }
 
+    &.width-250 img {
+        width: 250px !important;
+    }
+
     &.width-275 img {
         width: 275px !important;
     }
@@ -380,6 +384,10 @@
         width: 650px !important;
     }
 
+    &.width-800 img {
+        width: 650px !important;
+    }
+
     &.full-height img {
         height: 100%;
         object-fit: cover;
@@ -403,6 +411,10 @@
 
     &.height-550 img {
         height: 550px;
+    }
+
+    &.height-1000 img {
+        height: 1000px;
     }
 
     &.social-icons {
