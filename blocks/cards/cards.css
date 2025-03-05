@@ -40,7 +40,7 @@
   color: white;
 }
 
-.cards.clickable:not('large-image') > ul > a:hover {
+.cards.clickable:not(.large-image) > ul > a:hover {
   background: var(--orange);
   text-decoration: none;
   transition: background .3s ease;

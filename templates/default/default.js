@@ -82,7 +82,7 @@ export default async function decorate(doc) {
 
   decorateLinks($rightsection);
 
-  $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2').forEach((section) => {
+  $rightsection.querySelectorAll('.rightsection.special-words p, .rightsection.special-words ul, .rightsection.special-words h2, .rightsection.special-words h3').forEach((section) => {
     const myReg = /\[\[.*\]\]/g;
     const match1 = section.innerHTML.match(myReg);
     if (match1) {
