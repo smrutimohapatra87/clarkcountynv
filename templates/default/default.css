@@ -245,6 +245,16 @@ main .mainmenu .rightsection.special-words.solid-pink span.special {
     font-weight: 600;
 }
 
+main .mainmenu .rightsection.special-words.chocolate span.special {
+    color: var(--special-chocolate);
+    font-weight: 600;
+}
+
+main .mainmenu .rightsection.special-words.mid-blue span.special {
+    color: var(--special-mid-blue);
+    font-weight: 600;
+}
+
 main .mainmenu .rightsection.image-center picture img {
   display: block;
   margin-left: auto;

@@ -75,6 +75,10 @@ main .block.text {
     &.highlight-color-gray {
         background-color: #ced4d9;
     }
+
+    &.highlight-color-cream {
+        background-color: #f5e7b8;
+    }
     
     &.align-right-small {
         float: right;
