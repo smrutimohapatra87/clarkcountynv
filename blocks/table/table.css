@@ -88,7 +88,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages table tbody tr im
     height: 100%;
 }
 
-main .mainmenu .rightsection .table.no-header.cards.withimages.fixed table tbody tr img {
+main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table tbody tr img {
     height: 300px;
 }
 
