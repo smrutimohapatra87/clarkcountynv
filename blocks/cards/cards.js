@@ -46,9 +46,11 @@ export default function decorate(block) {
     } else if (block.classList.contains('clickable-images')) {
       const image = row.children[0].querySelector('picture');
       const aEle = a({ class: 'grid-link' });
-      const cardsLinkEl = row.children[1].querySelector('a') || row.children[1].querySelector('img');
-      aEle.href = cardsLinkEl?.tagName === 'A' ? cardsLinkEl.href : cardsLinkEl.src;
-      aEle.setAttribute('target', '_blank');
+      const cardsLinkEl = row.children[1]?.querySelector('a') || row.children[1]?.querySelector('img');
+      if (cardsLinkEl) { // for non-clickable images
+        aEle.href = cardsLinkEl?.tagName === 'A' ? cardsLinkEl.href : cardsLinkEl.src;
+        aEle.setAttribute('target', '_blank');
+      }
       aEle.append(image);
       $ul.append(li(aEle));
     } else if (block.classList.contains('tiles')) {

@@ -461,6 +461,10 @@
                 text-align: left;
             }
         }
+
+        img {
+            text-align: left;
+        }
     }
 
     &.v-align-center {
