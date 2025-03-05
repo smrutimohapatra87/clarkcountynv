@@ -29,6 +29,10 @@
   list-style: none;
 }
 
+.cards.clickable.large-image > ul > a {
+    border: none;
+}
+
 .cards > ul > li:hover {
   background: var(--orange);
   text-decoration: none;
@@ -36,7 +40,7 @@
   color: white;
 }
 
-.cards.clickable > ul > a:hover {
+.cards.clickable:not('large-image') > ul > a:hover {
   background: var(--orange);
   text-decoration: none;
   transition: background .3s ease;
@@ -106,6 +110,16 @@
 .cards.clickable > ul > a > li img {
   width: 96px;
 }
+
+.cards.clickable.large-image > ul > a > li {
+    color: black;
+    text-decoration: none;
+}
+
+.cards.clickable.large-image > ul > a > li img {
+  width: 100%;
+}
+
 
 @media (width >= 600px) {
   .cards > ul > li {
