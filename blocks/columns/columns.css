@@ -71,11 +71,27 @@
   letter-spacing: 0.1em;
 }
 
+.columns.alert h2{
+  color: #fff;
+  padding: 0 px;
+  margin: 25px 0;
+  font: 700 36px Oswald, sans-serif;
+  line-height: 1;
+  word-wrap: normal; 
+} 
+
 .columns.highlight .explore-item h2 {
   font: 400 32px var(--heading-font-family);
   color: var(--dark-orange);
   margin: 41px 0 44px;
   line-height: 1;
+}
+
+.columns.alert p{
+  font: 400 18px 'Open Sans', sans-serif;
+  color: #fff;
+  border-radius: 5px;
+  margin: 0;
 }
 
 .columns.highlight .explore-item p {
@@ -118,3 +134,67 @@
     position: relative;
   }
 }
+
+/* CSS Code for "Alert" variant of "Columns" block */
+.columns.alert {
+  background-color: #C54B2A;
+  color: white;
+  border-radius: 5px;
+  padding: 15px;
+  position: relative;
+  transition: all 300ms;
+  margin-bottom: 50px;
+}
+
+.columns.alert > div {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  width: 100%;
+}
+
+.columns.alert p img{
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  object-fit: contain;
+  
+}
+
+.icon-alert-icon{
+  position: absolute;
+  top: 40%;
+  left: 4%;
+  transform: translateY(-50%);
+  display: inline-block;
+  overflow: hidden;
+  width: 90px;
+  height: 90px;
+  margin: 15px;
+
+}
+
+.alert p em{
+  background-color: #B54425;
+  font: 400 18px 'Open Sans', sans-serif;
+  font-style: italic;
+  display: block;
+  border-color: #B54425;
+  border-radius: 5px;
+  height: 120px;
+  padding: 10px;
+}
+
+@media only screen and (width <= 767px) {
+  .alert .icon-alert-icon {
+      width: 40px;
+      height: 40px;
+  }
+}
+
+@media only screen and (width <= 767px) {
+  h2 {
+      font-size: 30px;
+  }
+}
+
+/* End of CSS Code for "Alert" variant of "Columns" block */
