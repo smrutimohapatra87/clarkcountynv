@@ -36,7 +36,8 @@
   --special-solid-pink: #81524e;
   --special-mid-blue: #236fa1;
   --overlay-background-color: #f5f5f5;
-  --table-backgroubd-color1: #ecf0f1;
+  --table-background-color1: #ecf0f1;
+  --table-head-background-color1: #ecf0f1;
 
   /* fonts */
   --body-font-family: 'Open Sans',sans-serif;
