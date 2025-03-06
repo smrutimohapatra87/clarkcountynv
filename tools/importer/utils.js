@@ -89,6 +89,7 @@ export const getSanitizedPath = (url) => {
   }
   let path = url;
 
+  [path] = path.split('#');
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
   path = path.replaceAll(/[,!]/g, '');
   const pathParts = path.split('/');
@@ -148,6 +149,9 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
           a.setAttribute('href', new URL(url.pathname, WEBFILES_DOMAIN).toString());
         }
       } else if (extension === 'pdf' || extension === 'docx' || extension === 'pptx') {
+        if (url.hostname !== 'www.clarkcountynv.gov' && url.hostname !== 'localhost' && url.hostname !== 'webfiles.clarkcountynv.gov' && url.hostname !== 'files.clarkcountynv.gov') {
+          return;
+        }
         const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
         const newPath = `/assets/documents/${assetPath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
 
