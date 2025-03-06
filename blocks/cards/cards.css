@@ -25,7 +25,7 @@
   border: 1px solid #eae9e8;
   text-align: center;
   transition: background .3s ease;
-  color: black;
+  color: black !important;
   list-style: none;
 }
 
