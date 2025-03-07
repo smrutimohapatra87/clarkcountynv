@@ -29,15 +29,13 @@ export default function decorate(block) {
         if (divEl.children.length === 1 && divEl.querySelector('picture')) divEl.className = 'cards-card-image';
         else {
           divEl.className = 'cards-card-body';
-          if (divEl.querySelector('a')) {
-            const cardsLinkEl = divEl.querySelector('a');
-            if (cardsLinkEl) {
-              aEle.href = cardsLinkEl.href;
-              if (cardsLinkEl.parentElement.tagName === 'P') {
-                cardsLinkEl.parentElement.remove();
-              } else {
-                cardsLinkEl.remove();
-              }
+          const cardsLinkEl = divEl.querySelector('a') || divEl.querySelector('img');
+          if (cardsLinkEl) {
+            aEle.href = cardsLinkEl.getAttribute('href') || cardsLinkEl.getAttribute('src');
+            if (cardsLinkEl.parentElement.tagName === 'P') {
+              cardsLinkEl.parentElement.remove();
+            } else {
+              cardsLinkEl.remove();
             }
           }
         }
@@ -52,7 +50,23 @@ export default function decorate(block) {
         aEle.setAttribute('target', '_blank');
       }
       aEle.append(image);
-      $ul.append(li(aEle));
+
+      const imageText = row.children[2];
+      if (imageText?.children.length > 0) {
+        imageText.classList.add('image-text');
+        let direction = 'bottom';
+        block.classList.values().filter((className) => className.startsWith('text-direction')).forEach((className) => {
+          [,, direction] = className.split('-');
+        });
+
+        if (direction === 'top') {
+          $ul.append(li(imageText, aEle));
+        } else {
+          $ul.append(li(aEle, imageText));
+        }
+      } else {
+        $ul.append(li(aEle));
+      }
     } else if (block.classList.contains('tiles')) {
       const $a = row.querySelector('a');
       let url;
