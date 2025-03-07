@@ -61,7 +61,7 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
-const loadEmbed = (block, link, autoplay) => {
+const loadEmbed = (block, link, autoplay, customStyles) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
   }
@@ -86,6 +86,7 @@ const loadEmbed = (block, link, autoplay) => {
   if (config) {
     block.innerHTML = config.embed(url, autoplay);
     block.classList = `block embed embed-${config.match[0]}`;
+    block.classList.add(...customStyles);
   } else {
     if (block.parentElement.parentElement.classList.contains('googleform')) {
       block.innerHTML = getFormEmbed(url);
@@ -93,6 +94,7 @@ const loadEmbed = (block, link, autoplay) => {
       block.innerHTML = getDefaultEmbed(url);
     }
     block.classList = 'block embed';
+    block.classList.add(...customStyles);
   }
   block.classList.add('embed-is-loaded');
 };
@@ -101,6 +103,7 @@ export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
   block.textContent = '';
+  const customStyles = [...block.classList].filter((className) => className.startsWith('style-'));
 
   if (placeholder) {
     const wrapper = document.createElement('div');
@@ -108,14 +111,14 @@ export default function decorate(block) {
     wrapper.innerHTML = '<div class="embed-placeholder-play"><button type="button" title="Play"></button></div>';
     wrapper.prepend(placeholder);
     wrapper.addEventListener('click', () => {
-      loadEmbed(block, link, true);
+      loadEmbed(block, link, true, customStyles);
     });
     block.append(wrapper);
   } else {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
-        loadEmbed(block, link);
+        loadEmbed(block, link, false, customStyles);
       }
     });
     observer.observe(block);
