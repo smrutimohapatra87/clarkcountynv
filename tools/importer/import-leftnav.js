@@ -747,10 +747,10 @@ export default {
     buildIframeForm(main);
     buildCardsTilesBlock(main, results, assetsPath);
     buildAgendaTable(main);
-    buildTables(main);
     buildPhotoGallery(main);
     buildMultilevelFaqAccordion(main);
     buildHotlineBlock(main, results, assetsPath);
+    buildTables(main);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;

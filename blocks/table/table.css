@@ -359,3 +359,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     padding: 0;
     margin: 0;
 }
+
+.table.fixed-img-150 img{
+    width: 150px;
+}
