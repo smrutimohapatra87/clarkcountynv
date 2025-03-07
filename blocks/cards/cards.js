@@ -74,7 +74,7 @@ export default function decorate(block) {
       const imgSrc = row.children[0].querySelector('img')?.src;
       const altText = imgSrc?.split('/').pop().split('?')[0];
       const name = row.children[1].textContent;
-      const title = row.children[2].textContent;
+      const title = row.children[2];
       const pageLink = row.children[3].querySelector('a')?.href;
       const phone = row.children[4].querySelector('a[title="phone"]')?.href;
       const email = row.children[4].querySelector('a[title="email"]')?.href;

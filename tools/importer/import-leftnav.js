@@ -106,8 +106,8 @@ function buildCardsStaffBlock(main, contactsDiv, results, assetsPath) {
       const card = {
         href: new URL(getSanitizedPath(tile.querySelector('.tile-detail')?.href), PREVIEW_DOMAIN).toString(),
         imageSrc: fixImageSrcPath(tile.querySelector('.staff-tile-img-box img')?.src, results, assetsPath),
-        name: tile.querySelector('.tile-detail .staff-tile-name').innerText.trim(),
-        title: tile.querySelector('.tile-detail .staff-tile-title').innerText.trim(),
+        name: tile.querySelector('.tile-detail .staff-tile-name')?.innerText.trim(),
+        title: tile.querySelector('.tile-detail .staff-tile-title')?.innerText.trim(),
         phoneSrc: contactsDiv.item(i).querySelector('a[href^="tel:"]')?.href,
         emailSrc: contactsDiv.item(i).querySelector('a[href^="mailto:"]')?.href,
         facebookSrc: contactsDiv.item(i).querySelector('a[href*="facebook"]')?.href,
