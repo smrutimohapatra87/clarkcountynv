@@ -44,7 +44,7 @@ function handleTagSearch(element) {
 }
 
 function handleTextSearch() {
-  const searchValue = document.querySelector('.search-input').value.trim();
+  const searchValue = document.querySelector('.hotline-search-input').value.trim();
   if (searchValue != null && searchValue.length === 0) {
     displayAllBlocks();
   }
@@ -62,9 +62,9 @@ function buildCategoryTags(categories) {
 
 function buildSearchForm() {
   const form = div(
-    { class: 'search-form' },
+    { class: 'hotline-search-form' },
     input({
-      class: 'search-input', placeholder: 'Search...', name: 'business-search', type: 'text',
+      class: 'hotline-search-input', placeholder: 'Search...', name: 'business-search', type: 'text',
     }),
   );
 
