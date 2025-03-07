@@ -543,6 +543,109 @@ function buildMultilevelFaqAccordion(main) {
   });
 }
 
+function buildHotlineBlock(main, results, assetsPath) {
+  const hotlineContainer = main.querySelectorAll('#rz-business-list .rz-business-block');
+  if (hotlineContainer.length === 0) {
+    console.log('Hotline not found');
+    return;
+  }
+
+  const lineBreak = document.createElement('br');
+  const cells = [];
+  hotlineContainer.forEach((row) => {
+    let bgImageUrl;
+    const bgImage = WebImporter.DOMUtils.getImgFromBackground(row.querySelector('.rz-block-img'), document);
+    if (bgImage) {
+      bgImageUrl = fixImageSrcPath(bgImage.getAttribute('src'), results, assetsPath);
+    }
+    const imageAEl = document.createElement('a');
+    imageAEl.innerText = bgImageUrl;
+    imageAEl.setAttribute('href', bgImageUrl);
+    const category = row.querySelector('.category-list li').textContent.trim();
+    const content = row.querySelector('.col-md-5').innerHTML.trim();
+    const contactEl = document.createElement('div');
+
+    const phoneLinkEl = document.createElement('a');
+    const phone = row.querySelector('.fa-phone');
+    if (phone) {
+      phoneLinkEl.href = phone.parentElement.getAttribute('href');
+      phoneLinkEl.innerText = `:phone: ${phone.parentElement.textContent.trim()}`;
+      contactEl.append(phoneLinkEl);
+      contactEl.append(lineBreak.cloneNode(true));
+    }
+
+    const emailEl = document.createElement('a');
+    const email = row.querySelector('.fa-envelope');
+    if (email) {
+      emailEl.href = email.parentElement.getAttribute('href');
+      emailEl.innerText = `:email: ${email.parentElement.textContent.trim()}`;
+      contactEl.append(emailEl);
+      contactEl.append(lineBreak.cloneNode(true));
+    }
+
+    const mapEl = document.createElement('a');
+    const map = row.querySelector('.fa-map-marker');
+    if (map) {
+      mapEl.href = map.parentElement.getAttribute('href');
+      mapEl.innerText = `:map: ${map.parentElement.textContent.trim()}`;
+      contactEl.append(mapEl);
+      contactEl.append(lineBreak.cloneNode(true));
+    }
+
+    const websiteEl = document.createElement('a');
+    const website = row.querySelector('.fa-globe') || row.querySelector('.row .col-md-4 .rz-business-links a[target="_blank"]');
+    if (website) {
+      websiteEl.href = website.getAttribute('href') ? website.getAttribute('href') : website.parentElement.getAttribute('href');
+      websiteEl.innerText = `:website: ${websiteEl.href}`;
+      contactEl.append(websiteEl);
+      contactEl.append(lineBreak.cloneNode(true));
+    }
+
+    const socialContainer = document.createElement('div');
+    const followMore = document.createElement('strong');
+    followMore.innerText = 'FOLLOW US:';
+    socialContainer.append(followMore);
+
+    const fbLink = row.querySelector('.fa-facebook-official')?.parentElement.getAttribute('href');
+    const xLink = row.querySelector('.fa-twitter')?.parentElement.getAttribute('href');
+    const instagramLink = row.querySelector('.fa-instagram')?.parentElement.getAttribute('href');
+
+    if (fbLink) {
+      const fbEl = document.createElement('a');
+      fbEl.href = fbLink;
+      fbEl.innerText = ':facebook-1:';
+      socialContainer.append(fbEl);
+    }
+
+    if (xLink) {
+      const xEl = document.createElement('a');
+      xEl.href = xLink;
+      xEl.innerText = ':x-twitter:';
+      socialContainer.append(xEl);
+    }
+
+    if (instagramLink) {
+      const instagramEl = document.createElement('a');
+      instagramEl.href = instagramLink;
+      instagramEl.innerText = ':instagram-round:';
+      socialContainer.append(instagramEl);
+    }
+
+    if (fbLink || xLink || instagramLink) {
+      contactEl.append(socialContainer);
+    }
+
+    cells.push([imageAEl, category, content, contactEl]);
+  });
+
+  const block = WebImporter.Blocks.createBlock(document, {
+    name: 'hotline',
+    cells: [...cells],
+  });
+
+  main.querySelector('#rz-business-list').replaceWith(block);
+}
+
 export default {
 
   transform: async ({
@@ -647,6 +750,7 @@ export default {
     buildTables(main);
     buildPhotoGallery(main);
     buildMultilevelFaqAccordion(main);
+    buildHotlineBlock(main, results, assetsPath);
 
     const doc = await fetchAndParseDocument(url);
     let contactsDiv;

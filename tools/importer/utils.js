@@ -161,13 +161,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
         });
         a.setAttribute('href', new URL(newPath, PREVIEW_DOMAIN).toString());
       } else if (!EXCLUDE_EXTENSIONS.includes(extension)) {
-        console.log(`File with extension - ${extension} found. Skipping import`);
-        results.push({
-          path: pagePath,
-          report: {
-            unknown: url.toString(),
-          },
-        });
+        console.log(`Link with extension - ${extension} found. Skipping import`);
       }
     }
   });
