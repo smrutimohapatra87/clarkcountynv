@@ -46,7 +46,6 @@ export default async function decorate(doc) {
         });
       }
     });
-
   }
 
   const $rightsection = document.querySelector('.rightsection');
