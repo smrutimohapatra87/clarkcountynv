@@ -386,6 +386,10 @@
         width: 375px !important;
     }
 
+    &.width-425 img {
+        width: 425px !important;
+    }
+    
     &.width-500 img {
         width: 500px !important;
     }
@@ -413,6 +417,10 @@
 
     &.height-300 img {
         height: 300px;
+    }
+
+    &.height-350 img {
+        height: 350px;
     }
 
     &.height-400 img {
