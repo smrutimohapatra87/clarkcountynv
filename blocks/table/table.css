@@ -317,7 +317,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 }
 
 .table.align-top table td{
-    vertical-align: top;
+    vertical-align: top !important;
 }
 
 .table.width-50 table td{
@@ -366,4 +366,89 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 .table.fixed-img-150 img{
     width: 150px;
+}
+
+.table.fixed-img-170 img{
+    width: 170px;
+}
+
+.table.col-odd-15 table tbody tr {
+    td:nth-child(odd) {
+        width: 15%;
+    }
+}
+
+.halloween-events-table {
+    width: 70%;
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0 20px;
+        margin: 20px 0;
+        font-family: var(--body-font-family);
+
+        tr {
+            line-height: 26px;
+
+            td,th {
+                vertical-align: top;
+                background-color: #f2f2f2;
+
+                &:first-child {
+                    width: 200px;
+                    padding: 10px 0 10px 5px;
+
+                    img {
+                        width: 200px;
+                        height: 200px;
+                        object-fit: cover;
+                        display: block;
+                        margin: 0 25px 5px 5px;
+                    }
+
+                }
+
+                &:nth-child(2) {
+                    padding: 10px 10px 10px 30px;
+
+                    h3 {
+                        color: #ba372a;
+                        margin: 0;
+                        line-height: 1.3;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (width <= 900px) {
+    .halloween-events-table,
+    .halloween-events-table tbody,
+    .halloween-events-table tr,
+    .halloween-events-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .halloween-events-table td:first-child {
+        width: 100%;
+    }
+
+    .halloween-events-table td:first-child img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .halloween-events-table td:nth-child(2) {
+        padding: 20px;
+    }
+
+    .halloween-events-table td:nth-child(2) h3 {
+        font-size: 20px;
+    }
+
+    .halloween-events-table tr {
+        margin-bottom: 30px;
+    }
 }

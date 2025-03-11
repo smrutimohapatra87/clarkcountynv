@@ -116,11 +116,8 @@ main .block.text {
         margin-right: 20px;
     }
 
-    &.align-left-video-title {
-        /* float: left; */
-        display: block;
-        width: 50% !important;
-        margin-left: 50px;
+    &.video-title {
+        margin-top: 40px;
     }
 
     &.no-button a {
@@ -134,6 +131,7 @@ main .block.text {
 
     &.new-line {
         clear: both;
+        min-height: 1px;
     }
 
     &.large-font-size {
