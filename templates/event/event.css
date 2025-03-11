@@ -4,6 +4,10 @@ body.event main .section.hero {
     height: 210px;
 }
 
+body.event .displayoff {
+    display: none;
+}
+
 body.event main .section.hero picture {
     position: absolute;
     z-index: -1;
