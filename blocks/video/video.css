@@ -70,6 +70,12 @@
     transform: translate(-50%, -50%);
   }
 
+  .video.width-medium {
+    width: 560px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+
   .video.left-align {
     text-align: left;
     display: flex;
