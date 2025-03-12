@@ -220,6 +220,10 @@ main .mainmenu .rightsection.special-words.red span.special {
     font-weight: 600;
 }
 
+main .mainmenu .rightsection.special-words.bigger-font-36px span.special {
+    font-size: 36px;
+}
+
 main .mainmenu .rightsection.special-words.orange span.special {
     color: var(--special-orange);
     font-weight: 600;
