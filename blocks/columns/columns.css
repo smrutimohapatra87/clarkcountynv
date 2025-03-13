@@ -21,7 +21,7 @@
   width: 100%;
 }
 
-.columns.alert a:any-link {
+main .section.rightsection.no-button .columns.alert a:any-link {
   color: white;
   text-decoration: underline;
 }
