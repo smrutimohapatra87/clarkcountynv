@@ -695,7 +695,7 @@ main .section.details-404 > .default-content-wrapper {
     padding:  26px 0 0;
   }
 
-  .columns > div > div.column2 strong:last-of-type {
+  .columns:not(.alert) > div > div.column2 strong:last-of-type {
     font-size: 16px;
 
   }

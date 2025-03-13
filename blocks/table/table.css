@@ -31,12 +31,12 @@
   }
 }
 
-.table table thead tr {
+.table:not(.cards) table thead tr {
   border-top: 2px solid #dadada;
   border-bottom: 2px solid #dadada;
 }
 
-.table table tbody tr {
+.table:not(.cards) table tbody tr {
   border-bottom: 1px solid #dadada;
 }
 
