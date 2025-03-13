@@ -21,6 +21,11 @@
   width: 100%;
 }
 
+.columns.alert a:any-link {
+  color: white;
+  text-decoration: underline;
+}
+
 .columns > div > .columns-img-col img {
   display: block;
 }
