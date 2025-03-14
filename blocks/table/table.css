@@ -188,6 +188,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
         tr > td {
             width: 75%;
         }
+
+        tr > td > p {
+            margin: 1em;
+        }
     }
 }
 
