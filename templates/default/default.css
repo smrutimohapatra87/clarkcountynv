@@ -259,6 +259,10 @@ main .mainmenu .rightsection.special-words.mid-blue span.special {
     font-weight: 600;
 }
 
+main .mainmenu .rightsection.special-words.highlight-yellow span.special {
+    background-color: #f1c40f;
+}
+
 main .mainmenu .rightsection.image-center picture img {
   display: block;
   margin-left: auto;

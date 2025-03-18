@@ -131,6 +131,7 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
     return;
   }
   const EXCLUDE_EXTENSIONS = ['php', 'gov', 'org'];
+  const WEBFILES_DOMAINS = ['www.clarkcountynv.gov', 'localhost', 'webfiles.clarkcountynv.gov', 'files.clarkcountynv.gov'];
 
   main.querySelectorAll('a').forEach((a) => {
     let href = a.getAttribute('href')?.replace('gov//', 'gov/');
@@ -149,10 +150,11 @@ export const fixPdfLinks = (main, results, pagePath, assetPath = 'general') => {
           a.setAttribute('href', new URL(url.pathname, WEBFILES_DOMAIN).toString());
         }
       } else if (extension === 'pdf' || extension === 'docx' || extension === 'pptx') {
-        if (url.hostname !== 'www.clarkcountynv.gov' && url.hostname !== 'localhost' && url.hostname !== 'webfiles.clarkcountynv.gov' && url.hostname !== 'files.clarkcountynv.gov') {
+        if (url.hostname !== 'www.clarkcountynv.gov' && url.hostname !== 'localhost' && url.hostname !== 'webfiles.clarkcountynv.gov' && url.hostname !== 'files.clarkcountynv.gov' && url.hostname !== 'maps.clarkcountynv.gov') {
           return;
         }
-        const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
+        const originalLocation = new URL(url.pathname, WEBFILES_DOMAINS.includes(url.hostname)
+          ? WEBFILES_DOMAIN : url.origin);
         const newPath = `/assets/documents/${assetPath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`;
 
         results.push({
