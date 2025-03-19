@@ -382,6 +382,18 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     }
 }
 
+.table.contacts {
+    tr {
+        text-align: left;
+        height: 50px;
+
+        th,td {
+            padding-left: 10px;
+
+        }
+    }
+}
+
 .halloween-events-table {
     width: 70%;
 

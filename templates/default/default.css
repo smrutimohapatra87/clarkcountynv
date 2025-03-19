@@ -199,6 +199,10 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     margin-top: unset;
 }
 
+.ul-no-list-style ul {
+    list-style: none;
+}
+
 .line-break.block {
     border: solid #ccc;
     border-width: 1px 0 0;

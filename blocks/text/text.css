@@ -55,6 +55,10 @@ main .block.text {
         color: #814924;
     }
 
+    &.color-red {
+        color: var(--special-red);
+    }
+
     &.img-medium img{
         width: 50%;
     }
