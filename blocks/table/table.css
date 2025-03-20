@@ -363,6 +363,14 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     }
 }
 
+.table.width-65 table {
+    width: 65%;
+
+    tbody tr td p {
+        margin: unset;
+    }
+}
+
 .table.no-padding table tbody tr td p {
     padding: 0;
     margin: 0;

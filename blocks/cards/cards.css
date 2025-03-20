@@ -487,6 +487,19 @@
         }
     }
 
+    &.extra-gap {
+        ul {
+            gap: 40px;
+        }
+    }
+
+    &.image-text-align-left {
+        .image-text {
+            text-align: left;
+            padding-left: 10px;
+        }
+    }
+
     ul {
         display: flex;
         justify-content: center;
