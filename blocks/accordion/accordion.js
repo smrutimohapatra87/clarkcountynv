@@ -5,6 +5,7 @@
  */
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
@@ -24,7 +25,13 @@ export default function decorate(block) {
 
     const aElems = block.querySelectorAll('.content a');
     aElems.forEach((aElem) => {
-      aElem.classList.remove('button');
+      const text = aElem.textContent;
+      if (text && (text.search('jpeg') !== -1 || text.search('jpg') !== -1 || text.search('png') !== -1 || text.search('gif') !== -1 || text.search('jpg') !== -1)) {
+        aElem.textContent = '';
+        aElem.append(createOptimizedPicture(text));
+      } else {
+        aElem.classList.remove('button');
+      }
       aElem.setAttribute('target', '_blank');
     });
   });
