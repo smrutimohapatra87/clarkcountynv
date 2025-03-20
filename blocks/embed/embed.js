@@ -88,7 +88,7 @@ const loadEmbed = (block, link, autoplay, customStyles) => {
     block.classList = `block embed embed-${config.match[0]}`;
     block.classList.add(...customStyles);
   } else {
-    if (block.parentElement.parentElement.classList.contains('googleform')) {
+    if (block.parentElement.parentElement.classList.contains('googleform') || customStyles.includes('style-scrollable')) {
       block.innerHTML = getFormEmbed(url);
     } else {
       block.innerHTML = getDefaultEmbed(url);
