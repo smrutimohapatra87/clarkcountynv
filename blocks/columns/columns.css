@@ -216,3 +216,22 @@ main .section.rightsection.no-button .columns.alert a:any-link {
 }
 
 /* End of CSS Code for "Alert" variant of "Columns" block */
+
+/* stylelint-disable no-descending-specificity */
+.columns.wedding {
+    .column1 {
+        width: auto;
+        flex-basis: 30%;
+        flex-grow: 0;
+    }
+
+    .column2 {
+        img {
+            width: 70%;
+        }
+
+        a {
+            vertical-align: top;
+        }
+    }
+}
