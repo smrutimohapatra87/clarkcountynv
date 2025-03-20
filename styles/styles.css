@@ -885,3 +885,13 @@ main > div.section.newsdetail > .default-content-wrapper > p {
         margin-top: 0;
     }
 }
+
+.icons-small {
+    img {
+        height: 80%;
+    }
+
+    span {
+        vertical-align: bottom;
+    }
+}
