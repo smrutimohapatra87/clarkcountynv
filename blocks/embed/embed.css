@@ -86,3 +86,24 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
     margin: 20px 70px 20px 50px;
     max-width: unset;
 }
+
+/* stylelint-disable no-descending-specificity */
+.embed.style-align-right-small {
+    width: auto;
+    display: block;
+
+    div {
+        float: right;
+        display: block;
+        margin: 10px;
+        width: 20% !important;
+        padding-bottom: 15% !important;
+    }
+
+    iframe {
+        position: static;
+        left: unset !important;
+        width: 200px !important;
+        height: 180px !important;
+    }
+}
