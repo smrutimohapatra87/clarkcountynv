@@ -324,6 +324,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     vertical-align: top !important;
 }
 
+.table.align-center table td{
+    text-align: center !important;
+}
+
 .table.width-50 table td{
     width: 50%;
 }
