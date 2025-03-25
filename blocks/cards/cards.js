@@ -32,6 +32,18 @@ export default function decorate(block) {
           const cardsLinkEl = divEl.querySelector('a') || divEl.querySelector('img');
           if (cardsLinkEl) {
             aEle.href = cardsLinkEl.getAttribute('href') || cardsLinkEl.getAttribute('src');
+
+            if (aEle.href) {
+              const isExternal = !aEle.href.startsWith(window.location.origin)
+                                && !aEle.href.startsWith('/')
+                                && !aEle.href.startsWith('#');
+
+              if (isExternal) {
+                aEle.setAttribute('target', '_blank');
+                aEle.setAttribute('rel', 'noopener noreferrer'); // Security best practice for external links
+              }
+            }
+
             if (cardsLinkEl.parentElement.tagName === 'P') {
               cardsLinkEl.parentElement.remove();
             } else {

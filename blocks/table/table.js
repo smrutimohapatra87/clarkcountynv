@@ -10,6 +10,20 @@ function buildCell(rowIndex) {
   return cell;
 }
 
+function getMaxColumns(block) {
+  let maxColumns = 0;
+
+  // Iterate through each row in the block
+  [...block.children].forEach((row) => {
+    // Get number of children (columns) in this row
+    const columnCount = [...row.children].length;
+    // Update maxColumns if this row has more columns
+    maxColumns = Math.max(maxColumns, columnCount);
+  });
+
+  return maxColumns;
+}
+
 export default async function decorate(block) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
@@ -19,15 +33,29 @@ export default async function decorate(block) {
   if (header) table.append(thead);
   table.append(tbody);
 
+  const maxColumns = getMaxColumns(block);
+
   [...block.children].forEach((child, i) => {
     const row = document.createElement('tr');
     if (header && i === 0) thead.append(row);
     else tbody.append(row);
-    [...child.children].forEach((col) => {
+
+    const childColumns = [...child.children];
+
+    // Add colspan if row has only one child and maxColumns is 2
+    if (maxColumns === 2 && childColumns.length === 1) {
       const cell = buildCell(header ? i : i + 1);
-      cell.innerHTML = col.innerHTML;
+      cell.innerHTML = childColumns[0].innerHTML;
+      cell.setAttribute('colspan', '2');
       row.append(cell);
-    });
+    } else {
+      // Normal case - add each column
+      childColumns.forEach((col) => {
+        const cell = buildCell(header ? i : i + 1);
+        cell.innerHTML = col.innerHTML;
+        row.append(cell);
+      });
+    }
   });
   block.innerHTML = '';
   block.append(table);
