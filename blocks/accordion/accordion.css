@@ -30,10 +30,10 @@
             background: #fff;
             border: 1px solid #C54B2A;
             border-top-style: none;
+            font-size: 14px;
 
             p {
                 margin: 0 0 20px;
-                font-size: 14px;
                 line-height: 1.5;
             }
         }
@@ -60,3 +60,25 @@
 .accordion details + details {
     margin-top: 3px;
 }
+
+.image-left img{
+    float: left;
+    padding-right: 10px;
+}
+
+.image-small img{
+    width: 7%;
+    padding-right: 10px;
+}
+
+.table-col1-50 table {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 85%;
+
+    tbody tr td:nth-child(odd){
+        width: 50%;
+    }
+}
+
+

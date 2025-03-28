@@ -274,7 +274,7 @@ main .mainmenu .rightsection.image-center picture img {
   width: 50%;
 }
 
-main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a) {
+main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a) {
     color: var(--no-button-link);
     background-color: transparent;
     text-decoration: underline;

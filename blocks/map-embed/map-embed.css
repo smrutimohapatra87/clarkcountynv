@@ -47,6 +47,10 @@ body.event .map-embed {
     }
 }
 
+.map-embed.width-larger {
+    width: 500px ;
+}
+
 .map-title {
     text-align: center;
     line-height: 1.778;

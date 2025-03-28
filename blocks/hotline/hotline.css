@@ -127,6 +127,7 @@
                         padding: unset;
                         margin: unset;
                         vertical-align: text-bottom;
+                        background-color: transparent;
 
                         span {
                             vertical-align: middle;
@@ -156,6 +157,7 @@
                         color: #1d5398;
                         padding: unset;
                         margin: unset;
+                        background-color: transparent;
                     }
                 }
 
