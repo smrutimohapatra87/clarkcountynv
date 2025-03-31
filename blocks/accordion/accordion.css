@@ -81,4 +81,11 @@
     }
 }
 
+.faq-image {
+    img {
+        height: 275px;
+        width: auto;
+    }
+}
+
 

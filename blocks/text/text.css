@@ -186,4 +186,8 @@ main .block.text {
         display: flex;
         padding-left: 50px;
     }
+
+    &.no-margin-top p{
+        margin-top: unset;
+    }
 }

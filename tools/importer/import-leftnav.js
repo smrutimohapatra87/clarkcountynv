@@ -696,8 +696,8 @@ export default {
 
     fixPdfLinks(main, results, newPagePath, assetsPath);
     fixPdfLinks(leftNavAsideEl, results, newPagePath, assetsPath);
-    fixLinks(main, true);
-    fixLinks(leftNavAsideEl, false);
+    fixLinks(main, results, assetsPath, true);
+    fixLinks(leftNavAsideEl, results, assetsPath, false);
     fixImageLinks(main, results, assetsPath);
 
     setPageTitle(main, params);

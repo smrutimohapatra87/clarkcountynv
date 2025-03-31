@@ -207,23 +207,6 @@ export const setPageTitle = (main, params) => {
   }
 };
 
-export const fixLinks = (main, shouldCheckTextIsLink = true) => {
-  if (!main) {
-    return;
-  }
-  main.querySelectorAll('a').forEach((a) => {
-    const href = a.getAttribute('href');
-    if (!href) {
-      return;
-    }
-    const link = getSanitizedPath(href);
-    if (shouldCheckTextIsLink && a.textContent.trim().search(href) !== -1) {
-      a.innerText = new URL(link, PREVIEW_DOMAIN).toString();
-    }
-    a.setAttribute('href', new URL(link, PREVIEW_DOMAIN).toString());
-  });
-};
-
 export const fixImageSrcPath = (src, results, imagePath = 'general') => {
   const url = new URL(src, window.location.origin);
   const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
@@ -238,6 +221,30 @@ export const fixImageSrcPath = (src, results, imagePath = 'general') => {
     },
   });
   return new URL(newPath, PREVIEW_DOMAIN).toString();
+};
+
+export const fixLinks = (main, results, imagePath, shouldCheckTextIsLink = true) => {
+  if (!main) {
+    return;
+  }
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (!href) {
+      return;
+    }
+
+    if (href.endsWith('.jpg') || href.endsWith('.jpeg') || href.endsWith('.png') || href.endsWith('.gif')) {
+      const imgUrl = fixImageSrcPath(href, results, imagePath);
+      a.setAttribute('href', imgUrl);
+      return;
+    }
+
+    const link = getSanitizedPath(href);
+    if (shouldCheckTextIsLink && a.textContent.trim().search(href) !== -1) {
+      a.innerText = new URL(link, PREVIEW_DOMAIN).toString();
+    }
+    a.setAttribute('href', new URL(link, PREVIEW_DOMAIN).toString());
+  });
 };
 
 export const fixImageLinks = (main, results, imagePath = 'general') => {
