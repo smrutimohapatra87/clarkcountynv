@@ -6,7 +6,7 @@ import { normalizeString, getWindowSize } from '../../scripts/utils.js';
 
 class Obj {
   // eslint-disable-next-line max-len
-  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration) {
+  constructor(title, start, end, allDay, daysOfWeek, startTime, endTime, url, backgroundColor, textColor, classNames, readMore, divisionid, excludeDates, duration, freq) {
     this.title = title;
     this.start = start;
     this.end = end;
@@ -22,6 +22,7 @@ class Obj {
     this.divisionid = divisionid;
     this.excludeDates = excludeDates;
     this.duration = duration;
+    this.freq = freq;
   }
 }
 
@@ -200,6 +201,22 @@ async function changehref() {
   });
 }
 
+function getbyweekday(daysOfWeek) {
+  const arraydays = [];
+  daysOfWeek.split(',').forEach((ele) => {
+    if (ele.length > 1) {
+      if (ele.includes('(')) {
+        const day = ele.split('(')[0].toUpperCase();
+        const within = ele.split('(')[1].split(')')[0];
+        arraydays.push(`${day}#${within}`);
+      } else {
+        arraydays.push(ele.toUpperCase());
+      }
+    }
+  });
+  return arraydays;
+}
+
 function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
@@ -214,12 +231,21 @@ function createEvents(eventsList) {
         if (typeof event.excludeDates === 'string') {
           event.excludeDates = event.excludeDates.split(',').map((date) => `${date}T${event.startTime}`).filter((content) => content.includes('-'));
         }
+        const eventbyweekday = getbyweekday(event.daysOfWeek);
+        /* Converting String into array to leverage map function */
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
-            freq: 'weekly',
-            byweekday: event.daysOfWeek.split(','),
+            freq: event.freq,
+            byweekday: eventbyweekday.map((day) => {
+              if (day.includes('#')) {
+                // eslint-disable-next-line no-undef
+                return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
+              }
+              // eslint-disable-next-line no-undef
+              return rrule.RRule[day];
+            }),
             dtstart: event.start,
             until: event.end,
           },
@@ -235,12 +261,20 @@ function createEvents(eventsList) {
           id: `${event.divisionid}-${event.title.length}${event.start.length}`,
         });
       } else {
+        const eventbyweekday = getbyweekday(event.daysOfWeek);
         calendar.addEvent({
           title: event.title,
           allDay: false,
           rrule: {
-            freq: 'weekly',
-            byweekday: event.daysOfWeek.split(','),
+            freq: event.freq,
+            byweekday: eventbyweekday.map((day) => {
+              if (day.includes('#')) {
+                // eslint-disable-next-line no-undef
+                return rrule.RRule[day.split('#')[0]].nth(day.split('#')[1]);
+              }
+              // eslint-disable-next-line no-undef
+              return rrule.RRule[day];
+            }),
             dtstart: event.start,
             until: event.end,
           },
@@ -294,7 +328,7 @@ function createEventList(importedData, eventsList) {
         }
       }
     });
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration);
+    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
     eventsList.push(eventObj);
   });
   createEvents(eventsList);
