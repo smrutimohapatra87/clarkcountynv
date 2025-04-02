@@ -123,11 +123,23 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     // decorate accordion item label
 
+    let fileGroupDesciption;
+
     const fileGroup = row.children[0];
-    const summaryEl = summary({ class: 'accordion-item-label' }, ...fileGroup.childNodes, small({ class: 'doc-center-counter' }, '2 documents'));
+    const numOfChildren = fileGroup.childElementCount;
+    const fileGroupTitle = fileGroup.children[0];
+    if (numOfChildren === 2) {
+      [, fileGroupDesciption] = fileGroup.children;
+    }
+    const summaryEl = summary({ class: 'accordion-item-label' }, fileGroupTitle, small({ class: 'doc-center-counter' }, '2 documents'));
 
     const body = row.children[1];
     body.className = 'content';
+    if (fileGroupDesciption) {
+      const descriptionEl = div({ class: 'doc-group-description' }, fileGroupDesciption.textContent.trim());
+      body.prepend(descriptionEl);
+    }
+
     const fileLinks = body.querySelectorAll('a');
     const numOfDocs = fileLinks.length;
     summaryEl.querySelector('.doc-center-counter').textContent = `${numOfDocs} documents`;
