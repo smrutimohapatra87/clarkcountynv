@@ -47,6 +47,22 @@ body.event .map-embed {
     }
 }
 
+.map-embed.left-align {
+    display: inline-block;
+    width: 500px ;
+    height: unset ;
+    border: none !important;
+    float: left;
+    padding-right: 50px;
+    padding-top: 1em;
+
+    iframe {
+        height: 450px ;
+        display: block ;
+        border: none ;
+    }
+}
+
 .map-embed.width-larger {
     width: 500px ;
 }

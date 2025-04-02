@@ -394,6 +394,27 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     }
 }
 
+.table.commissioners {
+    table {
+        align-content: center;
+        width: 60%;
+        border-collapse: collapse;
+        text-align: center;
+        vertical-align: center;
+        margin-left: 260px;
+        margin-right: 260px;
+
+        tr {
+            height: 40px;
+        }
+    }
+
+    img {
+        width: 150px;
+        height: 175px;
+    }
+}
+
 .table.contacts {
     tr {
         text-align: left;
