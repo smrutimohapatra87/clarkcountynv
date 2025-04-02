@@ -312,24 +312,33 @@ function createEvents(eventsList) {
 
 function createEventList(importedData, eventsList) {
   importedData.forEach((event) => {
+    let divisionArray = [];
     const startTime = event.start.split('T')[1];
     const endTime = event.end.split('T')[1];
     const url = window.location.origin + event.path;
-    // Check for each division and assign the class, color, id to the event
-    divisions.forEach((division) => {
-      if (normalizeString(division.name) === normalizeString(event.divisionname)) {
-        event['division-color'] = division.color;
-        event['division-textColor'] = division.textColor;
-        event.divisionid = division.id;
-        if (event.readMore.length > 1) {
-          event.classNames = `${normalizeString(event.divisionname)} yesReadMore`;
-        } else {
-          event.classNames = `${normalizeString(event.divisionname)} noReadMore`;
+    // Check for comma in the string
+    if (event.divisionname.includes(',')) {
+      divisionArray = event.divisionname.split(',');
+    } else {
+      divisionArray.push(event.divisionname);
+    }
+    divisionArray.forEach((divisionEle) => {
+      // Check for each division and assign the class, color, id to the event
+      divisions.forEach((division) => {
+        if (normalizeString(division.name) === normalizeString(divisionEle)) {
+          event['division-color'] = division.color;
+          event['division-textColor'] = division.textColor;
+          event.divisionid = division.id;
+          if (event.readMore.length > 1) {
+            event.classNames = `${normalizeString(event.divisionname)} yesReadMore`;
+          } else {
+            event.classNames = `${normalizeString(event.divisionname)} noReadMore`;
+          }
         }
-      }
+      });
+      const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
+      eventsList.push(eventObj);
     });
-    const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
-    eventsList.push(eventObj);
   });
   createEvents(eventsList);
   return eventsList;
