@@ -328,6 +328,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     text-align: center !important;
 }
 
+.table.extra-padding table td{
+    padding: 15px;
+}
+
 .table.width-50 table td{
     width: 50%;
 }
