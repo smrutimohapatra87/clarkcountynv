@@ -43,6 +43,10 @@ main .block.text {
         color: #ba372a !important;
     }
 
+    &.color-golden-orange {
+        color: #e67e23;
+    }
+
     &.color-ruby {
         color: #992235;
     }
