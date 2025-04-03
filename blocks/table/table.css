@@ -328,6 +328,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     text-align: center !important;
 }
 
+.table.align-center-col1 table td:first-of-type{
+    text-align: center !important;
+}
+
 .table.extra-padding table td{
     padding: 15px;
 }
@@ -416,6 +420,19 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     img {
         width: 150px;
         height: 175px;
+    }
+}
+
+.table.bid {
+    th,td {
+        text-align: left;
+        vertical-align: top;
+        padding: 10px;
+        width: 15%;
+
+        &:nth-of-type(2) {
+            width: 40%;
+        }
     }
 }
 
