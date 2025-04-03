@@ -50,6 +50,14 @@
   text-align: left;
 }
 
+.table.parks {
+    color: var(--special-parks-purple);
+}
+
+.table.parks td {
+    padding: 2em;
+}
+
 .table table th p,
 .table table td p {
   margin: 0;
