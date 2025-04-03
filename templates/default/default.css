@@ -13,6 +13,10 @@ main .mainmenu .leftsection {
     color: white;
 }
 
+main .mainmenu .rightsection.no-underline a:hover {
+    text-decoration: none;
+}
+
 main .mainmenu .leftsection > .default-content-wrapper > h2 {
     display: none;
 }
