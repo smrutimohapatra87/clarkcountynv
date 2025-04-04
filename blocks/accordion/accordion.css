@@ -54,6 +54,10 @@
             background-color: var(--background-color);
         }
     }
+
+    table tr {
+        height: 30px;
+    }
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
