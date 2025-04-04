@@ -163,6 +163,15 @@ export default function decorate(block) {
       id,
     }, summaryEl, body);
 
+    // Add toggle event listener to update URL hash based on open state
+    detailsEl.addEventListener('toggle', () => {
+      if (detailsEl.hasAttribute('open')) {
+        window.history.pushState(null, '', `#${id}`);
+      } else {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    });
+
     if (window.location.hash === `#${id}`) {
       detailsEl.setAttribute('open', '');
       setTimeout(() => {
