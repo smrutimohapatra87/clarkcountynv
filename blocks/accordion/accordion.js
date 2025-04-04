@@ -32,6 +32,15 @@ export default function decorate(block) {
     details.append(summary, body);
     row.replaceWith(details);
 
+    // Add toggle event listener to update URL hash based on open state
+    details.addEventListener('toggle', () => {
+      if (details.hasAttribute('open')) {
+        window.history.pushState(null, '', `#${id}`);
+      } else {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    });
+
     // Check if this details element is being targeted by the URL hash
     if (window.location.hash === `#${id}`) {
       details.setAttribute('open', '');
