@@ -125,6 +125,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
   width: 50%;
 }
 
+.table.col1-70 table tbody tr td:first-child{
+    width: 70%;
+  }
+
 .table.col1-15 table tbody tr {
     td:first-child {
         width: 15%;
