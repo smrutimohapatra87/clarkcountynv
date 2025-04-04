@@ -73,3 +73,10 @@ export function scrollWithHeaderOffset(element) {
     behavior: 'smooth',
   });
 }
+
+export function createHashId(text) {
+  return text.toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .substring(0, 50);
+}

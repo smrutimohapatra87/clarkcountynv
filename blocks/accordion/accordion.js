@@ -6,7 +6,7 @@
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { scrollWithHeaderOffset } from '../../scripts/utils.js';
+import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   [...block.children].forEach((row) => {
@@ -25,9 +25,7 @@ export default function decorate(block) {
     details.className = 'accordion-item';
 
     const headingText = summary.textContent.trim();
-    const id = headingText.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with hyphens
-      .replace(/(^-|-$)/g, ''); // Remove leading/trailing hyphens
+    const id = createHashId(headingText);
 
     details.id = id;
 

@@ -8,7 +8,7 @@ import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
   button, details, div, h2, input, label, small, span, summary, ul,
 } from '../../scripts/dom-helpers.js';
-import { scrollWithHeaderOffset } from '../../scripts/utils.js';
+import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 let oldSearch = '';
 
@@ -156,9 +156,7 @@ export default function decorate(block) {
     });
 
     const titleText = fileGroupTitle.textContent.trim();
-    const id = titleText.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+    const id = createHashId(titleText);
 
     const detailsEl = details({
       class: 'accordion-item',

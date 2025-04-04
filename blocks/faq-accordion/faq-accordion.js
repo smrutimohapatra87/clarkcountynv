@@ -1,12 +1,5 @@
 import { div, input } from '../../scripts/dom-helpers.js';
-import { scrollWithHeaderOffset } from '../../scripts/utils.js';
-
-function createHashId(text) {
-  return text.toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-    .substring(0, 50);
-}
+import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   const sections = {};
