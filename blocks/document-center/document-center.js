@@ -8,6 +8,7 @@ import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
   button, details, div, h2, input, label, small, span, summary, ul,
 } from '../../scripts/dom-helpers.js';
+import { scrollWithHeaderOffset } from '../../scripts/utils.js';
 
 let oldSearch = '';
 
@@ -121,8 +122,6 @@ export default function decorate(block) {
   const searchResults = div({ class: 'doc-search-results' });
   const container = div({ class: 'documents-wrap' });
   [...block.children].forEach((row) => {
-    // decorate accordion item label
-
     let fileGroupDesciption;
 
     const fileGroup = row.children[0];
@@ -156,11 +155,27 @@ export default function decorate(block) {
       fileLink.replaceWith(div({ class: 'file-item' }, fileLink.cloneNode(true), span({ class: 'doc-file-desc' }, fileDescription)));
     });
 
-    // decorate accordion item
-    const detailsEl = details({ class: 'accordion-item' }, summaryEl, body);
+    const titleText = fileGroupTitle.textContent.trim();
+    const id = titleText.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    const detailsEl = details({
+      class: 'accordion-item',
+      id,
+    }, summaryEl, body);
+
+    if (window.location.hash === `#${id}`) {
+      detailsEl.setAttribute('open', '');
+      setTimeout(() => {
+        scrollWithHeaderOffset(detailsEl);
+      }, 100);
+    }
+
     container.append(detailsEl);
     row.remove();
   });
+
   block.append(searchResults);
   block.append(container);
   createFileSearchForm(block);
@@ -168,5 +183,15 @@ export default function decorate(block) {
   /* eslint-disable no-new */
   block.querySelectorAll('details').forEach((el) => {
     new Accordion(el);
+
+    window.addEventListener('hashchange', () => {
+      const targetId = window.location.hash.substring(1);
+      if (el.id === targetId) {
+        el.setAttribute('open', '');
+        scrollWithHeaderOffset(el);
+      } else {
+        el.removeAttribute('open');
+      }
+    });
   });
 }

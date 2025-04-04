@@ -56,3 +56,20 @@ export function ScrolltoTop() {
     };
   }
 }
+
+export function scrollWithHeaderOffset(element) {
+  const header = document.querySelector('header');
+  const headerHeight = header ? header.offsetHeight : 0;
+
+  // Calculate the element's position relative to the viewport
+  const elementRect = element.getBoundingClientRect();
+  const absoluteElementTop = elementRect.top + window.pageYOffset;
+
+  const padding = 20;
+  const scrollToPosition = absoluteElementTop - headerHeight - padding;
+
+  window.scrollTo({
+    top: scrollToPosition,
+    behavior: 'smooth',
+  });
+}
