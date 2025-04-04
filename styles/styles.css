@@ -331,7 +331,7 @@ main div.section.desktop.short {
         object-fit: cover;
     }
 
-    h3 {
+    .page-title {
         position: relative;
         right: 0;
         bottom: 180px;
@@ -361,7 +361,7 @@ main div.section.mobile {
         top: 0;
     }
 
-    h3 {
+    .page-title {
         position: absolute;
         left: 20px;
         bottom: 0;

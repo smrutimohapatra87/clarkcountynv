@@ -15,7 +15,7 @@ import {
   createOptimizedPicture, fetchPlaceholders,
 } from './aem.js';
 
-import { h3 } from './dom-helpers.js';
+import { h1 } from './dom-helpers.js';
 
 import { getViewPort, externalLinks, ScrolltoTop } from './utils.js';
 
@@ -189,7 +189,7 @@ function decorateSectionsWithBackgrounds(element) {
 
     const heading = getMetadata('page-title');
     if (heading) {
-      const pageTitle = h3(heading);
+      const pageTitle = h1(heading);
       pageTitle.classList.add('page-title');
       section.append(pageTitle);
     }
@@ -201,12 +201,12 @@ function decorateSectionsWithBackgrounds(element) {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
+  const $h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
   // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
+  if ($h1 && picture && ($h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
+    section.append(buildBlock('hero', { elems: [picture, $h1] }));
     main.prepend(section);
   }
 }
