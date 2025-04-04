@@ -350,6 +350,19 @@ export async function loadTemplate(doc, templateName) {
 }
 
 /**
+ * Adds a popup for the Parks and Recreation department subscribe popup only on index page
+ * @param path
+ * @param main
+ *
+ */
+function addParksRecreationPopup(path, main) {
+  if (path && path.startsWith('/') && path === '/government/departments/parks___recreation/') {
+    const popup = document.createElement('script');
+    popup.setAttribute('src', '//content.govdelivery.com/overlay/js/8729.js');
+    main.append(popup);
+  }
+}
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -364,6 +377,7 @@ async function loadEager(doc) {
     if (templateName) {
       await loadTemplate(doc, templateName);
     }
+    addParksRecreationPopup(window.location.pathname, main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
