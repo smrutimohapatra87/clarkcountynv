@@ -398,6 +398,12 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     margin: 5px;
 }
 
+.table.height-img-200 table tbody tr td picture img {
+    height: 200px;
+    width: auto;
+    padding: unset;
+}
+
 .table.fees table {
     width: 50%;
 
