@@ -70,6 +70,16 @@
     }
 }
 
+.embed.style-align-left-350 {
+  margin: 20px 70px 20px 0;
+  width: 350px;
+
+  & > div {
+      justify-content: left;
+  }
+}
+
+
 /* CSS for iframe embed forms */
 
 main .mainmenu .section.rightsection.googleform .block.embed > div {
