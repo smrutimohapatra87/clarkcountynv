@@ -19,6 +19,10 @@
   background-color: var(--table-head-background-color2);
 }
 
+.table.thbc3 thead {
+  background-color: var(--table-head-background-color3);
+}
+
 @media (width >= 600px) {
   .table table {
     font-size: var(--body-font-size-s);
