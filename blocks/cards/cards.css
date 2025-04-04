@@ -493,6 +493,12 @@
         }
     }
 
+    &.space-evenly {
+        ul {
+            justify-content: space-evenly;
+        }
+    }
+
     &.image-text-align-left {
         .image-text {
             text-align: left;

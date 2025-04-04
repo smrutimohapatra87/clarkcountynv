@@ -98,6 +98,10 @@ main .block.text {
     &.highlight-color-cream {
         background-color: #f5e7b8;
     }
+
+    &.align-text-right {
+        text-align: right;
+    }
     
     &.align-right-small {
         float: right;
