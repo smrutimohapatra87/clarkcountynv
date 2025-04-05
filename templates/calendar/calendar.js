@@ -448,7 +448,7 @@ function createCalendar() {
       }
     },
   });
-  calendar.render();
+  /* The Below code is for when the URL is loaded with a specific date */
   const windowHref = window.location.href;
   const url = new URL(windowHref);
   const view = url.searchParams.get('view');
@@ -476,6 +476,7 @@ function createCalendar() {
       }
     }
   }, 1);
+  calendar.render();
 }
 
 async function getFeaturedEvents() {
