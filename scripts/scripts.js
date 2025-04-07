@@ -350,16 +350,30 @@ export async function loadTemplate(doc, templateName) {
 }
 
 /**
- * Adds a popup for the Parks and Recreation department subscribe popup only on index page
+ * Adds a page specific subscribe modal
  * @param path
  * @param main
  *
  */
-function addParksRecreationPopup(path, main) {
-  if (path && path.startsWith('/') && path === '/government/departments/parks___recreation/') {
-    const popup = document.createElement('script');
-    popup.setAttribute('src', '//content.govdelivery.com/overlay/js/8729.js');
-    main.append(popup);
+function addPageBasedModal(path, main) {
+  const modal = document.createElement('script');
+  if (path && path.startsWith('/')) {
+    switch (path) {
+      case '/government/departments/parks___recreation/':
+        modal.setAttribute('src', '//content.govdelivery.com/overlay/js/8729.js');
+        break;
+      case '/government/elected_officials/county_treasurer/':
+        modal.setAttribute('src', 'https://public.govdelivery.com/assets/SignupOverlay.js');
+        modal.setAttribute('data-account-code', 'NVCLARK');
+        modal.setAttribute('data-signup-id', '38697');
+        modal.setAttribute('data-width', '500');
+        modal.setAttribute('data-delay', '0');
+        modal.setAttribute('async', '');
+        break;
+      default:
+        break;
+    }
+    main.append(modal);
   }
 }
 /**
@@ -377,7 +391,7 @@ async function loadEager(doc) {
     if (templateName) {
       await loadTemplate(doc, templateName);
     }
-    addParksRecreationPopup(window.location.pathname, main);
+    addPageBasedModal(window.location.pathname, main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
