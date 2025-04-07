@@ -90,7 +90,7 @@ function createModal(doc) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a({ class: 'footer-readmore' }, 'Read More')),
   ));
   doc.body.append(modal);
 }
@@ -134,27 +134,36 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
-  if (readMore.length > 1) {
-    modal.querySelector('.event-modal-footer a').href = readMore;
-    modal.querySelector('.event-modal-footer a').setAttribute('target', '_blank');
-    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
-  } else {
-    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
+  const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
+  if (readMoreAEl) {
+    if (readMore.length > 1) {
+      readMoreAEl.setAttribute('href', readMore);
+      readMoreAEl.setAttribute('target', '_blank');
+      readMoreAEl.classList.remove('displayoff');
+    } else {
+      readMoreAEl.classList.add('displayoff');
+    }
   }
 
   // Listen for messages from iframe window
   window.addEventListener('message', (event) => {
-    if (event.data.eventtop === 'off') {
-      modal.querySelector('.event-modal-date').classList.add('off');
-      modal.querySelector('.event-modal-time').classList.add('off');
-    } else {
-      modal.querySelector('.event-modal-date').classList.remove('off');
-      modal.querySelector('.event-modal-time').classList.remove('off');
+    const { data } = event;
+
+    if (!data) return;
+
+    const dateEl = modal.querySelector('.event-modal-date');
+    const timeEl = modal.querySelector('.event-modal-time');
+    const footerEl = modal.querySelector('.event-modal-footer');
+
+    if (data.eventtop !== undefined && dateEl && timeEl) {
+      const showTop = data.eventtop === 'on';
+      dateEl.classList.toggle('off', !showTop);
+      timeEl.classList.toggle('off', !showTop);
     }
-    if (event.data.eventfooter === 'on') {
-      modal.querySelector('.event-modal-footer').classList.remove('off');
-    } else {
-      modal.querySelector('.event-modal-footer').classList.add('off');
+
+    if (data.eventfooter !== undefined && footerEl) {
+      const showFooter = data.eventfooter === 'on';
+      footerEl.classList.toggle('off', !showFooter);
     }
   });
 
@@ -188,11 +197,10 @@ async function getfromDOM(element) {
   const htmlBody = await resp.text();
   const parser = new DOMParser();
   const dom = parser.parseFromString(htmlBody, 'text/html');
-  dom.querySelectorAll('p a').forEach((ele) => {
-    if (ele.textContent === 'readmore') {
-      element.href = ele.href;
-    }
-  });
+  const readMoreMeta = dom.querySelector('meta[name="readmore"]');
+  if (readMoreMeta) {
+    element.href = readMoreMeta.content;
+  }
 }
 
 async function changehref() {
