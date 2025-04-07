@@ -3,7 +3,9 @@
 
 export const PREVIEW_DOMAIN = 'https://main--clarkcountynv--aemsites.aem.page';
 const METADATA_ALLOWED_KEYS = ['template', 'breadcrumbs-base', 'page-title', 'breadcrumbs-title-override',
-  'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl'];
+  'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl',
+  'featuredImage', 'divisionName', 'eventStart', 'eventStop', 'daysOfWeek',
+  'freq', 'duration', 'excludeDates', 'featuredTitle', 'featuredDescription', 'readMore'];
 
 const videoExtensions = [
   'mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', '3gp', 'rm',
@@ -15,14 +17,14 @@ const audioExtensions = [
   'aiff', 'pcm', 'opus', 'amr',
 ];
 
-const WEBFILES_DOMAIN = 'https://webfiles.clarkcountynv.gov';
+export const WEBFILES_DOMAIN = 'https://webfiles.clarkcountynv.gov';
 
 export const createMetadata = (main, document, params) => {
   const meta = {};
 
-  const title = document.querySelector('title');
+  const title = params.title || document.querySelector('title');
   if (title) {
-    meta.Title = title.textContent.replace(/[\n\t]/gm, '');
+    meta.Title = params.title || title.textContent.replace(/[\n\t]/gm, '');
   }
 
   const desc = document.querySelector('[property="og:description"]');
