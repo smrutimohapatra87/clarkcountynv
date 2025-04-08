@@ -1,5 +1,6 @@
+import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  div, input, li, p, ul,
+  div, input, li, p, ul, details, summary,
 } from '../../scripts/dom-helpers.js';
 
 function searchBlocks(searchValue, searchTarget) {
@@ -80,11 +81,34 @@ export default function decorate(block) {
   const contentContainer = div({ class: 'business-list' });
   const categories = [];
 
-  [...block.children].forEach((row) => {
+  function decorateLearnMore(learnMore, idValue) {
+    const $summary = summary({ class: 'accordion-item-label' });
+
+    const body = div({ class: 'accordion-item-body, content' });
+    [...learnMore.children].forEach((row, i) => {
+      if (i === 0) {
+        // decorate accordion item label
+        const label = row;
+        $summary.className = 'accordion-item-label';
+        $summary.append(label);
+      } else {
+        // decorate accordion item content
+        body.append(row);
+      }
+    });
+    const id = `learn-more-${idValue}`;
+    const $details = details({ class: 'accordion-item', id });
+    $details.append($summary, body);
+    return $details;
+  }
+
+  [...block.children].forEach((row, i) => {
     const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];
+    const learnMore = row.children[4];
+    const accLearnMore = decorateLearnMore(learnMore, i);
 
     categories.push(category);
     const businessBlock = div(
@@ -105,10 +129,16 @@ export default function decorate(block) {
         ),
       ),
     );
+    businessBlock.append(accLearnMore);
     contentContainer.append(businessBlock);
   });
   const searchContainer = buildSearchForm();
   const categoryTagContainer = buildCategoryTags([...new Set(categories)]);
   block.innerHTML = '';
   block.append(searchContainer, categoryTagContainer, contentContainer);
+
+  /* eslint-disable no-new */
+  block.querySelectorAll('details').forEach((el) => {
+    new Accordion(el);
+  });
 }
