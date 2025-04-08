@@ -103,12 +103,15 @@ export default function decorate(block) {
   }
 
   [...block.children].forEach((row, i) => {
+    let accLearnMore;
     const backgroundImage = row.children[0].querySelector('img')?.getAttribute('src');
     const category = row.children[1].textContent;
     const descriptionEl = row.children[2];
     const contacts = row.children[3];
-    const learnMore = row.children[4];
-    const accLearnMore = decorateLearnMore(learnMore, i);
+    if (row.children[4]) {
+      const learnMore = row.children[4];
+      accLearnMore = decorateLearnMore(learnMore, i);
+    }
 
     categories.push(category);
     const businessBlock = div(
@@ -129,7 +132,7 @@ export default function decorate(block) {
         ),
       ),
     );
-    businessBlock.append(accLearnMore);
+    if (row.children[4]) { businessBlock.append(accLearnMore); }
     contentContainer.append(businessBlock);
   });
   const searchContainer = buildSearchForm();
