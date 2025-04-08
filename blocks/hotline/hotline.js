@@ -84,7 +84,8 @@ export default function decorate(block) {
   function decorateLearnMore(learnMore, idValue) {
     const $summary = summary({ class: 'accordion-item-label' });
 
-    const body = div({ class: 'accordion-item-body, content' });
+    const body = div({ class: 'accordion-item-body' });
+    body.classList.add('content');
     [...learnMore.children].forEach((row, i) => {
       if (i === 0) {
         // decorate accordion item label
