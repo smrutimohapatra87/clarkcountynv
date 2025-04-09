@@ -11,10 +11,10 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 export function decorateLinks(element) {
   element.querySelectorAll('a').forEach((a) => {
     // match text inside [] and split by '|'
-    const match = a.textContent.match(/(.*)\[\[([^\]\]]*)]/);
-    if (match) {
+    const match1 = a.textContent.match(/(.*)\[\[([^\]\]]*)]/);
+    if (match1) {
       // eslint-disable-next-line no-unused-vars
-      const [_, linkText, attrs] = match;
+      const [_, linkText, attrs] = match1;
       a.textContent = linkText.trim();
       a.setAttribute('title', a.textContent);
       attrs.split(',').forEach((attr) => {
@@ -23,6 +23,13 @@ export function decorateLinks(element) {
         value = value.join().trim();
         if (key) a.setAttribute(key, value);
       });
+    }
+    // Check if hostname of the URL contains sms, remove https:// & ?
+    const url = new URL(a.href);
+    const smsHostnames = ['sms'];
+    if (smsHostnames.some((sms) => url.hostname.includes(sms))) {
+      const newSmsLink = url.href.replace('?', '').replace('https://', '');
+      a.href = newSmsLink;
     }
   });
 }

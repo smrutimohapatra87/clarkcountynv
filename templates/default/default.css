@@ -294,6 +294,19 @@ main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hot
     text-align: unset;
 }
 
+main .mainmenu .rightsection.no-button-v1 .cards a,
+main .mainmenu .rightsection.no-button-v1 .cards * a,
+main .mainmenu .rightsection.no-button-v1 .hotline a {
+    color: var(--no-button-link);
+    background-color: transparent;
+    text-decoration: underline;
+    border: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: wrap;
+    text-align: unset;
+}
+
 main .mainmenu .rightsection a:any-link.button.default {
     margin: 5px 0 !important;
     padding: .375rem .75rem !important;
