@@ -31,6 +31,11 @@
 .table.thbc5 thead {
   background-color: var(--table-head-background-color5);
 }
+
+.table.thbc6 thead {
+    background-color: var(--table-head-background-color6);
+  }
+  
   
 @media (width >= 600px) {
   .table table {
