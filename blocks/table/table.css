@@ -36,6 +36,9 @@
     background-color: var(--table-head-background-color6);
   }
   
+.table.thbc7 thead {
+    background-color: var(--table-head-background-color7);
+  }
   
 @media (width >= 600px) {
   .table table {
