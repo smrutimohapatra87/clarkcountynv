@@ -570,12 +570,12 @@ export function loadrrule() {
   document.head.append(scriptrrule);
 }
 
-function filterEvents(divisionId) {
+function filterEvents(divisionId, redirectCalendarName) {
   if (divisionId === '1') {
     window.location.href = `https://${window.location.host}/calendar`;
     return;
   }
-  window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+  window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
 }
 
 function searchItems(searchTerm) {
@@ -621,6 +621,16 @@ function changeURL() {
     const newUrl = windowHref + queryParam;
     window.location.replace(newUrl);
   }
+}
+
+function getName(divisionId) {
+  let divisionName = '';
+  divisions.forEach((division) => {
+    if (division.id === divisionId) {
+      divisionName = division.name;
+    }
+  });
+  return divisionName;
 }
 
 export default async function decorate(doc) {
@@ -678,11 +688,12 @@ export default async function decorate(doc) {
             if (division.id === divisionId) {
               liele.style.backgroundColor = division.color;
               liele.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
-              if (divisionId === '2') {
-                window.location.href = `https://${window.location.host}/calendar/${normalizeString(divisions[divisionId - 1].name)}/`;
+              const redirectCalendarName = getName(divisionId);
+              if (divisionId === '64') {
+                window.location.href = `https://${window.location.host}/calendar/${normalizeString(redirectCalendarName)}/`;
                 getFeaturedEvents();
               } else {
-                filterEvents(divisionId);
+                filterEvents(divisionId, redirectCalendarName);
               }
             }
           });
