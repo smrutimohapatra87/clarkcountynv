@@ -105,6 +105,6 @@ indices:
         select: head > meta[property="og:image"]
         value: attribute(el, 'content')
       bannerUrl:
-        select: head > meta[property="bannerurl"]
+        select: head > meta[name="bannerurl"]
         value: attribute(el, 'content')      
 
