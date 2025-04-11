@@ -54,7 +54,7 @@ function parseRRule(rruleString) {
     frequency,
     daysOfWeek,
     until,
-    excludeDates: excludeDates.join(', '),
+    excludeDates: excludeDates.join(','),
   };
 }
 
@@ -122,6 +122,51 @@ function colorToDivisionMapping(color) {
   return colorMapping[color] || '';
 }
 
+const calendarProps = {
+  1: { color: '#312222', name: 'Events' },
+  6: { color: '#3787D8', name: 'County Commissioners' },
+  13: { color: '#DA80C1', name: 'County Commission District A' },
+  14: { color: '#C0A6DD', name: 'County Commission District B' },
+  15: { color: '#48E7E2', name: 'County Commissioners District C' },
+  16: { color: '#7AD295', name: 'County Commissioners District D' },
+  17: { color: '#D4DBB6', name: 'County Commissioners District E' },
+  18: { color: '#F9A97F', name: 'County Commissioners District F' },
+  19: { color: '#2619E4', name: 'County Commissioners District G' },
+  21: { color: '', name: 'calendar-list-options' },
+  22: { color: '#FF8600', name: 'Goodsprings Citizens Advisory Committee' },
+  24: { color: '#37D84E', name: 'Laughlin TAB' },
+  26: { color: '#7237D8', name: 'Lone Mountain Citizens Advisory Council' },
+  28: { color: '#D837D2', name: 'Lower Kyle Canyon Citizens Advisory Committee' },
+  30: { color: '#9D484D', name: 'Moapa Town Advisory Board' },
+  32: { color: '#058089', name: 'Paradise Town Advisory Board' },
+  33: { color: '#3A9500', name: 'Spring Valley Town Advisory Board' },
+  34: { color: '#3C8C98', name: 'Winchester Town Advisory Board' },
+  35: { color: '#D5CD70', name: 'Enterprise Town Advisory Board' },
+  36: { color: '#89B5BC', name: 'Moapa Valley Town Advisory Board' },
+  37: { color: '#FE0000', name: 'Red Rock Citizens Advisory Committee' },
+  38: { color: '#37D891', name: 'Searchlight Town Advisory Board' },
+  39: { color: '#B4ADA6', name: 'Bunkerville Town Advisory Board' },
+  40: { color: '#F3BBEA', name: 'Mount Charleston Town Advisory Board' },
+  41: { color: '#DADD32', name: 'Sunrise Manor Town Advisory Board' },
+  42: { color: '#07CAF7', name: 'Whitney Town Advisory Board' },
+  43: { color: '#047C6D', name: 'PC' },
+  44: { color: '#9086D8', name: 'BCC' },
+  45: { color: '#6AA85A', name: 'Mountain Springs Citizens Advisory Council' },
+  47: { color: '#069874', name: 'Indian Springs Town Advisory Board' },
+  49: { color: '#51277C', name: 'Sandy Valley Citizens Advisory Council Meeting' },
+  52: { color: '#3787D8', name: 'Wetlands Park' },
+  53: { color: '#3787D8', name: 'Working Group to Address Homelessness' },
+  54: { color: '#EDF77F', name: 'County Manager' },
+  55: { color: '#DDC08F', name: 'Parks & Recreation' },
+  56: { color: '#3787D8', name: 'American Rescue Plan Act' },
+  57: { color: '#37D847', name: 'Truancy Prevention Outreach Program' },
+  61: { color: '#3787D8', name: 'CJCC' },
+  62: { color: '#F26D1E', name: 'Mojave Max and DCP Outreach Events / Volunteer Opportunities' },
+  64: { color: '#3787D8', name: 'Featured Events' },
+  65: { color: '#3787D8', name: 'Family Services' },
+  66: { color: '#3787D8', name: 'Independent Living' },
+};
+
 const DESCRIPTION = 'description';
 const MAP_LOCATION = 'Map-location';
 const EVENT_FOOTER = 'Event-footer';
@@ -148,7 +193,7 @@ export default {
 
     try {
       // Using relative path since events.json is in the same directory
-      const eventsJsonPath = new URL('./filtered_events.json', import.meta.url);
+      const eventsJsonPath = new URL('./events.json', import.meta.url);
       const response = await fetch(eventsJsonPath);
       eventsJsonData = await response.json();
     } catch (error) {
@@ -183,10 +228,6 @@ export default {
     main.append(getEventBlock('hero'));
     main.append(blockSeparator().cloneNode(true));
     main.append(getEventBlock('title'));
-    // main.append(blockSeparator().cloneNode(true));
-    // main.append(getEventBlock('image'));
-    // main.append(blockSeparator().cloneNode(true));
-    // main.append(getEventBlock(ADDRESS));
     main.append(blockSeparator().cloneNode(true));
 
     const descriptionEl = document.createElement('div');
@@ -203,9 +244,6 @@ export default {
     main.append(descriptionEl);
     main.append(getEventBlock(DESCRIPTION));
     main.append(blockSeparator().cloneNode(true));
-
-    // main.append(getEventBlock(LOCATIONS));
-    // main.append(blockSeparator().cloneNode(true));
 
     if (eventJson.location) { // if there is no location for ex. 4th July Independence day
       const mapEl = document.createElement('a');
@@ -248,11 +286,20 @@ export default {
     main.append(getEventBlock(EVENT_FOOTER));
     main.append(blockSeparator().cloneNode(true));
 
+    // calenders display
+    params.divisionName = colorToDivisionMapping(eventJson.color)
+      || eventJson.primary_calendar_name;
+    if (eventJson.calendar_displays && eventJson.calendar_displays.length > 1) {
+      const eventDivisions = eventJson.calendar_displays;
+      const names = eventDivisions
+        .map((id) => calendarProps[id]?.name) // Map ids to their names
+        .filter((name) => name) // Filter out undefined names
+        .join(', ');
+      params.divisionName = names;
+    }
+
     params.eventStart = eventJson.start;
-    if (!eventJson.end) {
-      params.eventStop = eventJson.allDay ? eventJson.start : '';
-      console.log('Event end not found. Setting eventStop to start date');
-    } else {
+    if (eventJson.end) {
       params.eventStop = eventJson.end;
     }
     params.duration = eventJson.duration ? `T${eventJson.duration}:00` : '';
@@ -261,17 +308,24 @@ export default {
       params.freq = rrule.frequency;
       params.daysOfWeek = rrule.daysOfWeek;
       params.excludeDates = rrule.excludeDates;
-      params.eventStop = rrule.until || params.eventstop;
+      if (rrule.until) {
+        params.eventStop = rrule.until; // Ideally we should support until in rrule
+      } /*else {
+        const startDate = new Date(params.eventStart);
+        startDate.setFullYear(startDate.getFullYear() + 5);
+        params.eventStop = startDate.toISOString().substring(0, 19);
+      }*/
+    }
+    if (!params.eventStop && params.allDay) {
+      console.log('Not setting eventStop for single allDay event');
     }
 
     params.featuredImage = heroImage.cloneNode(true);
     params.template = 'event';
-    params.divisionName = colorToDivisionMapping(eventJson.color)
-      || eventJson.primary_calendar_name;
     params.featuredTitle = eventJson.title;
     params.title = eventJson.title;
     params.featuredDescription = descriptionEl.cloneNode(true);
-
+    params.allDay = Boolean(eventJson.allDay) || false;
     createMetadata(main, document, params);
 
     results.push({

@@ -49,6 +49,9 @@ indices:
       end:
         select: head > meta[name="eventstop"]
         value: attribute(el, "content")
+      allDay:
+        select: head > meta[name="allday"]
+        value: attribute(el, "content")
       freq:
         select: head > meta[name="freq"]
         value: attribute(el, "content")

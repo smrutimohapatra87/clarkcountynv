@@ -5,7 +5,7 @@ export const PREVIEW_DOMAIN = 'https://main--clarkcountynv--aemsites.aem.page';
 const METADATA_ALLOWED_KEYS = ['template', 'breadcrumbs-base', 'page-title', 'breadcrumbs-title-override',
   'backgroundImageUrl', 'category', 'publishDate', 'title', 'brief', 'bannerUrl',
   'featuredImage', 'divisionName', 'eventStart', 'eventStop', 'daysOfWeek',
-  'freq', 'duration', 'excludeDates', 'featuredTitle', 'featuredDescription', 'readMore'];
+  'freq', 'duration', 'excludeDates', 'featuredTitle', 'featuredDescription', 'readMore', 'allDay'];
 
 const videoExtensions = [
   'mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', '3gp', 'rm',
