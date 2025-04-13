@@ -56,6 +56,10 @@ export default async function decorate(doc) {
     }
   });
 
+  if (descriptionEl?.children?.length === 0) {
+    descriptionEl.remove();
+  }
+
   // Configuring a POST Message on scrolling to send the event title to the parent window
   (() => {
     let lastState = { eventtop: null, eventfooter: null };

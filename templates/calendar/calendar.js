@@ -105,7 +105,7 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
+function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -116,9 +116,13 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   const eventStartHours = startTime.toString().split(' ')[4].split(':')[0];
   const eventStartMinutes = startTime.toString().split(' ')[4].split(':')[1];
   const eventStartTime = tConv24(`${eventStartHours}:${eventStartMinutes}`);
-  const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
-  const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
-  const eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+
+  let eventEndTime;
+  if (endTime) { // for allDay event, endTime is not mandatory
+    const eventEndHours = endTime.toString().split(' ')[4].split(':')[0];
+    const eventEndMinutes = endTime.toString().split(' ')[4].split(':')[1];
+    eventEndTime = tConv24(`${eventEndHours}:${eventEndMinutes}`);
+  }
 
   // convert number into Month name
   const eventMonthName = months[eventMonth];
@@ -131,7 +135,7 @@ function popupEvent(url, startTime, endTime, backgroundColor, readMore) {
   modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
   modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
-  modal.querySelector('.event-modal-time p').textContent = `${eventStartTime} - ${eventEndTime}`;
+  modal.querySelector('.event-modal-time p').textContent = allDay ? 'All Day' : `${eventStartTime} - ${eventEndTime}`;
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
@@ -229,6 +233,7 @@ function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
+    event.allDay = event.allDay === 'true';
     if (event.daysOfWeek.length > 1) {
       if (event.duration && event.duration.length > 0) {
         eventDuration = `${event.duration.split('T')[1]}`;
@@ -243,7 +248,7 @@ function createEvents(eventsList) {
         /* Converting String into array to leverage map function */
         calendar.addEvent({
           title: event.title,
-          allDay: false,
+          allDay: event.allDay,
           rrule: {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
@@ -272,7 +277,7 @@ function createEvents(eventsList) {
         const eventbyweekday = getbyweekday(event.daysOfWeek);
         calendar.addEvent({
           title: event.title,
-          allDay: false,
+          allDay: event.allDay,
           rrule: {
             freq: event.freq,
             byweekday: eventbyweekday.map((day) => {
@@ -302,7 +307,7 @@ function createEvents(eventsList) {
         title: event.title,
         start: event.start,
         end: event.end,
-        allDay: false,
+        allDay: event.allDay,
         url: event.url,
         backgroundColor: event.backgroundColor,
         textColor: event.textColor,
@@ -330,22 +335,24 @@ function createEventList(importedData, eventsList) {
     } else {
       divisionArray.push(event.divisionname);
     }
-    divisionArray.forEach((divisionEle) => {
-      // Check for each division and assign the class, color, id to the event
-      divisions.forEach((division) => {
-        if (normalizeString(division.name) === normalizeString(divisionEle)) {
-          event['division-color'] = division.color;
-          event['division-textColor'] = division.textColor;
-          event.divisionid = division.id;
-          if (event.readMore.length > 1) {
-            event.classNames = `${normalizeString(event.divisionname)} yesReadMore`;
-          } else {
-            event.classNames = `${normalizeString(event.divisionname)} noReadMore`;
+    divisionArray.forEach((divisionEle, index) => {
+      if (index === 0) {
+        // Check for each division and assign the class, color, id to the event
+        divisions.forEach((division) => {
+          if (normalizeString(division.name) === normalizeString(divisionEle)) {
+            event['division-color'] = division.color;
+            event['division-textColor'] = division.textColor;
+            event.divisionid = division.id;
+            if (event.readMore.length > 1) {
+              event.classNames = `${normalizeString(division.name)} yesReadMore`;
+            } else {
+              event.classNames = `${normalizeString(division.name)} noReadMore`;
+            }
           }
-        }
-      });
-      const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
-      eventsList.push(eventObj);
+        });
+        const eventObj = new Obj(event.title, event.start, event.end, event.allDay, event.daysOfWeek, startTime, endTime, url, event['division-color'], event['division-textColor'], event.classNames, event.readMore, event.divisionid, event.excludeDates, event.duration, event.freq);
+        eventsList.push(eventObj);
+      }
     });
   });
   createEvents(eventsList);
@@ -452,7 +459,7 @@ function createCalendar() {
           window.history.pushState({}, '', url);
         }
         // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.backgroundColor, info.event.extendedProps.readMore);
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
       }
     },
   });
@@ -511,7 +518,10 @@ async function initializeCalendar() {
             getFeaturedEvents();
           } else {
             // eslint-disable-next-line max-len
-            const filterData = importedData.filter((event) => normalizeString(event.divisionname) === normalizeString(division.name));
+            const filterData = importedData.filter((event) => normalizeString(event.divisionname).includes(normalizeString(division.name))).map((event) => {
+              event.divisionname = division.name;
+              return event;
+            });
             createEventList(filterData, eventsList);
           }
         }

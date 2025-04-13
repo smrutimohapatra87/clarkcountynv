@@ -25,7 +25,7 @@ export function capitalize(s) {
 }
 
 export function normalizeString(str) {
-  return str.toLowerCase().replace(/ /g, '-');
+  return str.trim().toLowerCase().replace(/ /g, '-');
 }
 
 // Links opening in new tab
