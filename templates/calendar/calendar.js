@@ -532,7 +532,7 @@ async function initializeCalendar() {
           } else {
             // eslint-disable-next-line max-len
             const filterData = importedData.filter((event) => normalizeString(event.divisionname).includes(normalizeString(division.name))).map((event) => {
-              event.divisionname = division.name;
+              [event.divisionname] = event.divisionname.split(',');
               return event;
             });
             createEventList(filterData, eventsList);

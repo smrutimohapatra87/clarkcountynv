@@ -194,15 +194,14 @@ async function getCategories(block, newsbox) {
   const firstOption = option({ value: normalizeString('All News') }, 'All News');
   select.append(firstOption);
   categories.forEach((category) => {
-    const option = document.createElement('option');
-    option.value = normalizeString(category);
-    option.textContent = category;
-    select.append(option);
+    const $option = option({ value: normalizeString(category) });
+    $option.textContent = category;
+    select.append($option);
   });
 
-  select.querySelectorAll('option').forEach((option) => {
-    if (normalizeString(option.value) === normalizeString(catNews)) {
-      option.setAttribute('selected', true);
+  select.querySelectorAll('option').forEach(($option) => {
+    if (normalizeString($option.value) === normalizeString(catNews)) {
+      $option.setAttribute('selected', true);
       if (normalizeString(catNews) === normalizeString('All News')) {
         loadresults(jsonDataNews, block, curPage, newsbox);
       } else {
@@ -211,7 +210,7 @@ async function getCategories(block, newsbox) {
         loadresults(filteredNews, block, curPage, newsbox);
       }
     } else {
-      option.removeAttribute('selected');
+      $option.removeAttribute('selected');
     }
   });
 
