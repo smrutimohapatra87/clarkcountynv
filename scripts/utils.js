@@ -80,3 +80,62 @@ export function createHashId(text) {
     .replace(/(^-|-$)/g, '')
     .substring(0, 50);
 }
+
+export function addPagingWidget(
+  div,
+  curpage,
+  totalPages,
+  doc = document,
+  curLocation = window.location,
+) {
+  const queryParams = new URLSearchParams(curLocation.search);
+  const nav = doc.createElement('ul');
+  nav.classList.add('pagination');
+
+  if (totalPages > 1) {
+    const lt = doc.createElement('li');
+    lt.classList.add('page');
+    lt.classList.add('prev');
+    const lta = doc.createElement('a');
+    if (curpage === 0) {
+      lt.classList.add('disabled');
+    } else {
+      queryParams.set('pg', curpage - 1);
+      lta.href = `${curLocation.pathname}?${queryParams}`;
+    }
+    lt.appendChild(lta);
+    nav.appendChild(lt);
+
+    for (let i = 0; i < totalPages; i += 1) {
+      const numli = doc.createElement('li');
+      if (i === curpage) {
+        numli.classList.add('active');
+      }
+
+      const a = doc.createElement('a');
+      a.innerText = i + 1;
+
+      queryParams.set('pg', i);
+      a.href = `${curLocation.pathname}?${queryParams}`;
+      numli.appendChild(a);
+
+      nav.appendChild(numli);
+    }
+
+    const rt = doc.createElement('li');
+    rt.classList.add('page');
+    rt.classList.add('next');
+    const rta = doc.createElement('a');
+    if (curpage === totalPages - 1) {
+      rt.classList.add('disabled');
+    } else {
+      queryParams.set('pg', curpage + 1);
+      rta.href = `${curLocation.pathname}?${queryParams}`;
+    }
+
+    rt.appendChild(rta);
+    nav.appendChild(rt);
+  }
+
+  div.appendChild(nav);
+}
