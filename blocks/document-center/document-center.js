@@ -6,7 +6,7 @@
 
 import { Accordion } from '../accordion-ml/accordion-ml.js';
 import {
-  button, details, div, h2, input, label, small, span, summary, ul,
+  button, details, div, h2, input, label, p, small, span, summary, ul,
 } from '../../scripts/dom-helpers.js';
 import { createHashId, scrollWithHeaderOffset } from '../../scripts/utils.js';
 
@@ -48,7 +48,7 @@ function searchDocuments(searchValue) {
   let fileText = '';
   const results = [];
 
-  const files = document.querySelectorAll('.documents-wrap .content .file-item');
+  const files = document.querySelectorAll('.documents-wrap .content .file-item, .documents-wrap .content-inner .file-item');
   files.forEach((file) => {
     const aEl = file.querySelector('a');
     if (aEl) {
@@ -118,52 +118,88 @@ function createFileSearchForm(block) {
   block.insertBefore(searchForm, block.firstChild);
 }
 
+function customizeFileLinks(fileLinks) {
+  fileLinks.forEach((fileLink) => {
+    const fullFileTitle = fileLink.textContent.trim();
+    const fileTypeClass = fileLink.href.split('.').pop().endsWith('pdf') ? 'fa-file-pdf-o' : 'fa-file-text-o';
+    fileLink.classList.add(fileTypeClass);
+    let fileDescription;
+    if (fullFileTitle.search('\\[description=') !== -1) {
+      fileDescription = fullFileTitle.split('[description=')[1].slice(0, -1);
+      const [fileName] = fullFileTitle.split('[description=');
+      fileLink.textContent = fileName;
+    }
+    fileLink.replaceWith(div({ class: 'file-item' }, fileLink.cloneNode(true), span({ class: 'doc-file-desc' }, fileDescription)));
+  });
+}
+
 export default function decorate(block) {
   const searchResults = div({ class: 'doc-search-results' });
   const container = div({ class: 'documents-wrap' });
   [...block.children].forEach((row) => {
-    let fileGroupDesciption;
-
     const fileGroup = row.children[0];
-    const numOfChildren = fileGroup.childElementCount;
-    const fileGroupTitle = fileGroup.children[0];
-    if (numOfChildren === 2) {
-      [, fileGroupDesciption] = fileGroup.children;
-    }
-    const summaryEl = summary({ class: 'accordion-item-label' }, fileGroupTitle, small({ class: 'doc-center-counter' }, '2 documents'));
+    const [fileGroupTitle, fileGroupDescription] = fileGroup.children;
 
-    const body = row.children[1];
+    let body = row.children[1];
     body.className = 'content';
-    if (fileGroupDesciption) {
-      const descriptionEl = div({ class: 'doc-group-description' }, fileGroupDesciption.textContent.trim());
+    if (fileGroupDescription) {
+      const descriptionEl = div({ class: 'doc-group-description' }, fileGroupDescription.textContent.trim());
       body.prepend(descriptionEl);
     }
 
-    const fileLinks = body.querySelectorAll('a');
-    const numOfDocs = fileLinks.length;
-    summaryEl.querySelector('.doc-center-counter').textContent = `${numOfDocs} documents`;
-    fileLinks.forEach((fileLink) => {
-      const fullFileTitle = fileLink.textContent.trim();
-      const fileTypeClass = fileLink.href.split('.').pop().endsWith('pdf') ? 'fa-file-pdf-o' : 'fa-file-text-o';
-      fileLink.classList.add(fileTypeClass);
-      let fileDescription;
-      if (fullFileTitle.search('\\[description=') !== -1) {
-        fileDescription = fullFileTitle.split('[description=')[1].slice(0, -1);
-        const [fileName] = fullFileTitle.split('[description=');
-        fileLink.textContent = fileName;
-      }
-      fileLink.replaceWith(div({ class: 'file-item' }, fileLink.cloneNode(true), span({ class: 'doc-file-desc' }, fileDescription)));
-    });
+    const documents = row.children[1].cloneNode(true);
+    const isMultiLevel = documents.querySelectorAll('ul ul').length > 0;
+    if (isMultiLevel) {
+      const sections = documents.querySelectorAll('ul > li > ul');
+      const subAccordionsContainer = div({ class: 'sub-accordions' });
+
+      sections.forEach((section) => {
+        const sectionTitle = section.previousSibling.textContent.trim();
+        if (!sectionTitle) {
+          return;
+        }
+
+        const fileLinks = section.querySelectorAll('a');
+        const numOfDocs = fileLinks.length;
+        const sectionSummary = summary({ class: 'accordion-item-label-inner' }, p(sectionTitle), small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`));
+        customizeFileLinks(fileLinks);
+
+        const subId = createHashId(sectionTitle);
+        const subDetailsEl = details(
+          { class: 'accordion-item-inner', id: subId },
+          sectionSummary,
+          div({ class: 'content' }, section),
+        );
+        subAccordionsContainer.append(subDetailsEl);
+      });
+
+      body = subAccordionsContainer.cloneNode(true);
+    } else {
+      const fileLinks = body.querySelectorAll('a');
+      customizeFileLinks(fileLinks);
+    }
 
     const titleText = fileGroupTitle.textContent.trim();
     const id = createHashId(titleText);
+    const mainSummaryEl = summary(
+      { class: 'accordion-item-label' },
+      fileGroupTitle,
+      small(
+        { class: 'doc-center-counter' },
+        `${body.querySelectorAll('.file-item').length} documents`,
+      ),
+    );
 
-    const detailsEl = details({
-      class: 'accordion-item',
-      id,
-    }, summaryEl, body);
+    const detailsEl = details(
+      {
+        class: 'accordion-item',
+        id,
+      },
+      mainSummaryEl,
+      body,
+    );
 
-    // Add toggle event listener to update URL hash based on open state
+    // Add toggle event listener for hash updates
     detailsEl.addEventListener('toggle', () => {
       if (detailsEl.hasAttribute('open')) {
         window.history.pushState(null, '', `#${id}`);
@@ -172,13 +208,13 @@ export default function decorate(block) {
       }
     });
 
+    // Check if this main accordion should be open based on hash
     if (window.location.hash === `#${id}`) {
       detailsEl.setAttribute('open', '');
       setTimeout(() => {
         scrollWithHeaderOffset(detailsEl);
       }, 100);
     }
-
     container.append(detailsEl);
     row.remove();
   });

@@ -225,40 +225,69 @@ function buildDocumentCenterBlock(main) {
     return;
   }
 
-  const elems = newsletterEl.querySelectorAll('.docs-toggle, .file-group');
+  // const elems = newsletterEl.querySelectorAll('.docs-toggle, .file-group');
+
+  const elems = newsletterEl.querySelectorAll('.outer-cat');
   const cells = [];
   for (let i = 0; i < elems.length;) {
+    const currentGroup = elems[i];
+    const summary = currentGroup.querySelector('h3').childNodes[0].nodeValue.trim();
     const files = document.createElement('div');
-    if (elems[i].childNodes[0].nodeValue === null) {
-      i += 1;
-      // eslint-disable-next-line no-continue
-      continue;
-    }
-    const summary = elems[i].childNodes[0].nodeValue.trim();
-    const liEls = elems[i + 1]?.querySelectorAll('li');
-    if (liEls && liEls.length > 0) {
-      liEls.forEach((li) => {
-        const a = li.querySelector('a');
-        const fileName = a.textContent.trim();
-        const { href } = a;
-        let description;
-        if (li.querySelector('.doc-file-desc')) {
-          description = li.querySelector('.doc-file-desc').textContent.trim() || '';
-        }
 
-        const elem = document.createElement('a');
-        elem.href = href;
-        elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-        const newLi = document.createElement('li');
-        newLi.append(elem);
-        files.append(newLi);
+    // add condition for empty group
+
+    const innerCat = currentGroup.querySelectorAll('.inner-cat');
+    if (innerCat && innerCat.length > 0) {
+      // ul - li combination
+
+      innerCat.forEach((inner) => {
+        const innerCatTitle = inner.querySelector('h4').childNodes[0].nodeValue.trim();
+        const ulEl = document.createElement('ul');
+        const liEls = inner.querySelectorAll('li');
+        liEls.forEach((li) => {
+          const a = li.querySelector('a');
+          const fileName = a.textContent.trim();
+          const { href } = a;
+          let description;
+          if (li.querySelector('.doc-file-desc')) {
+            description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+          }
+
+          const elem = document.createElement('a');
+          elem.href = href;
+          elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+          const newLi = document.createElement('li');
+          newLi.append(elem);
+          ulEl.append(newLi);
+        });
+        const innerSummary = document.createElement('li');
+        innerSummary.append(innerCatTitle);
+        innerSummary.append(ulEl);
+        files.append(innerSummary);
       });
     } else {
-      i += 1;
-      // eslint-disable-next-line no-continue
-      continue;
+      const liEls = currentGroup?.querySelectorAll('li');
+      // all inside one ul.
+      if (liEls && liEls.length > 0) {
+        liEls.forEach((li) => {
+          const a = li.querySelector('a');
+          const fileName = a.textContent.trim();
+          const { href } = a;
+          let description;
+          if (li.querySelector('.doc-file-desc')) {
+            description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+          }
+
+          const elem = document.createElement('a');
+          elem.href = href;
+          elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+          const newLi = document.createElement('li');
+          newLi.append(elem);
+          files.append(newLi);
+        });
+      }
     }
-    i += 2;
+    i += 1;
     cells.push([summary, files]);
   }
 
@@ -446,7 +475,7 @@ function buildAgendaTable(main) {
 }
 
 function buildTables(main) {
-  const TABLE_HEADERS = ['Section Metadata', 'Accordion', 'table', 'Leftnav', 'cards', 'carousel', 'document-center', 'embed', 'featured-events', 'hero', 'hotline', 'text', 'modal', 'video'];
+  const TABLE_HEADERS = ['Section Metadata', 'Accordion', 'table', 'Leftnav', 'cards', 'carousel', 'document-center', 'Document Center', 'embed', 'featured-events', 'hero', 'hotline', 'text', 'modal', 'video'];
 
   const tables = main.querySelectorAll('table');
   tables.forEach((table) => {
