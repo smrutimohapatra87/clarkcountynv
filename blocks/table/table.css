@@ -139,7 +139,7 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 
 .table.col1-70 table tbody tr td:first-child{
     width: 70%;
-  }
+}
 
 .table.col1-15 table tbody tr {
     td:first-child {
@@ -493,6 +493,39 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
         th,td {
             padding-left: 10px;
 
+        }
+    }
+}
+
+.table.business-detail {
+    tr {
+        border-collapse: collapse;
+        border: none !important;
+
+        td {
+            vertical-align: top !important;
+
+            h2 {
+                margin-top: unset !important;
+            }
+        }
+
+        td:first-child{
+            width: 45%;
+            font-size: var(--body-font-size-xs);
+        }
+
+        p {
+            margin: 5px !important;
+            padding: unset;
+        }
+
+        span.icon {
+            vertical-align: middle;
+
+            img {
+                height: 80%;
+            }
         }
     }
 }
