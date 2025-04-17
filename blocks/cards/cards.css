@@ -415,6 +415,10 @@
         height: 200px;
     }
 
+    &.height-250 img {
+        height: 250px;
+    }
+
     &.height-300 img {
         height: 300px;
     }
