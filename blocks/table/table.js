@@ -48,6 +48,14 @@ export default async function decorate(block) {
       cell.innerHTML = childColumns[0].innerHTML;
       cell.setAttribute('colspan', '2');
       row.append(cell);
+
+    // Condition for blue-header-bordered table variant
+    } else if (childColumns.length === 1
+      && block.classList.contains('mixed-columns')) {
+      const cell = buildCell(header ? i : i + 1);
+      cell.innerHTML = childColumns[0].innerHTML;
+      cell.setAttribute('colspan', maxColumns);
+      row.append(cell);
     } else {
       // Normal case - add each column
       childColumns.forEach((col) => {

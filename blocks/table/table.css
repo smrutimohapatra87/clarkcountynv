@@ -604,3 +604,27 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
         margin-bottom: 30px;
     }
 }
+
+
+/* CSS for blue-header-bordered Table variant */
+  .table.mixed-columns
+{
+    table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    td, th {
+    border: 1px solid black;
+    padding: 8px;  
+  }
+
+  td[colspan] {
+    text-align: left;  
+  }
+}
+
+.mixed-columns td {
+    text-align: center;
+  }
+
