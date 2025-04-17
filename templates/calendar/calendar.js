@@ -238,6 +238,9 @@ function createEvents(eventsList) {
   disableSpinner();
   let eventDuration = '';
   eventsList.forEach((event) => {
+    if (event.freq.toLowerCase() === 'daily') {
+      event.daysOfWeek = 'mo,tu,we,th,fr,sa,su';
+    }
     event.allDay = event.allDay === 'true';
     if (event.daysOfWeek.length > 1) {
       if (event.duration && event.duration.length > 0) {
