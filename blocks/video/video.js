@@ -3,6 +3,9 @@
  * Show a video referenced by a link
  * https://www.hlx.live/developer/block-collection/video
  */
+import {
+  div,
+} from '../../scripts/dom-helpers.js';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -106,10 +109,15 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
   }
 };
 
-export default async function decorate(block) {
+function videoEnablement(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
+  const details = block.querySelector('h4').textContent;
+  const detailsv1 = div({ class: 'text' }, `${details}`);
   block.textContent = '';
+  if (detailsv1) {
+    block.append(detailsv1);
+  }
   block.dataset.embedLoaded = false;
 
   const autoplay = block.classList.contains('autoplay');
@@ -141,5 +149,17 @@ export default async function decorate(block) {
       }
     });
     observer.observe(block);
+  }
+}
+
+export default async function decorate(block) {
+  if (block.classList.contains('table')) {
+    [...block.children].forEach((row) => {
+      [...row.children].forEach((col) => {
+        videoEnablement(col);
+      });
+    });
+  } else {
+    videoEnablement(block);
   }
 }

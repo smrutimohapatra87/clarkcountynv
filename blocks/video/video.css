@@ -13,9 +13,38 @@
     display: flex;
     justify-content: center;
   }
+
+  .video.table {
+    max-width: 1200px;
+  }
   
   .video video {
     max-width: 100%;
+  }
+
+  .video.table > div {
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  @media (width >= 900px) {
+    .video.table > div {
+      flex-direction: row;
+      margin-bottom: 5vh;
+      gap: 20px;
+    }
+  }
+
+  .video.table video {
+    height: 80%;
+  }
+
+  .video.table div.text {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: var(--heading-font-family);
+    line-height: 1.2;
+    height: 60px;
   }
   
   .video .video-placeholder {
