@@ -1,11 +1,9 @@
 {
   "mappings": [
-    "/content/showcase/:/",
-    "/content/showcase/configuration:/.helix/config.json",
-    "/content/showcase/metadata:/metadata.json"
+    "/content/clarkcountynv-forms/:/forms"
   ],
   "includes": [
-    "/content/",
-    "/content/dam/"
+    "/content/clarkcountynv-forms",
+    "/content/dam/clarkcountynv-forms"
   ]
 }
