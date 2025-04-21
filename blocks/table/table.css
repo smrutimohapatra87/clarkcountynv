@@ -412,6 +412,13 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     padding: unset;
 }
 
+.table.img-300-right table tbody tr td picture img {
+    height: 200px;
+    width: 300px;
+    float: right;
+}
+
+
 .table.fees table {
     width: 50%;
 
