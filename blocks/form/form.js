@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   createButton, createFieldWrapper, createLabel, getHTMLRenderType,
   createHelpText,
@@ -11,15 +10,16 @@ import {
 import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorator from './mappings.js';
 import DocBasedFormToAF from './transform.js';
-import transferRepeatableDOM from './components/repeat/repeat.js';
+import transferRepeatableDOM, { insertAddButton, insertRemoveButton } from './components/repeat/repeat.js';
 import { handleSubmit } from './submit.js';
-import { getSubmitBaseUrl, emailPattern } from './constant.js';
+import { getSubmitBaseUrl, emailPattern, SUBMISSION_SERVICE } from './constant.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export const DELAY_MS = 0;
 let captchaField;
 let afModule;
 
-const withFieldWrapper = (element) => (fd) => { // eslint-disable-line
+const withFieldWrapper = (element) => (fd) => {
   const wrapper = createFieldWrapper(fd);
   wrapper.append(element(fd));
   return wrapper;
@@ -150,6 +150,23 @@ function createLegend(fd) {
   return createLabel(fd, 'legend');
 }
 
+function createRepeatablePanel(wrapper, fd) {
+  setConstraints(wrapper, fd);
+  wrapper.dataset.repeatable = true;
+  wrapper.dataset.index = fd.index || 0;
+  if (fd.properties) {
+    Object.keys(fd.properties).forEach((key) => {
+      if (!key.startsWith('fd:')) {
+        wrapper.dataset[key] = fd.properties[key];
+      }
+    });
+  }
+  if ((!fd.index || fd?.index === 0) && fd.properties?.variant !== 'noButtons') {
+    insertAddButton(wrapper, wrapper);
+    insertRemoveButton(wrapper, wrapper);
+  }
+}
+
 function createFieldSet(fd) {
   const wrapper = createFieldWrapper(fd, 'fieldset', createLegend);
   wrapper.id = fd.id;
@@ -158,9 +175,7 @@ function createFieldSet(fd) {
     wrapper.classList.add('panel-wrapper');
   }
   if (fd.repeatable === true) {
-    setConstraints(wrapper, fd);
-    wrapper.dataset.repeatable = true;
-    wrapper.dataset.index = fd.index || 0;
+    createRepeatablePanel(wrapper, fd);
   }
   return wrapper;
 }
@@ -174,8 +189,8 @@ function setConstraintsMessage(field, messages = {}) {
 function createRadioOrCheckboxGroup(fd) {
   const wrapper = createFieldSet({ ...fd });
   const type = fd.fieldType.split('-')[0];
-  fd.enum.forEach((value, index) => {
-    const label = (typeof fd.enumNames?.[index] === 'object' && fd.enumNames?.[index] !== null) ? fd.enumNames[index].value : fd.enumNames?.[index] || value;
+  fd?.enum?.forEach((value, index) => {
+    const label = (typeof fd?.enumNames?.[index] === 'object' && fd?.enumNames?.[index] !== null) ? fd?.enumNames[index].value : fd?.enumNames?.[index] || value;
     const id = getId(fd.name);
     const field = createRadioOrCheckbox({
       name: fd.name,
@@ -185,7 +200,12 @@ function createRadioOrCheckboxGroup(fd) {
       enum: [value],
       required: fd.required,
     });
-    const layout = fd.properties['afs:layout'];
+    const { variant, 'afs:layout': layout } = fd.properties;
+    if (variant === 'cards') {
+      wrapper.classList.add(variant);
+    } else {
+      wrapper.classList.remove('cards');
+    }
     if (layout?.orientation === 'horizontal') {
       wrapper.classList.add('horizontal');
     }
@@ -229,14 +249,10 @@ function createPlainText(fd) {
 
 function createImage(fd) {
   const field = createFieldWrapper(fd);
-  const imagePath = fd.source || fd.properties['fd:repoPath'] || '';
-  const image = `
-  <picture>
-    <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
-    <source srcset="${imagePath}?width=750&optimize=medium">
-    <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
-  </picture>`;
-  field.innerHTML = image;
+  field.id = fd?.id;
+  const imagePath = fd.value || fd.properties['fd:repoPath'] || '';
+  const altText = fd.altText || fd.name;
+  field.append(createOptimizedPicture(imagePath, altText));
   return field;
 }
 
@@ -440,7 +456,7 @@ export async function createForm(formDef, data) {
 
   form.addEventListener('reset', async () => {
     const newForm = await createForm(formDef);
-    document.querySelector(`[data-action="${formDef.action}"]`).replaceWith(newForm);
+    document.querySelector(`[data-action="${form?.dataset?.action}"]`)?.replaceWith(newForm);
   });
 
   form.addEventListener('submit', (e) => {
@@ -540,7 +556,15 @@ export default async function decorate(block) {
   let rules = true;
   let form;
   if (formDef) {
-    formDef.action = getSubmitBaseUrl() + (formDef.action || '');
+    const { actionType, spreadsheetUrl } = formDef?.properties || {};
+    if (!formDef?.properties?.['fd:submit'] && actionType === 'spreadsheet' && spreadsheetUrl) {
+      // Check if we're in an iframe and use parent window's path if available
+      const iframePath = window.frameElement ? window.parent.location.pathname
+        : window.location.pathname;
+      formDef.action = SUBMISSION_SERVICE + btoa(pathname || iframePath);
+    } else {
+      formDef.action = getSubmitBaseUrl() + (formDef.action || '');
+    }
     if (isDocumentBasedForm(formDef)) {
       const transform = new DocBasedFormToAF();
       formDef = transform.transform(formDef);

@@ -24,6 +24,7 @@ import {
 import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
 import initializeRuleEngineWorker from './worker.js';
+import { createOptimizedPicture } from '../../../scripts/aem.js';
 
 const formModel = {};
 
@@ -48,13 +49,17 @@ function handleActiveChild(id, form) {
   if (field) {
     field.closest('.field-wrapper').dataset.active = true;
     field.focus();
+    // prevent scroll into view when user clicks on a field.
+    if (document.activeElement !== field && !field.contains(document.activeElement)) {
+      field.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
 
 async function fieldChanged(payload, form, generateFormRendition) {
   const { changes, field: fieldModel } = payload;
   const {
-    id, name, fieldType, readOnly, type, displayValue, displayFormat, displayValueExpression,
+    id, name, fieldType, ':type': componentType, readOnly, type, displayValue, displayFormat, displayValueExpression,
     activeChild,
   } = fieldModel;
   const field = form.querySelector(`#${id}`);
@@ -100,12 +105,21 @@ async function fieldChanged(payload, form, generateFormRendition) {
           field.checked = compare(currentValue, field.value, type);
         } else if (fieldType === 'plain-text') {
           field.innerHTML = currentValue;
+        } else if (fieldType === 'image') {
+          const altText = field?.querySelector('img')?.alt || '';
+          field.querySelector('picture')?.replaceWith(createOptimizedPicture(field, currentValue, altText));
         } else if (field.type !== 'file') {
           field.value = currentValue;
         }
         break;
       case 'visible':
         fieldWrapper.dataset.visible = currentValue;
+        if (fieldType === 'panel' && fieldWrapper.querySelector('dialog')) {
+          const dialog = fieldWrapper.querySelector('dialog');
+          if (currentValue === false && dialog.open) {
+            dialog.close(); // close triggers the event listener that removes the dialog overlay
+          }
+        }
         break;
       case 'enabled':
         // If checkboxgroup/radiogroup/drop-down is readOnly then it should remain disabled.
@@ -119,6 +133,10 @@ async function fieldChanged(payload, form, generateFormRendition) {
           if (readOnly === false) {
             disableElement(field, !currentValue);
           }
+        } else if (componentType === 'rating') {
+          if (readOnly === false) {
+            fieldWrapper.querySelector('.rating')?.classList.toggle('disabled', !currentValue);
+          }
         } else {
           field.toggleAttribute('disabled', currentValue === false);
         }
@@ -130,6 +148,8 @@ async function fieldChanged(payload, form, generateFormRendition) {
           });
         } else if (fieldType === 'drop-down') {
           disableElement(field, currentValue);
+        } else if (componentType === 'rating') {
+          fieldWrapper.querySelector('.rating')?.classList.toggle('disabled', currentValue === true);
         } else {
           field.toggleAttribute('disabled', currentValue === true);
         }

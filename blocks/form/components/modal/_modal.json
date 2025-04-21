@@ -2,7 +2,7 @@
     "definitions": [
         {
             "title": "Modal",
-            "id": "modal",
+            "id": "form-modal",
             "plugins": {
               "xwalk": {
                 "page": {
@@ -11,7 +11,6 @@
                     "jcr:title": "Modal",
                     "fieldType": "panel",
                     "fd:viewType": "modal",
-                    "enabled": true,
                     "visible": false
                   }
                 }
@@ -28,10 +27,10 @@
                     "name": "basic",
                     "label": "Basic",
                     "collapsible": false,
-                    "...": "../../../../models/form-common/_basic-input-fields.json"
+                    "...": "../../models/form-common/_basic-input-fields.json"
                 },
                 {
-                    "...": "../../../../models/form-common/_help-container.json"
+                    "...": "../../models/form-common/_help-container.json"
                 }
             ]
         }

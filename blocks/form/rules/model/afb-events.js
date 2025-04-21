@@ -1,4 +1,3 @@
-/* eslint-disable */
 /*************************************************************************
 * ADOBE CONFIDENTIAL
 * ___________________
@@ -19,6 +18,10 @@
 * the terms of the Adobe license agreement accompanying it.
 *************************************************************************/
 
+/*
+ *  Package: @aemforms/af-core
+ *  Version: 0.22.121
+ */
 var EventSource;
 (function (EventSource) {
     EventSource["CODE"] = "code";
@@ -132,8 +135,8 @@ class ValidationComplete extends ActionImpl {
     }
 }
 class Focus extends ActionImpl {
-    constructor() {
-        super({}, 'focus', { dispatch: false });
+    constructor(payload, dispatch = false) {
+        super(payload, 'focus', { dispatch });
     }
 }
 class Submit extends ActionImpl {

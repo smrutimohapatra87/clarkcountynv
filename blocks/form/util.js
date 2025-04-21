@@ -92,9 +92,15 @@ export function createFieldWrapper(fd, tagName = 'div', labelFn = createLabel) {
   const renderType = getHTMLRenderType(fd);
   const fieldId = `${renderType}-wrapper${nameStyle}`;
   fieldWrapper.className = fieldId;
+  if (fd.Fieldset) {
+    fieldWrapper.dataset.fieldset = fd.Fieldset;
+  }
   fieldWrapper.dataset.id = fd.id;
   if (fd.visible === false) {
     fieldWrapper.dataset.visible = fd.visible;
+  }
+  if (fd?.fieldType === 'number-input' && fd?.type) {
+    fieldWrapper.dataset.type = fd.type;
   }
   fieldWrapper.classList.add('field-wrapper');
   if (fd.label && fd.label.value && typeof labelFn === 'function') {
@@ -226,6 +232,11 @@ export function checkValidation(fieldElement) {
     updateRequiredCheckboxGroup(fieldElement.name, fieldElement.form);
   }
   if (fieldElement.validity.valid && fieldElement.type !== 'file') {
+    removeInvalidMsg(fieldElement);
+    return;
+  }
+  // for decimal inputs don't display stepMismatch error message
+  if (wrapper?.dataset?.type === 'number' && fieldElement.validity?.stepMismatch) {
     removeInvalidMsg(fieldElement);
     return;
   }

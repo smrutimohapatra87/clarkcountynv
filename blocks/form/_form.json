@@ -14,6 +14,12 @@
           }
         }
       }
+    },
+    {
+      "...": "./models/form-components/_*.json#/definitions"
+    },
+    {
+      "...": "./components/*/_*.json#/definitions"
     }
   ],
   "models": [
@@ -52,6 +58,10 @@
                   {
                       "name": "Send email",
                       "value": "fd/af/components/guidesubmittype/email"
+                  },
+                  {
+                      "name": "Persist to Spreadsheet",
+                      "value": "spreadsheet"
                   }
               ],
               "value" : ""
@@ -69,6 +79,13 @@
               "label": "URL For POST request",
               "valueType": "string",
               "condition": { "==": [{ "var": "actionType" }, "fd/af/components/guidesubmittype/restendpoint"] }
+          },
+          {
+              "condition": { "==": [{ "var": "actionType" }, "spreadsheet"] },
+              "component": "text",
+              "name": "spreadsheetUrl",
+              "label": "Spreadsheet Url",
+              "valueType": "string" 
           },
           {
               "component": "container",
@@ -140,6 +157,12 @@
               ]
           }
       ]
+    },
+    {
+      "...": "./models/form-components/_*.json#/models"
+    },
+    {
+      "...": "./components/*/_*.json#/models"
     }
   ],
   "filters": [
@@ -153,14 +176,16 @@
         "drop-down",
         "email",
         "file-input",
+        "form-accordion",
         "form-button",
         "form-fragment",
         "form-image",
+        "form-modal",
         "form-reset-button",
         "form-submit-button",
-        "modal",
         "number-input",
         "panel",
+        "password",
         "plain-text",
         "radio-group",
         "rating",
