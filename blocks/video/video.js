@@ -110,10 +110,13 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
 };
 
 function videoEnablement(block) {
+  let detailsv1 = null;
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
-  const details = block.querySelector('h4').textContent;
-  const detailsv1 = div({ class: 'text' }, `${details}`);
+  if (block.querySelector('h4')) {
+    const details = block.querySelector('h4').textContent;
+    detailsv1 = div({ class: 'text' }, `${details}`);
+  }
   block.textContent = '';
   if (detailsv1) {
     block.append(detailsv1);
