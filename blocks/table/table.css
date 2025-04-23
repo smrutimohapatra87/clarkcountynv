@@ -147,6 +147,12 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     }
 }
 
+.table.col1-30 table tbody tr {
+    td:first-child {
+        width: 30%;
+    }
+}
+
 .table.type2border {
     table {
         border-collapse: collapse;
