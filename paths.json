@@ -1,9 +1,0 @@
-{
-  "mappings": [
-    "/content/clarkcountynv-forms/:/forms"
-  ],
-  "includes": [
-    "/content/clarkcountynv-forms",
-    "/content/dam/clarkcountynv-forms"
-  ]
-}
