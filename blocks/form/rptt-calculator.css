@@ -1,8 +1,7 @@
 .section.rptt-calc {
-
-    .form.block {
+   .form.block {
         form {
-            *:not(.field-description):not(.field-invalid) {
+            :not(.field-description, .field-invalid) {
                 color: #000;
             }
 
