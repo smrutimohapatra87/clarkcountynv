@@ -1,102 +1,104 @@
 .section.rptt-calc {
+
     .form.block {
-      form {
-        * {
-          color: #000;
-        }
-  
-        .number-wrapper {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          margin: 0;
-  
-          label {
-            flex-basis: 75%;
-          }
-  
-          input {
-            flex-basis: 25%;
-            border: 1px solid #92ACAF;
-            background-color: #eee;
-            text-align: right;
-          }
-  
-          &:first-child {
-            label {
-              flex-basis: 50%;
+        form {
+            *:not(.field-description):not(.field-invalid) {
+                color: #000;
             }
-  
-            input {
-              flex-basis: 50%;
+
+            .number-wrapper {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0;
+
+                label {
+                    flex-basis: 75%;
+                }
+
+                input {
+                    flex-basis: 25%;
+                    border: 1px solid #92ACAF;
+                    background-color: #eee;
+                    text-align: right;
+                }
+
+                &:first-child {
+                    margin-top: 10vh;
+
+                    label {
+                        flex-basis: 50%;
+                    }
+
+                    input {
+                        flex-basis: 50%;
+                    }
+                }
+
+                &.field-taxable-amount {
+                    label {
+                        flex-basis: 60%;
+                    }
+
+                    input {
+                        flex-basis: 40%;
+                    }
+                }
+
+                &.field-transfer-tax {
+                    margin-top: 10vh;
+                }
+
+                &.field-deed-in-lieu-fixed {
+                    label {
+                        flex-basis: 60%;
+                    }
+
+                    input {
+                        flex-basis: 40%;
+                    }
+                }
             }
-          }
-  
-          &.field-taxable-amount {
-            label {
-              flex-basis: 60%;
+
+            .number-wrapper[class*="fixed"] {
+                input {
+                    background-color: white;
+                    text-align: right;
+                }
             }
-  
-            input {
-              flex-basis: 40%;
+
+            .number-wrapper[class*="newform"] {
+                margin-top: 15vh;
             }
-          }
-  
-          &.field-transfer-tax {
-            margin-top: 10vh;
-          }
-  
-          &.field-deed-in-lieu-fixed {
-            label {
-              flex-basis: 60%;
+
+            .button-wrapper {
+                display: flex;
+                justify-content: end;
+                position: relative;
+                width: 103%;
+                border-bottom: 2px solid #000;
             }
-  
-            input {
-              flex-basis: 40%;
+
+            .field-estimate-tax-button {
+                button {
+                    background: #0094C3;
+                    color: #fff;
+                    border: 0;
+                    border-radius: 0;
+                    display: inline-block;
+                    font-size: var(--body-font-size-m);
+                    font-weight: 400;
+                    text-decoration: none;
+                    cursor: pointer;
+                    line-height: 1;
+                    vertical-align: top;
+                    font-family: sans-serif;
+                    transition: all 0.3s;
+                    right: 4vw;
+                    position: relative;
+                }
             }
-          }
         }
-  
-        .number-wrapper[class*="fixed"] {
-          input {
-            background-color: white;
-            text-align: right;
-          }
-        }
-  
-        .number-wrapper[class*="newform"] {
-          margin-top: 15vh;
-        }
-  
-        .button-wrapper {
-          display: flex;
-          justify-content: end;
-          position: relative;
-          width: 103%;
-          border-bottom: 2px solid #000;
-        }
-  
-        .field-estimate-tax-button {
-          button {
-            background: #0094C3;
-            color: #fff;
-            border: 0;
-            border-radius: 0;
-            display: inline-block;
-            font-size: var(--body-font-size-m);
-            font-weight: 400;
-            text-decoration: none;
-            cursor: pointer;
-            line-height: 1;
-            vertical-align: top;
-            font-family: sans-serif;
-            transition: all 0.3s;
-            right: 4vw;
-            position: relative;
-          }
-        }
-      }
     }
-  }
-  
+}
