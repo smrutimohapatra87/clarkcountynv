@@ -595,7 +595,7 @@ function buildHotlineBlock(main, results, assetsPath) {
     const imageAEl = document.createElement('a');
     imageAEl.innerText = bgImageUrl;
     imageAEl.setAttribute('href', bgImageUrl);
-    const category = row.querySelector('.category-list li').textContent.trim();
+    const category = row.querySelector('.category-list li')?.textContent.trim();
     const content = row.querySelector('.col-md-5').innerHTML.trim();
     const contactEl = document.createElement('div');
 

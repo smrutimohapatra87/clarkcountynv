@@ -1,7 +1,7 @@
 .hotline.block {
     max-width: 100%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 2%;
+    margin-right: 2%;
     margin-top: 50px;
 }
 
@@ -149,7 +149,6 @@
             flex-wrap: wrap;
             margin-right: -15px;
             margin-left: -15px;
-            box-sizing: border-box;
             overflow: hidden;
 
             @media (width >=900px) {
@@ -159,6 +158,10 @@
             @media (width <=900px) {
                 flex-direction: column;
                 height: fit-content;
+            }
+
+            & > * {
+                box-sizing: border-box;
             }
 
             .business-image {
@@ -196,6 +199,8 @@
                 padding: 0 20px;
                 float: left;
                 flex-basis: 33%;
+                word-break: break-word;
+
 
                 p {
                     margin: unset;
@@ -212,6 +217,7 @@
                         margin: unset;
                         vertical-align: text-bottom;
                         background-color: transparent;
+                        text-decoration: none;
 
                         span {
                             vertical-align: middle;
