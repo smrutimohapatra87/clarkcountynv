@@ -83,7 +83,7 @@
             .field-estimate-tax-button {
                 button {
                     background: #0094C3;
-                    color: #fff;
+                    color: #fff !important;
                     border: 0;
                     border-radius: 0;
                     display: inline-block;
