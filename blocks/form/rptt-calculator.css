@@ -1,4 +1,7 @@
 .section.rptt-calc {
+    margin-top: 6vh;
+    position: relative;
+    
     .form.block {
       form {
         * {
