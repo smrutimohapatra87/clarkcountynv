@@ -139,45 +139,71 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     const fileGroup = row.children[0];
     const [fileGroupTitle, fileGroupDescription] = fileGroup.children;
-
+    const contentContainer = div({ class: 'content' });
     let body = row.children[1];
     body.className = 'content';
     if (fileGroupDescription) {
       const descriptionEl = div({ class: 'doc-group-description' }, fileGroupDescription.textContent.trim());
       body.prepend(descriptionEl);
+      contentContainer.prepend(descriptionEl);
     }
 
     const documents = row.children[1].cloneNode(true);
-    const isMultiLevel = documents.querySelectorAll('ul ul').length > 0;
-    if (isMultiLevel) {
-      const sections = documents.querySelectorAll('ul > li > ul');
-      const subAccordionsContainer = div({ class: 'sub-accordions' });
+    const documentsList = documents.children[0];
+    const singleLevelList = ul(); // Create a single ul for all single-level items
 
-      sections.forEach((section) => {
-        const sectionTitle = section.previousSibling.textContent.trim();
-        if (!sectionTitle) {
-          return;
+    // Process each top-level list item
+    [...documentsList.children].forEach((listItem) => {
+      // Check if item is an empty heading (text without link and no children)
+      const isEmptyHeading = !listItem.querySelector('a') && !listItem.querySelector('ul') && listItem.textContent.trim();
+      const hasNestedList = listItem.querySelector('ul');
+
+      if (hasNestedList || isEmptyHeading) {
+        // If we have accumulated any single-level items, add them to container
+        if (singleLevelList.children.length > 0) {
+          contentContainer.append(singleLevelList.cloneNode(true));
+          singleLevelList.innerHTML = ''; // Clear the list for next group
         }
 
-        const fileLinks = section.querySelectorAll('a');
+        // Handle multi-level item or empty heading
+        const sectionTitle = listItem.firstChild.textContent.trim();
+        if (!sectionTitle) return;
+
+        const nestedList = listItem.querySelector('ul');
+        const fileLinks = nestedList ? nestedList.querySelectorAll('a') : [];
         const numOfDocs = fileLinks.length;
-        const sectionSummary = summary({ class: 'accordion-item-label-inner' }, p(sectionTitle), small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`));
-        customizeFileLinks(fileLinks);
+
+        const sectionSummary = summary(
+          { class: 'accordion-item-label-inner' },
+          p(sectionTitle),
+          small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`),
+        );
+
+        if (nestedList) {
+          customizeFileLinks(fileLinks);
+        }
 
         const subId = createHashId(sectionTitle);
         const subDetailsEl = details(
           { class: 'accordion-item-inner', id: subId },
           sectionSummary,
-          div({ class: 'content' }, section),
+          nestedList ? div({ class: 'content' }, nestedList) : div({ class: 'content' }), // Empty content div for empty headings
         );
-        subAccordionsContainer.append(subDetailsEl);
-      });
+        contentContainer.append(subDetailsEl);
+      } else {
+        // Handle single-level item
+        const fileLinks = listItem.querySelectorAll('a');
+        customizeFileLinks(fileLinks);
+        singleLevelList.append(listItem);
+      }
+    });
 
-      body = subAccordionsContainer.cloneNode(true);
-    } else {
-      const fileLinks = body.querySelectorAll('a');
-      customizeFileLinks(fileLinks);
+    // Add any remaining single-level items
+    if (singleLevelList.children.length > 0) {
+      contentContainer.append(singleLevelList);
     }
+
+    body = contentContainer;
 
     const titleText = fileGroupTitle.textContent.trim();
     const id = createHashId(titleText);
@@ -196,7 +222,7 @@ export default function decorate(block) {
         id,
       },
       mainSummaryEl,
-      body,
+      contentContainer,
     );
 
     // Add toggle event listener for hash updates

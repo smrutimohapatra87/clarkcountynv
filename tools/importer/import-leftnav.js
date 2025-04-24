@@ -225,71 +225,80 @@ function buildDocumentCenterBlock(main) {
     return;
   }
 
-  // const elems = newsletterEl.querySelectorAll('.docs-toggle, .file-group');
-
   const elems = newsletterEl.querySelectorAll('.outer-cat');
   const cells = [];
-  for (let i = 0; i < elems.length;) {
-    const currentGroup = elems[i];
+
+  elems.forEach((currentGroup) => {
+    if (currentGroup.querySelector('h3')?.textContent.trim().search('No documents') !== -1) {
+      console.log('Found empty group');
+      return;
+    }
     const summary = currentGroup.querySelector('h3').childNodes[0].nodeValue.trim();
     const files = document.createElement('div');
+    const mainUl = document.createElement('ul');
+    files.append(mainUl);
 
-    // add condition for empty group
+    // Handle direct files in the group (single-level)
+    const directLiEls = Array.from(currentGroup.querySelectorAll('li'))
+      .filter((li) => li.closest('.inner-cat') === null); // Get only direct li elements
 
+    if (directLiEls.length > 0) {
+      directLiEls.forEach((li) => {
+        const a = li.querySelector('a');
+        if (a) {
+          const fileName = a.textContent.trim();
+          const { href } = a;
+          let description;
+          if (li.querySelector('.doc-file-desc')) {
+            description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+          }
+
+          const elem = document.createElement('a');
+          elem.href = href;
+          elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+          const newLi = document.createElement('li');
+          newLi.append(elem);
+          mainUl.append(newLi);
+        }
+      });
+    }
+
+    // Handle nested categories (multi-level)
     const innerCat = currentGroup.querySelectorAll('.inner-cat');
     if (innerCat && innerCat.length > 0) {
-      // ul - li combination
-
       innerCat.forEach((inner) => {
         const innerCatTitle = inner.querySelector('h4').childNodes[0].nodeValue.trim();
         const ulEl = document.createElement('ul');
         const liEls = inner.querySelectorAll('li');
         liEls.forEach((li) => {
           const a = li.querySelector('a');
-          const fileName = a.textContent.trim();
-          const { href } = a;
-          let description;
-          if (li.querySelector('.doc-file-desc')) {
-            description = li.querySelector('.doc-file-desc').textContent.trim() || '';
-          }
+          if (a) {
+            const fileName = a.textContent.trim();
+            const { href } = a;
+            let description;
+            if (li.querySelector('.doc-file-desc')) {
+              description = li.querySelector('.doc-file-desc').textContent.trim() || '';
+            }
 
-          const elem = document.createElement('a');
-          elem.href = href;
-          elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-          const newLi = document.createElement('li');
-          newLi.append(elem);
-          ulEl.append(newLi);
+            const elem = document.createElement('a');
+            elem.href = href;
+            elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
+            const newLi = document.createElement('li');
+            newLi.append(elem);
+            ulEl.append(newLi);
+          }
         });
+
+        // Add the nested category to main list
         const innerSummary = document.createElement('li');
         innerSummary.append(innerCatTitle);
         innerSummary.append(ulEl);
-        files.append(innerSummary);
+        mainUl.append(innerSummary);
       });
-    } else {
-      const liEls = currentGroup?.querySelectorAll('li');
-      // all inside one ul.
-      if (liEls && liEls.length > 0) {
-        liEls.forEach((li) => {
-          const a = li.querySelector('a');
-          const fileName = a.textContent.trim();
-          const { href } = a;
-          let description;
-          if (li.querySelector('.doc-file-desc')) {
-            description = li.querySelector('.doc-file-desc').textContent.trim() || '';
-          }
-
-          const elem = document.createElement('a');
-          elem.href = href;
-          elem.innerText = description ? `${fileName} [description=${description}]` : `${fileName}`;
-          const newLi = document.createElement('li');
-          newLi.append(elem);
-          files.append(newLi);
-        });
-      }
     }
-    i += 1;
+
     cells.push([summary, files]);
-  }
+  });
 
   const docCenterBlock = WebImporter.Blocks.createBlock(document, {
     name: 'document-center',
