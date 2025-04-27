@@ -795,8 +795,10 @@ main > div.section.newsdetail > .default-content-wrapper > p {
     margin-bottom: 30px;
 }
 
-
-
+.line-break.block {
+    border: solid #ccc;
+    border-width: 1px 0 0;
+}
 
 .biddetail {
     padding: 50px 15px;

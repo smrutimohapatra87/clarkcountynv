@@ -207,11 +207,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     list-style: none;
 }
 
-.line-break.block {
-    border: solid #ccc;
-    border-width: 1px 0 0;
-}
-
 .image-1-center .default-content-wrapper {
     picture:first-of-type {
         display: flex;

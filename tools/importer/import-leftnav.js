@@ -638,8 +638,10 @@ function buildHotlineBlock(main, results, assetsPath) {
     const websiteEl = document.createElement('a');
     const website = row.querySelector('.fa-globe') || row.querySelector('.row .col-md-4 .rz-business-links a[target="_blank"]');
     if (website) {
-      websiteEl.href = website.getAttribute('href') ? website.getAttribute('href') : website.parentElement.getAttribute('href');
-      websiteEl.innerText = `:website: ${websiteEl.href}`;
+      const sanitizedPath = new URL(getSanitizedPath(website.getAttribute('href') ? website.getAttribute('href') : website.parentElement.getAttribute('href')), PREVIEW_DOMAIN);
+      const finalUrl = new URL(sanitizedPath.pathname, PREVIEW_DOMAIN).toString();
+      websiteEl.href = finalUrl;
+      websiteEl.innerText = `:globe: ${finalUrl.replace(PREVIEW_DOMAIN, 'https://www.clarkcountynv.gov')}`;
       contactEl.append(websiteEl);
       contactEl.append(lineBreak.cloneNode(true));
     }
