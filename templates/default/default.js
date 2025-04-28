@@ -57,15 +57,14 @@ export default async function decorate(doc) {
 
   const $rightsection = document.querySelector('.rightsection');
 
-  /* Adding logic for contacf us section */
-  const $contactus = document.querySelector('.contact-us');
-  if ($contactus && !$contactus.classList.contains('rightsection')) {
-    $rightsection.prepend($contactus);
-  }
-
-  if ($contactus && !$contactus.classList.contains('rightsection')) {
-    $rightsection.prepend($contactus);
-  }
+  /* Adding logic to match classes from array and then append to rightsection */
+  const classesToPrepend = ['contact-us', 'calculator'];
+  classesToPrepend.forEach((className) => {
+    const $section = document.querySelector(`.section.${className}`);
+    if ($section && !$section.classList.contains('rightsection')) {
+      $rightsection.prepend($section);
+    }
+  });
 
   /* Adding logic for toc-sections section */
 

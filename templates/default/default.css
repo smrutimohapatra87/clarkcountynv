@@ -142,6 +142,29 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
         box-sizing: border-box;
     }
 
+     /* CSS for Calculator page */
+
+     main .mainmenu .rightsection.rptt-calc .section.calculator {
+        display: flex;
+        flex-direction: row;
+        gap: 7em;
+     }
+
+     main .mainmenu .rightsection.rptt-calc .section.calculator .form-wrapper {
+        flex-basis: 55%;
+     }
+
+     main .mainmenu .rightsection.rptt-calc .section.calculator .default-content-wrapper {
+        flex-basis: 45%;
+        margin: 0;
+     }
+
+     main .mainmenu .rightsection.rptt-calc .section.calculator .default-content-wrapper img {
+        margin-top: 5em;
+        width: 100%;
+        height: 100%;
+     }
+
     /* CSS for Contact-us pages */
 
     main .mainmenu .rightsection.contact-us, main .mainmenu .contact-us {

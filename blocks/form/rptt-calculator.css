@@ -5,6 +5,11 @@
                 color: #000;
             }
 
+            .field-description, .field-invalid {
+                position: relative;
+                left: 1em;
+            }
+
             .number-wrapper {
                 display: flex;
                 flex-direction: row;

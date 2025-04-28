@@ -4,7 +4,7 @@
             color: #000;
         }
 
-        .field-submit-button button {
+        .field-wrapper.submit-wrapper button {
             background: #0094C3;
             color: #fff;
             border: 0;
