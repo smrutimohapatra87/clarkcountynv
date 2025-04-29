@@ -1,5 +1,6 @@
 // create a string containing head tags from h1 to h5
 import { defaultErrorMessages } from './constant.js';
+import { span } from '../../scripts/dom-helpers.js';
 
 const headings = Array.from({ length: 5 }, (_, i) => `<h${i + 1}>`).join('');
 const allowedTags = `${headings}<a><b><p><i><em><strong><ul><li><ol>`;
@@ -76,6 +77,11 @@ export function createLabel(fd, tagName = 'label') {
     }
     if (fd.tooltip) {
       label.title = stripTags(fd.tooltip, '');
+    }
+
+    if (fd?.properties?.tooltipText) {
+      const tooltipContent = span({ class: 'tooltip-content', 'data-tooltip-text': stripTags(fd.properties.tooltipText, '') }, '?');
+      label.appendChild(tooltipContent);
     }
     return label;
   }

@@ -1,25 +1,22 @@
 .section.contact-us .form.block {
     form {
-        * {
-            color: #000;
+        .submit-wrapper, .reset-wrapper {
+            button {
+                background: #0094C3;
+                color: #fff;
+                border: 0;
+                border-radius: 0;
+                display: inline-block;
+                font-size: var(--body-font-size-m);
+                font-weight: 400;
+                text-decoration: none;
+                cursor: pointer;
+                line-height: 1;
+                vertical-align: top;
+                font-family: sans-serif;
+                transition: all .3s;
+                padding: 15px 25px;
+            }
         }
-
-        .field-wrapper.submit-wrapper button {
-            background: #0094C3;
-            color: #fff;
-            border: 0;
-            border-radius: 0;
-            display: inline-block;
-            font-size: var(--body-font-size-m);
-            font-weight: 400;
-            text-decoration: none;
-            cursor: pointer;
-            line-height: 1;
-            vertical-align: top;
-            font-family: sans-serif;
-            transition: all .3s;
-            padding: 15px 25px;
-        }
-
     }
 }

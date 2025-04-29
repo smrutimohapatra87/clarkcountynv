@@ -700,6 +700,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -1098,6 +1105,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -1390,6 +1404,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -1576,6 +1597,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -1804,6 +1832,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -2545,6 +2580,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -3138,6 +3180,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
@@ -3800,6 +3849,13 @@
             "name": "tooltip",
             "label": "Short description",
             "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "tooltipText",
+            "label": "Tooltip",
+            "valueType": "string",
+            "description": "Text to show as a tooltip."
           }
         ]
       },
