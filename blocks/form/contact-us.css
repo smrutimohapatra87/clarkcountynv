@@ -1,6 +1,6 @@
 .section.contact-us-form .form.block {
     form {
-        .submit-wrapper, .reset-wrapper {
+        .submit-wrapper, .reset-wrapper, .file-wrapper {
             button {
                 background: #0094C3;
                 color: #fff;
