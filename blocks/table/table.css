@@ -39,6 +39,12 @@
 .table.thbc7 thead {
     background-color: var(--table-head-background-color7);
   }
+
+  .table.thbc8 thead {
+    background-color: var(--table-head-background-color8);
+    color:white;
+  }
+
   
 @media (width >= 600px) {
   .table table {
@@ -52,6 +58,16 @@
   }
 }
 
+.table table th {
+    font-weight: 700;
+  }
+  
+  .table:not(:has('center')) table th,
+  .table:not(:has('center')) table td {
+    padding: 0.5em;
+    text-align: left;
+  }
+
 .table:not(.cards) table thead tr {
   border-top: 2px solid #dadada;
   border-bottom: 2px solid #dadada;
@@ -59,16 +75,6 @@
 
 .table:not(.cards) table tbody tr {
   border-bottom: 1px solid #dadada;
-}
-
-.table table th {
-  font-weight: 700;
-}
-
-.table:not(:has('center')) table th,
-.table:not(:has('center')) table td {
-  padding: 0.5em;
-  text-align: left;
 }
 
 .table.parks {
@@ -645,3 +651,9 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     text-align: center;
   }
 
+/* CSS for left-aligned text */
+.table.left-align table th,
+                  table td {
+padding: 0.5em;
+text-align: left;
+}
