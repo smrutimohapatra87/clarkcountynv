@@ -43,14 +43,13 @@ function days(endDate, startDate) {
 }
 
 /**
- * Replace all instances of a substring in a string with another string
+ * Replace all instances of a substring in a string with empty string
  * @param {string} str - The original string
  * @param {string} searchStr - The substring to be replaced
- * @param {string} [replaceStr=''] - The string to replace with (defaults to empty string)
  * @returns {string} The string with all replacements made
  */
-function replaceString(str, searchStr, replaceStr = '') {
-  return str.replace(new RegExp(searchStr, 'g'), replaceStr);
+function replaceString(str, searchStr) {
+  return str.replace(new RegExp(searchStr, 'g'), '');
 }
 
 // eslint-disable-next-line import/prefer-default-export
