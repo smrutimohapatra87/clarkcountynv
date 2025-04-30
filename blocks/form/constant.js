@@ -40,5 +40,8 @@ export function setSubmitBaseUrl(url) {
 }
 
 export function getSubmitBaseUrl() {
+  if (window.location.hostname.includes('aem.page') || window.location.hostname.includes('aem.live')) {
+    submitBaseUrl = 'https://publish-p154411-e1620520.adobeaemcloud.com';
+  }
   return submitBaseUrl;
 }
