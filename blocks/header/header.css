@@ -727,7 +727,6 @@ header .nav-tools .nav-search .search-box .search-top .search-top-left {
 
 header .nav-tools .nav-search .search-box .search-form-wrap {
   position: relative;
-  margin-top: 61px;
 }
 
 header .nav-tools .nav-search .search-box .search-form-wrap form {
@@ -867,11 +866,6 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
   color: #ccc;
  }
 
- header .nav-tools .nav-search .search-box .search-form-wrap .search-results .search-nav li.close-curated .fa-close::before {
-  content: "\f00d";
-  font-family: FontAwesome, sans-serif;
- }
-
  header .nav-tools .nav-search .search-box .search-form-wrap .search-results .tab-content {
   background: #fff;
   max-height: 800px;
@@ -892,12 +886,10 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
  }
 
  header .nav-tools .nav-search .search-box .search-form-wrap .search-results .tab-content .tab-pane .g-search-wrap iframe {
-  min-height: 600px;
+  height: 1800px;
   border: 0 !important;
   width: 100%;
  }
-
-
 
 @media (width >= 900px) {
   header {

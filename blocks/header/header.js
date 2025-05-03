@@ -18,6 +18,7 @@ function hideGoogleTranslateBar() {
 }
 
 let rawkey = '';
+let searchIframe = '';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -295,6 +296,12 @@ function handleNavTools(navWrapper, expandElement) {
       searchBox.classList.add('hidden');
     });
 
+    // print the value of input element the moment the user types
+    // searchBox.querySelector('input').addEventListener('input', (key) => {
+    //   key.preventDefault();
+    //   console.log(key.target.value);
+    // });
+
     searchBox.querySelector('input').addEventListener('input', (key) => {
       key.preventDefault();
       rawkey = key.target.value;
@@ -305,9 +312,12 @@ function handleNavTools(navWrapper, expandElement) {
         const tabContent = searchBox.querySelector('.search-results .tab-content');
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
-        addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
+        addIframe.src = `/search?q=${rawkey}`;
+        if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
+          searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
+        } else {
+          searchIframe.src = `/search?q=${rawkey}`;
         }
       }
     });
@@ -326,9 +336,12 @@ function handleNavTools(navWrapper, expandElement) {
         const tabContent = searchBox.querySelector('.search-results .tab-content');
         const tab = tabContent.querySelector('.tab-pane');
         const addIframe = iframe();
-        addIframe.src = `https://www.clarkcountynv.gov/_assets_/plugins/search-box.html?q=${rawkey}`;
-        if (!tab.querySelector('.g-search-wrap').querySelector('iframe')) {
+        addIframe.src = `/search?q=${rawkey}`;
+        if (!searchIframe) {
           tab.querySelector('.g-search-wrap').appendChild(addIframe);
+          searchIframe = tab.querySelector('.g-search-wrap').querySelector('iframe');
+        } else {
+          searchIframe.src = `/search?q=${rawkey}`;
         }
       }
     });
