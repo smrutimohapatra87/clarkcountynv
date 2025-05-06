@@ -85,7 +85,7 @@
               "component": "text",
               "name": "spreadsheetUrl",
               "label": "Spreadsheet Url",
-              "valueType": "string" 
+              "valueType": "string"
           },
           {
               "component": "container",
@@ -172,6 +172,7 @@
         "captcha",
         "checkbox",
         "checkbox-group",
+        "checkbox-with-others",
         "date-input",
         "drop-down",
         "email",

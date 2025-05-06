@@ -21,32 +21,12 @@
     ]
   },
   {
-    "id": "cards",
-    "components": [
-      "card"
-    ]
-  },
-  {
-    "id": "columns",
-    "components": [
-      "column"
-    ]
-  },
-  {
-    "id": "column",
-    "components": [
-      "text",
-      "image",
-      "button",
-      "title"
-    ]
-  },
-  {
     "id": "form",
     "components": [
       "captcha",
       "checkbox",
       "checkbox-group",
+      "checkbox-with-others",
       "date-input",
       "drop-down",
       "email",

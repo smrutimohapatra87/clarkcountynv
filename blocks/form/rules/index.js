@@ -19,14 +19,19 @@
  ************************************************************************ */
 import { submitSuccess, submitFailure } from '../submit.js';
 import {
-  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue,
+  createHelpText,
+  createLabel,
+  updateOrCreateInvalidMsg,
+  getCheckboxGroupValue,
+  createDropdownUsingEnum,
+  createRadioOrCheckboxUsingEnum,
 } from '../util.js';
 import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
 import initializeRuleEngineWorker from './worker.js';
 import { createOptimizedPicture } from '../../../scripts/aem.js';
 
-const formModel = {};
+const formSubscriptions = {};
 
 function disableElement(el, value) {
   el.toggleAttribute('disabled', value === true);
@@ -97,7 +102,7 @@ async function fieldChanged(payload, form, generateFormRendition) {
         } else if (fieldType === 'radio-group' || fieldType === 'checkbox-group') {
           field.querySelectorAll(`input[name=${name}]`).forEach((el) => {
             const exists = (Array.isArray(currentValue)
-              && currentValue.some((x) => compare(x, el.value, type.replace('[]', ''))))
+                && currentValue.some((x) => compare(x, el.value, type.replace('[]', ''))))
               || compare(currentValue, el.value, type);
             el.checked = exists;
           });
@@ -200,13 +205,18 @@ async function fieldChanged(payload, form, generateFormRendition) {
           updateOrCreateInvalidMsg(field, '');
         }
         break;
+      case 'enum':
+      case 'enumNames':
+        if (fieldType === 'radio-group' || fieldType === 'checkbox-group') {
+          createRadioOrCheckboxUsingEnum(fieldModel, field);
+        } else if (fieldType === 'drop-down') {
+          createDropdownUsingEnum(fieldModel, field);
+        }
+        break;
       default:
         break;
     }
   });
-  if (fieldWrapper?.dataset?.subscribe) {
-    fieldWrapper.dataset.fieldModelChanged = JSON.stringify(Math.random());
-  }
 }
 
 function formChanged(payload, form) {
@@ -284,7 +294,10 @@ export async function loadRuleEngine(formDef, htmlForm, captcha, genFormRenditio
   const ruleEngine = await import('./model/afb-runtime.js');
   const form = ruleEngine.restoreFormInstance(formDef, data);
   window.myForm = form;
-  formModel[htmlForm.dataset?.id] = form;
+  formSubscriptions[htmlForm.dataset?.id]?.entries()?.forEach(([id, { callback, fieldDiv }]) => {
+    const model = form.getElement(id);
+    callback(fieldDiv, model, 'register');
+  });
   form.subscribe((e) => {
     handleRuleEngineEvent(e, htmlForm, genFormRendition);
   }, 'fieldChanged');
@@ -333,20 +346,19 @@ export async function initAdaptiveForm(formDef, createForm) {
 
 /**
  * Subscribes to changes in the specified field element and triggers a callback
- * with access to formModel when changes occur.
+ * with access to formModel when the component is initialised
  * @param {HTMLElement} fieldDiv - The field element to observe for changes.
- * @param {Function} callback - The callback function to execute when changes are detected.
+ * @param {Function} callback - The callback function to which returns fieldModel
  */
-export function subscribe(fieldDiv, callback) {
+export function subscribe(fieldDiv, formId, callback) {
   if (callback) {
-    fieldDiv.dataset.subscribe = true;
-    const observer = new MutationObserver((mutationsList) => {
-      mutationsList?.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-field-model-changed') {
-          callback(fieldDiv, formModel[fieldDiv.closest('form')?.dataset?.id]);
-        }
-      });
-    });
-    observer.observe(fieldDiv, { attributes: true });
+    // Check if a subscription map already exists for this form
+    let subscriptions = formSubscriptions[formId];
+    if (!subscriptions) {
+      subscriptions = new Map();
+      formSubscriptions[formId] = subscriptions;
+    }
+    // Add the new subscription to the existing map
+    subscriptions.set(fieldDiv?.dataset?.id, { callback, fieldDiv });
   }
 }
