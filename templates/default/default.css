@@ -301,7 +301,7 @@ main .mainmenu .rightsection.image-center picture img {
   width: 50%;
 }
 
-main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .document-center a) {
+main .mainmenu .rightsection.no-button a:any-link:not(.cards a, .cards * a, .hotline a, .newslist a, .newslist-ens a, .document-center a) {
     color: var(--no-button-link);
     background-color: transparent;
     text-decoration: underline;
