@@ -115,7 +115,7 @@ async function buildBreadcrumbsFromMetadata(nav, currentUrl) {
   return crumbs;
 }
 
-async function buildBreadcrumbs() {
+export async function buildBreadcrumbs() {
   const breadcrumbs = document.createElement('nav');
   breadcrumbs.className = 'breadcrumbs';
 
@@ -189,8 +189,7 @@ function decorateSectionsWithBackgrounds(element) {
 
     const heading = getMetadata('page-title');
     if (heading) {
-      const pageTitle = h1(heading);
-      pageTitle.classList.add('page-title');
+      const pageTitle = h1({ class: 'page-title' }, heading);
       section.append(pageTitle);
     }
   });

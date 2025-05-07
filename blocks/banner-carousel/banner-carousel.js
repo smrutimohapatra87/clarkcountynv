@@ -1,5 +1,9 @@
 // eslint-disable-next-line import/named
 import { fetchPlaceholders, getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  div, h1, li, nav, ul,
+} from '../../scripts/dom-helpers.js';
+import { buildBreadcrumbs } from '../../scripts/scripts.js';
 
 let autoInterval;
 const autoDuration = 8000; // default if not set in block
@@ -77,10 +81,9 @@ function bindEvents(block) {
 }
 
 function createSlide(row, slideIndex, carouselId) {
-  const slide = document.createElement('li');
+  const slide = li({ class: 'carousel-slide' });
   slide.dataset.slideIndex = slideIndex;
   slide.setAttribute('id', `carousel-${carouselId}-slide-${slideIndex}`);
-  slide.classList.add('carousel-slide');
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
     if (colIdx === 0) {
       column.classList.add('carousel-slide-image');
@@ -187,24 +190,21 @@ export default async function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
 
-  const container = document.createElement('div');
-  container.classList.add('carousel-slides-container');
+  const container = div({ class: 'carousel-slides-container' });
 
-  const slidesWrapper = document.createElement('ul');
-  slidesWrapper.classList.add('carousel-slides');
+  const slidesWrapper = ul({ class: 'carousel-slides' });
   block.prepend(slidesWrapper);
 
   let slideIndicators;
   if (!isSingleSlide) {
-    const slideIndicatorsNav = document.createElement('nav');
+    const slideIndicatorsNav = nav({ class: 'carousel-slide-controls' });
     slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
     slideIndicators = document.createElement('ol');
     slideIndicators.classList.add('carousel-slide-indicators');
     slideIndicatorsNav.append(slideIndicators);
     block.append(slideIndicatorsNav);
 
-    const slideNavButtons = document.createElement('div');
-    slideNavButtons.classList.add('carousel-navigation-buttons');
+    const slideNavButtons = div({ class: 'carousel-navigation-buttons' });
     slideNavButtons.innerHTML = `
       <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
       <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
@@ -227,15 +227,13 @@ export default async function decorate(block) {
     row.remove();
   });
 
-  const bannerTitleDiv = document.createElement('div');
-  bannerTitleDiv.classList.add('banner-title');
-  bannerTitleDiv.classList.add('desktop');
-  bannerTitleDiv.classList.add('short');
+  if (getMetadata('breadcrumbs')?.toLowerCase() === 'true') {
+    const breadcrumbs = await buildBreadcrumbs();
+    block.prepend(breadcrumbs);
+  }
 
-  bannerTitleDiv.innerHTML = `
-    <h3> ${getMetadata('page-title')} </h3>
-    `;
-  block.append(bannerTitleDiv);
+  const pageTitleDiv = h1({ class: 'page-title' }, getMetadata('page-title'));
+  block.append(pageTitleDiv);
 
   container.append(slidesWrapper);
   block.prepend(container);
