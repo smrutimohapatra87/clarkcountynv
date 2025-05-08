@@ -1,4 +1,5 @@
 /* global WebImporter */
+/* eslint-disable no-console */
 import {
   createMetadata,
   blockSeparator,

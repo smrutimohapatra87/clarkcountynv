@@ -1,4 +1,6 @@
 // Function to get the current window size
+import { createOptimizedPicture } from './aem.js';
+
 export function getWindowSize() {
   const windowWidth = window.innerWidth
     || document.documentElement.clientWidth
@@ -138,4 +140,16 @@ export function addPagingWidget(
   }
 
   div.appendChild(nav);
+}
+
+export function replaceClickableImageLinkWithImage(element) {
+  element.querySelectorAll('a').forEach((aEl) => {
+    if (['jpg', 'jpeg', 'png', 'gif'].some((ext) => aEl.textContent.trim().endsWith(ext))) {
+      const picture = createOptimizedPicture(aEl.textContent, aEl.textContent.split('/').pop());
+      aEl.removeAttribute('title');
+      aEl.classList?.remove('button');
+      aEl.textContent = '';
+      aEl.appendChild(picture);
+    }
+  });
 }

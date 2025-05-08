@@ -1,5 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { div } from '../../scripts/dom-helpers.js';
+import { replaceClickableImageLinkWithImage } from '../../scripts/utils.js';
 
 /**
  * loads and decorates the footer
@@ -13,12 +15,13 @@ export default async function decorate(block) {
 
   // decorate footer DOM
   block.textContent = '';
-  const footer = document.createElement('div');
+  const footer = div();
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   const newsletterLink = footer.querySelector('.newsletter a');
-  // eslint-disable-next-line no-unused-expressions
-  newsletterLink.classList.length >= 1 ? newsletterLink.classList.remove('button') : null;
+  newsletterLink.classList?.remove('button');
+
+  replaceClickableImageLinkWithImage(footer.querySelector('.footer-left'));
 
   // add class to footer-contact
   const paragraphs = footer.querySelectorAll('.footer-middle p');
