@@ -696,6 +696,20 @@ export default async function decorate(doc) {
   // loadrrule() is loaded after 3 seconds via the delayed.js script for improving page performance
   createModal(doc);
   calendarList.querySelectorAll('.fc-calendar-list-item').forEach((divisionLi, _, parent) => {
+    // get path from url
+    const path = window.location.pathname.split('/');
+    const pathDivision = path[2];
+    if (pathDivision && pathDivision.length > 0) {
+      if (pathDivision === normalizeString(divisionLi.querySelector('a').innerText)) {
+        divisions.forEach((division) => {
+          if (divisionLi.id === division.id) {
+            divisionLi.classList.add('active');
+            divisionLi.style.backgroundColor = division.color;
+            divisionLi.querySelector('.fc-calendar-list-button').style.backgroundColor = division.color;
+          }
+        });
+      }
+    }
     divisionLi.addEventListener('click', () => {
       parent.forEach((liele) => {
         liele.classList.toggle('active', liele === divisionLi);
