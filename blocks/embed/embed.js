@@ -61,7 +61,7 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
-const loadEmbed = (block, link, autoplay, customStyles) => {
+const loadEmbed = (block, link, autoplay, customStyles, title) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
   }
@@ -85,13 +85,16 @@ const loadEmbed = (block, link, autoplay, customStyles) => {
   const url = new URL(link);
   if (config) {
     block.innerHTML = config.embed(url, autoplay);
+    if (title) block.prepend(title);
     block.classList = `block embed embed-${config.match[0]}`;
     block.classList.add(...customStyles);
   } else {
     if (block.parentElement.parentElement.classList.contains('googleform') || customStyles.includes('style-scrollable')) {
       block.innerHTML = getFormEmbed(url);
+      if (title) block.prepend(title);
     } else {
       block.innerHTML = getDefaultEmbed(url);
+      if (title) block.prepend(title);
     }
     block.classList = 'block embed';
     block.classList.add(...customStyles);
@@ -101,6 +104,7 @@ const loadEmbed = (block, link, autoplay, customStyles) => {
 
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
+  const title = block.querySelector('h5, h6, h4, h3, h2, h1');
   const link = block.querySelector('a').href;
   block.textContent = '';
   const customStyles = [...block.classList].filter((className) => className.startsWith('style-'));
@@ -111,14 +115,14 @@ export default function decorate(block) {
     wrapper.innerHTML = '<div class="embed-placeholder-play"><button type="button" title="Play"></button></div>';
     wrapper.prepend(placeholder);
     wrapper.addEventListener('click', () => {
-      loadEmbed(block, link, true, customStyles);
+      loadEmbed(block, link, true, customStyles, title);
     });
     block.append(wrapper);
   } else {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
-        loadEmbed(block, link, false, customStyles);
+        loadEmbed(block, link, false, customStyles, title);
       }
     });
     observer.observe(block);

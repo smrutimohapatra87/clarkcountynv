@@ -110,21 +110,34 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
 
 /* stylelint-disable no-descending-specificity */
 .embed.style-align-right-small {
-    width: auto;
+  width: auto;
+  display: block;
+
+  div {
+    float: right;
     display: block;
+    margin: 10px;
+    width: 20% !important;
+    padding-bottom: 15% !important;
+  }
 
-    div {
-        float: right;
-        display: block;
-        margin: 10px;
-        width: 20% !important;
-        padding-bottom: 15% !important;
-    }
+  iframe {
+    position: static;
+    left: unset !important;
+    width: 200px !important;
+    height: 180px !important;
+  }
+}
 
-    iframe {
-        position: static;
-        left: unset !important;
-        width: 200px !important;
-        height: 180px !important;
-    }
+.embed.style-align-right-small-title {
+  float: right;
+  display: block;
+  width: 20% !important;
+
+  iframe {
+    position: static;
+    left: unset !important;
+    width: 200px !important;
+    height: 180px !important;
+  }
 }
