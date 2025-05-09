@@ -1,21 +1,29 @@
-.section.contact-us-form .form.block {
-    form {
-        .submit-wrapper, .reset-wrapper, .file-wrapper {
-            button {
-                background: #0094C3;
-                color: #fff;
-                border: 0;
-                border-radius: 0;
-                display: inline-block;
-                font-size: var(--body-font-size-m);
-                font-weight: 400;
-                text-decoration: none;
-                cursor: pointer;
-                line-height: 1;
-                vertical-align: top;
-                font-family: sans-serif;
-                transition: all .3s;
-                padding: 15px 25px;
+.section.contact-us-form {
+    .form.block {
+        form {
+            .submit-wrapper, .reset-wrapper, .file-wrapper {
+                button {
+                    background: #0094C3;
+                    color: #fff;
+                    border: 0;
+                    border-radius: 0;
+                    display: inline-block;
+                    font-size: var(--body-font-size-m);
+                    font-weight: 400;
+                    text-decoration: none;
+                    cursor: pointer;
+                    line-height: 1;
+                    vertical-align: top;
+                    font-family: sans-serif;
+                    transition: all .3s;
+                    padding: 15px 25px;
+                }
+            }
+        }
+
+        &.width-small form{
+            .field-wrapper {
+                grid-column: 1 / span 4; /* start in column 1, span 4 */
             }
         }
     }
