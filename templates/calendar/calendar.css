@@ -186,6 +186,10 @@ body.calendar main section.fc-search form button {
     padding: 0;
 }
 
+body.calendar .fc-scroller {
+    overflow: hidden !important;
+}
+
 body.calendar .event-modal .event-modal-footer a.displayoff {
     display: none;
 }
@@ -374,7 +378,7 @@ body.calendar main section .fc .fc-header-toolbar > .fc-toolbar-chunk:last-child
 @media (width >= 900px) {
     body.calendar main section .fc {
         padding: 0 1vw 5vw;
-        height: 1241px;
+        height: 1280px;
     }
     
     body.calendar main section.fc-search {
