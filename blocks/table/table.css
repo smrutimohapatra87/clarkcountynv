@@ -437,6 +437,9 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     float: right;
 }
 
+.table.img-margin-left table tbody tr td p a {
+    margin-left: 20px;      
+}
 
 .table.fees table {
     width: 50%;
