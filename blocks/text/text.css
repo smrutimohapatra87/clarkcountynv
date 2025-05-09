@@ -99,6 +99,10 @@ main .block.text {
         background-color: #f5e7b8;
     }
 
+    &.highlight-color-dark-blue {
+        background-color: #3598db;
+    }
+
     &.align-text-right {
         text-align: right;
     }

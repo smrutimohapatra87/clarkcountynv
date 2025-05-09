@@ -65,6 +65,16 @@ export default async function decorate(block) {
       });
     }
   });
+
+  // Add a fix for extra space added after underline when a part of the word.
+  // Same logic can be used in other blocks when required
+  table.querySelectorAll('u').forEach((el) => {
+    const next = el.nextSibling;
+    if (next && next.nodeName === '#text') {
+      next.textContent = next.textContent.replace(/^ +/, '');
+    }
+  });
+
   block.innerHTML = '';
   block.append(table);
 }

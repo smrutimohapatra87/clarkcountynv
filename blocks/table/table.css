@@ -471,6 +471,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     width: 170px;
 }
 
+.table.fixed-img-300 img{
+    width: 300px;
+}
+
 .table.col-odd-15 table tbody tr {
     td:nth-child(odd) {
         width: 15%;
