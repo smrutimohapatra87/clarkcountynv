@@ -16,11 +16,25 @@ const loadScript = (url, callback, type) => {
   return script;
 };
 
-const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-    <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
+function getDefaultEmbed(url, customStyles) {
+  let width = '100%'; let
+    height = '100%';
+  if (customStyles.some((style) => style.startsWith('style-height'))) {
+    const heightStyle = customStyles.find((style) => style.startsWith('style-height'));
+    height = `${heightStyle.replace('style-height-', '')}px`;
+  }
+
+  if (customStyles.some((style) => style.startsWith('style-width'))) {
+    const widthStyle = customStyles.find((style) => style.startsWith('style-width'));
+    width = `${widthStyle.replace('style-width-', '')}px`;
+  }
+
+  return `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+    <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: ${width}; height: ${height}; position: absolute;" allowfullscreen=""
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
   </div>`;
+}
 
 const getFormEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
 <iframe name="mktoFormsXDIframe0.12896821644951362" id="MktoForms2XDIframe" src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
@@ -93,7 +107,7 @@ const loadEmbed = (block, link, autoplay, customStyles, title) => {
       block.innerHTML = getFormEmbed(url);
       if (title) block.prepend(title);
     } else {
-      block.innerHTML = getDefaultEmbed(url);
+      block.innerHTML = getDefaultEmbed(url, customStyles);
       if (title) block.prepend(title);
     }
     block.classList = 'block embed';

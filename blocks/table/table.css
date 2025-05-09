@@ -40,12 +40,15 @@
     background-color: var(--table-head-background-color7);
   }
 
-  .table.thbc8 thead {
+.table.thbc8 thead {
     background-color: var(--table-head-background-color8);
     color:white;
-  }
+}
 
-  
+.table.thbc9 thead {
+    background-color: var(--table-head-background-color-green);
+}
+
 @media (width >= 600px) {
   .table table {
     font-size: var(--body-font-size-s);

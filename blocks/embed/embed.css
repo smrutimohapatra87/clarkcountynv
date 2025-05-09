@@ -141,3 +141,11 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
     height: 180px !important;
   }
 }
+
+.embed.style-center-small {
+    width: 600px;
+}
+
+.embed.style-height-1200 {
+    height: 1200px;
+}

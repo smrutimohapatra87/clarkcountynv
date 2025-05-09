@@ -354,6 +354,10 @@
         width: auto;
     }
 
+    &.width-50 img {
+        width: 50px !important;
+    }
+
     &.width-125 img {
         width: 125px !important;
     }
@@ -543,4 +547,13 @@
     .cards.clickable-images:not(:has(ul)) {
         flex-direction: row;
     }
+}
+
+.block.cards.no-button a:any-link {
+    color: var(--no-button-link);
+    background-color: transparent;
+    text-decoration: underline;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
