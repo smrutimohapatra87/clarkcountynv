@@ -719,6 +719,11 @@ header .nav-tools .nav-search .search-box .search-top {
   padding: 33px 50px 23px;
   border-bottom: 1px solid #bbb;
   color: var(--dark-orange);
+  cursor: default;
+}
+
+header .nav-tools .nav-search .search-box .search-top-right {
+  cursor: pointer;
 }
 
 header .nav-tools .nav-search .search-box .search-top .search-top-left {
@@ -886,7 +891,7 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
  }
 
  header .nav-tools .nav-search .search-box .search-form-wrap .search-results .tab-content .tab-pane .g-search-wrap iframe {
-  height: 1800px;
+  height: 1600px;
   border: 0 !important;
   width: 100%;
  }

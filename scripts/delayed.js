@@ -25,7 +25,10 @@ googleTranslate();
 
 // Script for Accessibility Widget
 async function loadWidget() {
-  await loadScript('/widgets/accessibility/accessibility.js');
+  const searchPath = '/search';
+  if (!window.location.pathname.includes(searchPath)) {
+    await loadScript('/widgets/accessibility/accessibility.js');
+  }
 }
 
 // Script for share Widget
