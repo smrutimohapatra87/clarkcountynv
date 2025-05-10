@@ -33,6 +33,14 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Contact Us",
+              "value": "contact-us-form"
+            },
+            {
+              "name": "RPTT Calculator",
+              "value": "rptt-calc"
             }
           ]
         }
