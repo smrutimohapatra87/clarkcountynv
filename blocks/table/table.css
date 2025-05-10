@@ -437,8 +437,10 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
     float: right;
 }
 
-.table.img-margin-left table tbody tr td p a {
-    margin-left: 20px;      
+/* For the government/departments/public_communications/social-media page */
+.table.img-margin-left.social table tbody tr td:last-child p {
+    display: flex;  
+    gap: 1vw; 
 }
 
 .table.fees table {
