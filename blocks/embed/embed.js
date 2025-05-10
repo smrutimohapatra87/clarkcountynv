@@ -123,6 +123,21 @@ export default function decorate(block) {
   block.textContent = '';
   const customStyles = [...block.classList].filter((className) => className.startsWith('style-'));
 
+  let width;
+  let height;
+  if (customStyles.some((style) => style.startsWith('style-height'))) {
+    const heightStyle = customStyles.find((style) => style.startsWith('style-height'));
+    height = `${heightStyle.replace('style-height-', '')}px`;
+  }
+
+  if (customStyles.some((style) => style.startsWith('style-width'))) {
+    const widthStyle = customStyles.find((style) => style.startsWith('style-width'));
+    width = `${widthStyle.replace('style-width-', '')}px`;
+  }
+
+  block.style.width = width;
+  block.style.height = height;
+
   if (placeholder) {
     const wrapper = document.createElement('div');
     wrapper.className = 'embed-placeholder';
