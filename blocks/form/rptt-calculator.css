@@ -1,11 +1,12 @@
 .section.rptt-calc {
-   .form.block {
+    .form.block {
         form {
             :not(.field-description, .field-invalid) {
                 color: #000;
             }
 
-            .field-description, .field-invalid {
+            .field-description,
+            .field-invalid {
                 position: relative;
                 left: 1em;
             }
@@ -27,6 +28,21 @@
                     background-color: #eee;
                     text-align: right;
                 }
+
+                /* Chrome, Safari, Edge, Opera */
+                input[type='number']::-webkit-outer-spin-button,
+                input[type='number']::-webkit-inner-spin-button {
+                    /* stylelint-disable-next-line property-no-vendor-prefix */
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                /* Firefox */
+                input[type='number'] {
+                    /* stylelint-disable-next-line property-no-vendor-prefix */
+                    -moz-appearance: textfield;
+                }
+
 
                 &:first-child {
                     margin-top: 10vh;
