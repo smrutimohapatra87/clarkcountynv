@@ -500,7 +500,7 @@ main .section.details-404 > .default-content-wrapper {
 
 
 
-@media (width >= 900px) {
+@media (width >= 991px) {
   .desktop {
     display: block;
   }

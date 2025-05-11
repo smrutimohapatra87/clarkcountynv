@@ -237,7 +237,7 @@ header nav[aria-expanded="true"] .nav-sections {
 }
 
 header nav[aria-expanded="true"] .nav-sections > div.default-content-wrapper {
-  margin-right: 0;
+  margin-right: 3vw;
 }
 
 header .tabs-panel ul {
@@ -442,7 +442,7 @@ header nav .nav-tools {
 .nav-brand p {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: unset;
 }
 
 .scrolled:not(.mobile) {
@@ -460,7 +460,6 @@ header .nav-tools button.translate-button {
   flex-direction: row;
   align-items: center;
   align-self: flex-end;
-  margin-left: 53px;
 }
 
 header .nav-tools button.translate-button span {
@@ -896,7 +895,7 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
   width: 100%;
  }
 
-@media (width >= 900px) {
+@media (width >= 991px) {
   header {
     border-bottom: 1px solid #fff;
   }
@@ -932,13 +931,10 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
     overflow:visible;
   }
 
-  header .nav-search-icon {
-    margin-right: 20px;
-  }
-
   header nav .nav-tools {
     flex-direction: row;
     width: auto;
+    align-items: center;
   }
 
   header .nav-search {
@@ -975,13 +971,15 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
     position: relative;
-
-    /* font-weight: 500; */
     font: 700 14px 'Open Sans',sans-serif;
     color: #fff;
-    padding-right: 2vw;
     min-width: 140px;
     flex-grow: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+    justify-content: space-around;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
@@ -1028,8 +1026,8 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
   header nav .nav-sections .nav-drop::after {
     content: "";
     position: absolute;
-    top: 50%;
-    right: 17px;
+    top: 48%;
+    right: 0;
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -1046,6 +1044,7 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
     display: flex;
     margin: 0;
     font-size: var(--body-font-size-xs);
+    align-items: center;
   }
 
   header .nav-tools .nav-language ul {
@@ -1114,6 +1113,10 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
 }
 
 @media (width >= 1200px) {
+  header nav .nav-sections .nav-drop::after {
+    right: 1vw;
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li {
     padding-right: 3vw;
     font: 700 16px 'Open Sans',sans-serif;
