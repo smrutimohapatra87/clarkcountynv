@@ -251,6 +251,7 @@ header nav .nav-sections ul  {
   font-size: var(--body-font-size-s);
   font-weight: 500;
   margin: 0;
+  text-align: left;
 }
 
 header nav .nav-sections > div > ul > li {
