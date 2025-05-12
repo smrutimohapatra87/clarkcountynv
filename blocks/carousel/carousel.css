@@ -59,8 +59,8 @@
 }
 
 .carousel .carousel-slide-indicator button {
-    width: .65rem;
-    height: .65rem;
+    width: 14px;
+    height: 14px;
     padding: 0;
     border-radius: 1rem;
     background-color: rgba(0 0 0 / 20%);
@@ -70,7 +70,7 @@
 .carousel .carousel-slide-indicator button:disabled,
 .carousel .carousel-slide-indicator button:hover,
 .carousel .carousel-slide-indicator button:focus-visible {
-    background-color: rgba(0 0 0 / 80%);
+    background-color: #fff;
 }
 
 .carousel .carousel-slide-indicator span,

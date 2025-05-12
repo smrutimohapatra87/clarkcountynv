@@ -354,6 +354,7 @@ function handleNavTools(navWrapper, expandElement) {
     decorateGoogleTranslator(languageTool);
     const languageButton = button({ class: 'translate-button' }, span('US'), img());
     languageButton.querySelector('img').src = normalizeImage('en');
+    languageButton.querySelector('img').alt = 'Translate Icon';
     languageDiv.appendChild(languageButton);
     languageDiv.appendChild(languageTool);
     languageTool.querySelectorAll('li').forEach((ele, _, lis) => {
@@ -444,7 +445,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('role', '$button');
+        drop.setAttribute('role', drop.querySelector('a').textContent);
         drop.setAttribute('tabindex', 0);
         drop.addEventListener('focus', focusNavSection);
       }

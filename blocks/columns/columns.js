@@ -3,6 +3,7 @@ import { a, i } from '../../scripts/dom-helpers.js';
 
 function enablePlaybutton(col, pic, redirectURL) {
   const playButton = a({ class: 'explore-video-play' }, i({ class: 'play-button' }));
+  playButton.setAttribute('aria-label', 'Play Video');
   playButton.href = redirectURL;
   col.append(pic);
   col.append(playButton);

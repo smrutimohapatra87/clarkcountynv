@@ -23,6 +23,12 @@ export default async function decorate(block) {
 
   replaceClickableImageLinkWithImage(footer.querySelector('.footer-left'));
 
+  footer.querySelectorAll('.footer-right a').forEach((aEl, index) => {
+    // set unique aria label for each link
+    const ariaLabel = `social-link-${index + 1}`;
+    aEl.setAttribute('aria-label', ariaLabel);
+  });
+
   // add class to footer-contact
   const paragraphs = footer.querySelectorAll('.footer-middle p');
   paragraphs.forEach((p) => {
