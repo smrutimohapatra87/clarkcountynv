@@ -360,3 +360,14 @@ main .mainmenu .rightsection a:any-link.button.default {
     transition: all .3s;
   }
 
+  /* CSS for Search page */
+  main button.gsc-search-button {
+    background-color: var(--default-button);
+    border-color: var(--default-button);
+  }
+
+  main .gsc-control-cse {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+

@@ -317,7 +317,7 @@ main > div.section > .default-content-wrapper > p {
 
 main div.section.desktop img {
   width: 100%;
-  height: 667px;
+  height: 567px;
   object-fit: cover;
 }
 
@@ -398,7 +398,7 @@ body:not(:has('sidekick-library')) main > div:first-child:not(.short)::before, b
     top: 0;
     left: 0;
     width: 100%;
-    height: 667px;
+    height: 567px;
     z-index: 0;
     background: #000;
     opacity: 0.1;
@@ -519,7 +519,7 @@ main .section.details-404 > .default-content-wrapper {
   }
 
   main > div::before {
-      height: 667px;
+      height: 567px;
   }
 
   main .section.details-404 > .default-content-wrapper {
@@ -535,7 +535,7 @@ main .section.details-404 > .default-content-wrapper {
   }
 
   main > div.section.desktop.with-background-image {
-    height: 667px;
+    height: 567px;
     background-color: #bbb7b7;
 
     img {

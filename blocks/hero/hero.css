@@ -51,6 +51,7 @@ main .hero.text.homepage div div {
   flex-direction: row;
   justify-content: space-between;
   margin-right: 2vw;
+  align-items: center;
 }
 
 main .hero.text.homepage div div a {

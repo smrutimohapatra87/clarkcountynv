@@ -37,7 +37,7 @@
 
 .carousel.block nav {
     position: absolute;
-    left: 49%;
+    left: 47.5vw;
 }
 
 
@@ -220,9 +220,7 @@
     color: #fff;
     align-items: center;
     text-align: center;
-    position: relative;
-    top: -200%;
-            
+    position: relative;     
 }
 
 
@@ -257,11 +255,6 @@
     display: flex;
     background-color: rgb(255 255 255);
 }
-
-.slide-content-4-slide-2 {
-    top: 20%;
-}
-
     
 
 .slide-content-1 p::before {
@@ -282,6 +275,9 @@
     margin:12 12px 0 0;
 }
 
+.carousel .carousel-slide:not(:has(.slide-content-3 p)) .slide-content-1 p {
+    top: -200%;
+}
 
 
 /* stylelint-disable */
@@ -420,9 +416,8 @@
         align-items: center;
         text-align: center;
         position: relative;
-        top: -250%;
-        text-shadow: black 2px 2px 2px;
-                
+        top: -100%;
+        text-shadow: black 2px 2px 2px;      
     }
     
 
@@ -489,3 +484,9 @@
     }
 
 } /* stylelint-enable */
+
+@media (width >= 950px) {
+    .carousel .carousel-slide:has(.slide-content-2 p, .slide-content-3 p) .slide-content-4 {
+        top: -5%;
+    }
+}

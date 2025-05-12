@@ -4,9 +4,16 @@ import {
 import { loadScript } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  const gseDiv = div({ class: 'gcse-searchresults-only' });
+  const gseDivHeader = div({ class: 'gcse-searchresults-only' });
+  const gseDiv = div({ class: 'gcse-search' });
+  gseDivHeader.setAttribute('data-linkTarget', '_blank');
   gseDiv.setAttribute('data-linkTarget', '_blank');
   block.innerHTML = '';
-  block.append(gseDiv);
+  const searchPath = '/search-header';
+  if (window.location.pathname.includes(searchPath)) {
+    block.append(gseDivHeader);
+  } else {
+    block.append(gseDiv);
+  }
   await loadScript('/widgets/googlesearch/googlesearch.js');
 }

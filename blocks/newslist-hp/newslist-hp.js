@@ -82,7 +82,7 @@ const loadresults = async (jsonDataNews, resultsDiv) => {
   const month = today.getMonth(); // Months are zero-based
   const year = today.getFullYear();
   const suffix = ['th', 'st', 'nd', 'rd'][((day % 10) < 4 && ((day % 100) - (day % 10)) !== 10) ? day % 10 : 0];
-  const formattedDate = `${day}${suffix} ${monthNames[month]} ${year}`;
+  const formattedDate = `${monthNames[month]} ${day}${suffix} ${year}`;
   newsTop.querySelector('.date').textContent = formattedDate;
 
   resultsDiv.append(newsTop, parentDiv);
