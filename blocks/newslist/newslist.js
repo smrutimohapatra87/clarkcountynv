@@ -19,6 +19,13 @@ class News {
   }
 }
 
+function intoValidDate(localdate) {
+  const date = new Date(localdate);
+  const timezoneOffset = date.getTimezoneOffset();
+  const adjustedTime = new Date(date.getTime() + (timezoneOffset * 60 * 1000));
+  return adjustedTime.toDateString();
+}
+
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
@@ -38,7 +45,7 @@ const resultParsers = {
       }
       const cardright = div({ class: 'card-right' });
       if (result.newsPublished.length > 0) {
-        publishedDate = new Date(result.newsPublished * 1000).toDateString();
+        publishedDate = intoValidDate(new Date(result.newsPublished * 1000));
       }
       const divTitle = div();
       if (result.newsCategory && publishedDate) {
