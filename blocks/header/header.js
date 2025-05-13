@@ -146,7 +146,7 @@ function decorateGoogleTranslator(languageTool) {
     const dataLang = textArray[1];
     textArray.splice(0, 2);
     const dataText = textArray.join(' ');
-    const aTag = a({ class: `${dataLang}` }, dataText);
+    const aTag = a({ class: `${dataLang}`, href: '#' }, dataText);
     aTag.setAttribute('data-code', dataCode);
     aTag.setAttribute('data-lang', dataLang);
     li.innerHTML = '';
