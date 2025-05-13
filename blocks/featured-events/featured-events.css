@@ -27,18 +27,8 @@
 
 .block.featured-events .block.columns .event-image {
     flex-basis: 50%;
-    background: #ccc;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.block.featured-events .block.columns .event-image picture {
     height: 263px;
+    min-width: 20vw;
 }
 
 .block.featured-events div.see-more {
@@ -63,8 +53,9 @@
 }
 
 
-.block.featured-events .block.columns .event-image img {
+.block.featured-events .block.columns .event-image picture img {
     height: 100%;
+    width: 100%;
 }
 
 .block.featured-events .block.columns .event-body {
