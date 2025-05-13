@@ -19,11 +19,23 @@ class News {
   }
 }
 
+/* Check for Day Light Saving */
+function isDaylightSavingTime(date) {
+  const start = new Date(date.getFullYear(), 2, 8);
+  const end = new Date(date.getFullYear(), 10, 1);
+  start.setDate((1 + (7 - start.getDay())) % 7);
+  end.setDate((1 + (7 - end.getDay())) % 7);
+  start.setHours(2, 0, 0);
+  end.setHours(2, 0, 0);
+  return date >= start && date < end;
+}
+
 // Result parsers parse the query results into a format that can be used by the block builder for
 // the specific block types
 const resultParsers = {
   // Parse results into a cards block
   columns: (results) => {
+    let intoPdt;
     const blockContents = [];
     results.forEach((result) => {
       let publishedDate;
@@ -38,7 +50,13 @@ const resultParsers = {
       }
       const cardright = div({ class: 'card-right' });
       if (result.newsPublished.length > 0) {
-        publishedDate = new Date(result.newsPublished * 1000).toDateString();
+        /* convert epoc time UTC to epoc time Pacific */
+        if (isDaylightSavingTime(new Date())) {
+          intoPdt = result.newsPublished - 25200;
+        } else {
+          intoPdt = result.newsPublished - 28800;
+        }
+        publishedDate = new Date(intoPdt * 1000).toDateString();
       }
       const divTitle = div();
       if (result.newsCategory && publishedDate) {
