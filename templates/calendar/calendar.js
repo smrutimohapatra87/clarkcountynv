@@ -418,6 +418,7 @@ function createCalendar() {
   // eslint-disable-next-line no-undef
   calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone: 'local',
+    fixedWeekCount: false,
     initialView: getView(),
     dayMaxEventRows: mobilecheck() ? 1 : 6,
     views: {
