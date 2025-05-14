@@ -365,7 +365,7 @@ header nav .nav-sections:has(details) .default-content-wrapper details a:any-lin
 
 
 header nav .nav-sections:has(details) .default-content-wrapper details:not(:has(ul)) summary > div {
-  padding: 7px 60px 15px 0;
+  padding: 7px 7px 15px 0;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary.itemcolor2 a {
