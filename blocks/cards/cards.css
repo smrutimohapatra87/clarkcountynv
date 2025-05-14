@@ -264,6 +264,19 @@
             font-style: normal;
         }
     }
+
+    @media screen and (width <= 1200px) and (width > 767px) {
+        li {
+            flex: 1 1 calc(40% - 20px);
+            max-width: calc(50% - 20px);
+        }
+    }
+
+    @media only screen and (width <= 767px) {
+        ul li {
+            width: 100%;
+        }
+    }
 }
 
 .cards.staff.block.min-height-3-title .staff-tile-title{
