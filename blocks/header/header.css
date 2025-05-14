@@ -375,7 +375,6 @@ header nav .nav-sections:has(details) .default-content-wrapper details > summary
 
 header nav .nav-sections:has(details) .default-content-wrapper details summary.itemcolor3 a {
   font-size: 12px;
-  display: block;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details summary:not(.itemcolor3):has(+ ul) a:any-link {
