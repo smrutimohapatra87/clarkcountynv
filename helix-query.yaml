@@ -2,6 +2,46 @@ indices:
   site:
     include:
       - '/**'
+      - /calender
+      - /calendar/county-commissioners/
+      - /calendar/county-commission-district-a/
+      - /calendar/county-commission-district-b/
+      - /calendar/county-commissioners-district-c/
+      - /calendar/county-commissioners-district-d/
+      - /calendar/county-commissioners-district-e/
+      - /calendar/county-commissioners-district-f/
+      - /calendar/county-commissioners-district-g/
+      - /calendar/calendar-list-options/
+      - /calendar/goodsprings-citizens-advisory-committee/
+      - /calendar/laughlin-tab/
+      - /calendar/lone-mountain-citizens-advisory-council/
+      - /calendar/lower-kyle-canyon-citizens-advisory-committee/
+      - /calendar/moapa-town-advisory-board/
+      - /calendar/paradise-town-advisory-board/
+      - /calendar/spring-valley-town-advisory-board/
+      - /calendar/winchester-town-advisory-board/
+      - /calendar/enterprise-town-advisory-board/
+      - /calendar/moapa-valley-town-advisory-board/
+      - /calendar/red-rock-citizens-advisory-committee/
+      - /calendar/searchlight-town-advisory-board/
+      - /calendar/bunkerville-town-advisory-board/
+      - /calendar/mount-charleston-town-advisory-board/
+      - /calendar/sunrise-manor-town-advisory-board/
+      - /calendar/whitney-town-advisory-board/
+      - /calendar/pc/
+      - /calendar/bcc/
+      - /calendar/mountain-springs-citizens-advisory-council/
+      - /calendar/indian-springs-town-advisory-board/
+      - /calendar/sandy-valley-citizens-advisory-council-meeting/
+      - /calendar/working-group-to-address-homelessness/
+      - /calendar/county-manager/
+      - /calendar/parks-and-recreation/
+      - /calendar/american-rescue-plan-act/
+      - /calendar/truancy-prevention-outreach-program/
+      - /calendar/cjcc/
+      - /calendar/mojave-max-and-dcp-outreach-events-volunteer-opportunities/
+      - /calendar/featured-events/
+
     exclude:
       - '/drafts/**'
       - '/fragments/**'
