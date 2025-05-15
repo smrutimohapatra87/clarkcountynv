@@ -19,6 +19,10 @@
                     padding: 15px 25px;
                 }
             }
+
+            .reset-wrapper {
+                margin-left:40px;
+            }
         }
 
         &.width-small form{

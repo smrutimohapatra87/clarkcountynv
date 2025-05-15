@@ -46,13 +46,14 @@ const resultParsers = {
       const cardright = div({ class: 'card-right' });
       if (result.newsPublished.length > 0) {
         publishedDate = intoValidDate(new Date(result.newsPublished * 1000));
+        publishedDate = new Date(publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       }
       const divTitle = div();
       if (result.newsCategory && publishedDate) {
-        divTitle.textContent = `${result.newsCategory} - ${publishedDate.slice(4)}`;
+        divTitle.textContent = `${result.newsCategory} - ${publishedDate}`;
       } else {
         // eslint-disable-next-line no-nested-ternary
-        const available = publishedDate ? publishedDate.slice(4) : result.newsCategory ? result.newsCategory : '';
+        const available = publishedDate || (result.newsCategory ? result.newsCategory : '');
         divTitle.textContent = available;
       }
       cardright.append(divTitle);

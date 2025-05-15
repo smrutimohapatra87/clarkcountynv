@@ -190,6 +190,7 @@ indices:
       - /news/**
     exclude:
       - /news/
+      - /news/news-breadcrumbs
     target: /news/query-index.json
     properties:
       url:
