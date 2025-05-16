@@ -236,10 +236,6 @@ header nav[aria-expanded="true"] .nav-sections {
   justify-content: flex-end;
 }
 
-header nav[aria-expanded="true"] .nav-sections > div.default-content-wrapper {
-  margin-right: 3vw;
-}
-
 header .tabs-panel ul {
   column-count: 2;
   column-gap: 60px;
