@@ -67,7 +67,6 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
-  modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
   modal.querySelector('.event-modal-date p:last-child').textContent = `${eventMonthName}`;
@@ -75,10 +74,13 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   modal.querySelector('iframe').src = url;
   modal.style.display = 'block';
   if (readMore.length > 1) {
-    modal.querySelector('.event-modal-footer a').href = readMore;
-    modal.querySelector('.event-modal-footer a').classList.remove('displayoff');
-  } else {
-    modal.querySelector('.event-modal-footer a').classList.add('displayoff');
+    modal.querySelectorAll('.event-modal-footer a').forEach((ele) => {
+      ele.remove();
+    });
+    const readMoreEle = a('Read More');
+    readMoreEle.href = readMore;
+    modal.querySelector('.event-modal-footer').appendChild(readMoreEle);
+    modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   }
 
   // Listen for messages from iframe window
@@ -100,6 +102,9 @@ function popupEvent(url, startTime, endTime, duration, backgroundColor, readMore
   window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
+      modal.querySelectorAll('.event-modal-footer a').forEach((ele) => {
+        ele.remove();
+      });
     }
   };
 }
@@ -200,7 +205,7 @@ function createModal(block) {
     }),
     div({ class: 'event-modal-date' }, p(), p()),
     div({ class: 'event-modal-time' }, p()),
-    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close'), a('Read More')),
+    div({ class: 'event-modal-footer' }, button({ class: 'close', onclick: () => { document.querySelector('.event-modal').style.display = 'none'; } }, 'Close')),
   ));
   block.append(modal);
 }
