@@ -220,7 +220,7 @@ export default async function decorate(block) {
   const blockContents = resultParsers.columns(yesArray.slice(0, 4));
   const builtBlock = buildBlock('columns', blockContents);
   block.appendChild(builtBlock);
-  const seeMoreButton = div({ class: 'see-more' }, a({ href: '/calendar' }, 'See More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
+  const seeMoreButton = div({ class: 'see-more' }, a({ href: '/calendar' }, 'Discover More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
   block.appendChild(seeMoreButton);
   decorateBlock(builtBlock);
   await loadBlock(builtBlock);

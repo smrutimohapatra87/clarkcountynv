@@ -43,7 +43,7 @@ const resultParsers = {
 
       const pageTitle = div({ class: 'pagetitle' }, result.newsTitle);
       cardbottom.append(pageTitle);
-      const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Learn More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
+      const aEle1 = div({ class: 'learnmore' }, a({ href: `${result.newsPath}` }, 'Explore More', img({ src: '/assets/images/general/white-arrow-right.png', alt: 'more' })));
       cardbottom.append(aEle1);
       row.push(cardtop, cardbottom);
       blockContents.push(row);

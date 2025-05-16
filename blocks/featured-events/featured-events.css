@@ -33,7 +33,7 @@
 
 .block.featured-events div.see-more {
     background: var(--dark-orange);
-    width: 180px;
+    width: 210px;
     display: flex;
     justify-content: center;
     margin: 2vh;
