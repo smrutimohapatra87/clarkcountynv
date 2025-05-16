@@ -15,7 +15,7 @@
 async function* request(url, context) {
   const { chunkSize, sheetName, fetch } = context;
   for (let offset = 0, total = Infinity; offset < total; offset += chunkSize) {
-    const params = new URLSearchParams(`offset=${offset}&limit=${chunkSize}`);
+    const params = new URLSearchParams(`offset=${offset}&limit=${chunkSize}&nocache=${Date.now()}`);
     if (sheetName) params.append('sheet', sheetName);
     const resp = await fetch(`${url}?${params.toString()}`);
     if (resp.ok) {
