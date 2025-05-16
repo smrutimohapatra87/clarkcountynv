@@ -30,7 +30,7 @@ class Accordion {
     // Store the <summary> element
     this.summary = el.querySelector('summary');
     // Store the parent <details> element
-    this.parent = el.parentElement.parentElement;
+    this.parent = el.parentElement.parentElement.parentElement;
     // Store the <div class="content"> element
     this.content = el.querySelector('.content');
 
@@ -487,11 +487,15 @@ function decorateNavItemMobile(mainUL) {
 
     if (childUL) {
       $details.append($summary, childUL);
-      mainLI.replaceWith($details);
+      const parentLi = document.createElement('li');
+      parentLi.append($details);
+      mainLI.replaceWith(parentLi);
       decorateNavItemMobile(childUL);
     } else {
       $details.append($summary);
-      mainLI.replaceWith($details);
+      const parentLi = document.createElement('li');
+      parentLi.append($details);
+      mainLI.replaceWith(parentLi);
     }
   }
 }

@@ -255,6 +255,14 @@ header nav .nav-sections > div > ul > li {
   padding-top: 44px;
 }
 
+header nav .nav-sections ul > li > ul > li {
+  font-weight: 500;
+}
+
+header nav .nav-sections ul.content li {
+  padding-top: 0;
+}
+
 header nav .nav-sections ul > li > ul {
   margin-top: 0;
 }
@@ -329,7 +337,7 @@ header .nav-in-menu-wrap .tabs-tab a {
 header nav .nav-sections:has(details) .default-content-wrapper details a {
   font-size: 14px;
   font-family: var(--heading-font-family);
-  padding: 15px 60px 15px 15px;
+  padding: 15px;
 }
 
 header nav .nav-sections:has(details) .default-content-wrapper details > summary a {
@@ -423,10 +431,6 @@ header nav .nav-sections:has(details) .default-content-wrapper details[open] > s
 }
 
 /* Mobile View Nav sections End */
-
-header nav .nav-sections ul > li > ul > li {
-  font-weight: 500;
-}
 
 /* tools */
 header nav .nav-tools {
