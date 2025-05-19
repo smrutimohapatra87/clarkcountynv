@@ -140,6 +140,10 @@ const resultParsers = {
       const dateDiv = div({ class: 'date' }, fullDate);
       const divTitle = div({ class: 'title' }, h3(result.title));
       const divDescription = div({ class: 'description' }, result.eventdescription);
+      // Regular expression to match URLs
+      const urlRegex = /(https?:\/\/main[^\s]+)/g;
+      // Remove URLs from the textContent
+      divDescription.textContent = divDescription.textContent.replace(urlRegex, '').trim();
       const divPath = div({ class: 'path' }, result.path);
       divRight.appendChild(dateDiv);
       divRight.appendChild(divTitle);
