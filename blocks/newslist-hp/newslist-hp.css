@@ -33,6 +33,7 @@
 .newslist-hp.block .cards.block.newsitems {
     margin-top: 49px;
     width: 100%;
+    margin-bottom: 49px;
 }
 
 .newslist-hp.block .cards.block.newsitems ul {
@@ -49,6 +50,14 @@
     .newslist-hp.block .cards.block.newsitems ul {
         grid-template-columns: repeat(3, 30%);
     }
+}
+
+@media (width <=600px) {
+    .newslist-hp.block .cards.block.newsitems {
+    margin-top: 49px;
+    width: 100%;
+    margin-bottom: 200px;
+}
 }
 
 .newslist-hp.block .cards.block.newsitems ul li {
@@ -92,7 +101,7 @@
 }
 
 .newslist-hp.block .cards.block.newsitems li .cards-card-body .card-bottom div.pagetitle {
-    height: 46.7917px;
+    height: 70px;
     font-weight: 700;
     font-size: 18px;
     margin: 38px 0 36px;
