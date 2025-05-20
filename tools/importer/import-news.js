@@ -100,7 +100,7 @@ export default {
     params['breadcrumbs-base'] = '/news/news-breadcrumbs';
     params['breadcrumbs-title-override'] = 'News Post';
     const listMetadata = await extractPageInfo(
-      'http://localhost:3001/newslist.php?host=https://www.clarkcountynv.gov/newslist.php',
+      'http://localhost:3001/revize/clarkcounty/newslist.php?host=https://cms8.revize.com/revize/clarkcounty/newslist.php',
       params.originalURL,
       results,
     );

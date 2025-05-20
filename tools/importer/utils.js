@@ -83,7 +83,7 @@ export const getSanitizedPath = (url) => {
   let u;
   try {
     u = new URL(url);
-    if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost') {
+    if (u.hostname && u.hostname !== 'www.clarkcountynv.gov' && u.hostname !== 'localhost' && u.hostname !== 'cms8.revize.com') {
       return url;
     }
   } catch (error) {
@@ -92,6 +92,7 @@ export const getSanitizedPath = (url) => {
   let path = url;
 
   [path] = path.split('#');
+  path = path.search('/revize/clarkcounty') !== -1 ? path.replace('/revize/clarkcounty', '') : path;
   path = path.endsWith('.php') ? path.slice(0, -4) : path;
   path = path.replaceAll(/[,!]/g, '');
   const pathParts = path.split('/');
@@ -211,7 +212,7 @@ export const setPageTitle = (main, params) => {
 
 export const fixImageSrcPath = (src, results, imagePath = 'general') => {
   const url = new URL(src, window.location.origin);
-  const originalLocation = new URL(url.pathname, WEBFILES_DOMAIN);
+  const originalLocation = new URL(url.pathname.replace('/revize/clarkcounty', ''), WEBFILES_DOMAIN);
   const newPath = `/assets/images/${imagePath}${WebImporter.FileUtils.sanitizePath(`/${originalLocation.pathname.split('/').pop()}`)}`.toLowerCase();
 
   results.push({
