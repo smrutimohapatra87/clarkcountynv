@@ -21,6 +21,8 @@ export function submitSuccess(e, form) {
   }
   form.setAttribute('data-submitting', 'false');
   form.querySelector('button[type="submit"]').disabled = false;
+  document.querySelector('.spinner').style.display = 'none';
+  document.querySelector('main .form form').style.display = 'block';
 }
 
 export function submitFailure(e, form) {
@@ -34,6 +36,8 @@ export function submitFailure(e, form) {
   errorMessage.scrollIntoView({ behavior: 'smooth' });
   form.setAttribute('data-submitting', 'false');
   form.querySelector('button[type="submit"]').disabled = false;
+  document.querySelector('.spinner').style.display = 'none';
+  document.querySelector('main .form form').style.display = 'block';
 }
 
 function generateUnique() {

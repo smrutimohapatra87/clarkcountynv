@@ -833,3 +833,53 @@ main div.form-wrapper {
         line-height: 1.5em
     }
 }
+
+.form.block div.spinner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    z-index: 20000; 
+    height:250px;
+    margin-top: 75%;
+    margin-left: 25%;
+}
+
+.form.block div.spinner div.circle-spinner {
+    width: 20vh;
+    height: 20vh;
+    background: conic-gradient(var(--default-button), var(--default-button), #fff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    animation: rotate 2s ease-in-out infinite;
+}
+
+@media (width >= 900px) {
+    .form.block div.spinner {
+        margin-top: 25%;
+        margin-left: 48%;
+    }
+}
+
+.form.block div.spinner div.circle-spinner::after {
+    content: "";
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0.7);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(720deg);
+    }
+}

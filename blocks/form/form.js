@@ -5,6 +5,7 @@ import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorator from './mappings.js';
 import { handleSubmit } from './submit.js';
 import DocBasedFormToAF from './transform.js';
+import { div } from '../../scripts/dom-helpers.js';
 import {
   checkValidation,
   createButton,
@@ -498,5 +499,8 @@ export default async function decorate(block) {
       form.dataset.formpath = formDef.properties['fd:path'];
     }
     container.replaceWith(form);
+    // create a spinner div
+    const spinnerDiv = div({ class: 'spinner', style: 'display: none;' }, div({ class: 'circle-spinner' }));
+    form.after(spinnerDiv);
   }
 }
