@@ -35,6 +35,8 @@ export function externalLinks(main) {
   const links = main.querySelectorAll('a[href]');
   links.forEach((linkItem) => {
     const hrefURL = new URL(linkItem.href);
+    console.log(hrefURL.hostname);
+    console.log(window.location.hostname);
     if (hrefURL.pathname.includes('pdf') || hrefURL.hostname !== window.location.hostname) {
       linkItem.setAttribute('target', '_blank');
     }
