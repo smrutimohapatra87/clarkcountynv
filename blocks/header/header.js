@@ -41,8 +41,9 @@ class Accordion {
     // Store if the element is expanding
     this.isExpanding = false;
     // Detect user clicks on the summary element
+    this.arrowSelector = this.summary.querySelector('.markerdiv');
     if (this.content) {
-      this.summary.addEventListener('click', (e) => this.onClick(e));
+      this.arrowSelector.addEventListener('click', (e) => this.onClick(e));
     }
   }
 
