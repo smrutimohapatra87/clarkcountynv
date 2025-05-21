@@ -21,11 +21,11 @@ export default function decorate(block) {
       }
     });
     if (block.classList.contains('clickable')) {
-      const $li = li();
+      const $li = li({ class: 'cards-card' });
       const aEle = a();
-      aEle.append($li);
-      while (row.firstElementChild) $li.append(row.firstElementChild);
-      [...$li.children].forEach((divEl) => {
+      $li.append(aEle);
+      while (row.firstElementChild) aEle.append(row.firstElementChild);
+      [...aEle.children].forEach((divEl) => {
         if (divEl.children.length === 1 && divEl.querySelector('picture')) divEl.className = 'cards-card-image';
         else {
           divEl.className = 'cards-card-body';
@@ -52,7 +52,7 @@ export default function decorate(block) {
           }
         }
       });
-      $ul.append(aEle);
+      $ul.append($li);
     } else if (block.classList.contains('clickable-images')) {
       const image = row.children[0].querySelector('picture');
       const aEle = a({ class: 'grid-link' });
