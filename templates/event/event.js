@@ -56,6 +56,11 @@ export default async function decorate(doc) {
     }
   });
 
+  const links = descriptionEl.querySelectorAll('a');
+  links.forEach((linkItem) => {
+    linkItem.setAttribute('target', '_blank');
+  });
+
   if (descriptionEl?.children?.length === 0) {
     descriptionEl.remove();
   }

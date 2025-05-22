@@ -34,7 +34,10 @@ export function normalizeString(str) {
 export function externalLinks(main) {
   const links = main.querySelectorAll('a[href]');
   links.forEach((linkItem) => {
-    linkItem.setAttribute('target', '_blank');
+    const hrefURL = new URL(linkItem.href);
+    if (hrefURL.pathname.includes('pdf') || hrefURL.hostname !== window.location.hostname) {
+      linkItem.setAttribute('target', '_blank');
+    }
   });
 }
 
