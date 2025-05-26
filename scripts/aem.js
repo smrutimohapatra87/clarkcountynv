@@ -560,6 +560,11 @@ function buildBlock(blockName, content) {
   return blockEl;
 }
 
+function shouldIgnoreStylingBlock(blockName) {
+  const BLOCKS_TO_IGNORE = ['line-break', 'h2underline'];
+  return BLOCKS_TO_IGNORE.includes(blockName);
+}
+
 /**
  * Loads JS and CSS for a block.
  * @param {Element} block The block element
@@ -569,6 +574,9 @@ async function loadBlock(block) {
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
     const { blockName } = block.dataset;
+    if (shouldIgnoreStylingBlock(blockName)) {
+      return block;
+    }
     try {
       const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
       const decorationComplete = new Promise((resolve) => {
