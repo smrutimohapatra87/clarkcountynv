@@ -58,13 +58,6 @@ header nav {
   padding: 0;
 }
 
-@media (width >=600px) {
-  header nav {
-    margin: 0;
-    padding: 0 1rem;
-  }
-}
-
 header nav p {
   margin: 0;
   line-height: 1;
@@ -89,8 +82,19 @@ header nav .nav-hamburger {
   display: flex;
   align-items: center;
   position: absolute;
-  top: 5vh;
-  right: 3vh;
+  top: 50%;
+  right: 10%;
+}
+
+@media (width >=600px) {
+  header nav {
+    margin: 0;
+    padding: 0 1rem;
+  }
+
+  header nav .nav-hamburger {
+    right: 20%;
+  }
 }
 
 header nav .nav-hamburger button {
