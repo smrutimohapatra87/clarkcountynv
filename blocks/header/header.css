@@ -1127,3 +1127,9 @@ header .nav-tools .nav-search .search-box .search-form-wrap .search-results {
     width: 1134.66px;
   }
 }
+
+@media (width >= 2000px) {
+  header .menuul {
+    right: 25%;
+  }
+}
