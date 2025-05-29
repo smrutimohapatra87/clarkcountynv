@@ -677,3 +677,13 @@ main .mainmenu .rightsection .table.no-header.cards.withimages.height-300 table 
 padding: 0.5em;
 text-align: left;
 }
+
+/* Mobile view adjustments */
+@media (width <= 600px) {
+    .table.commissioners {
+    table {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 100%;
+    }
+}}

@@ -75,3 +75,21 @@ body.event .map-embed {
     color: #fff;
     font-weight: bold;
 }
+
+/* Mobile View */
+@media (width <= 600px) {
+    .map-embed {
+        height: 300px;
+    }
+
+    .map-embed.right-align,
+    .map-embed.left-align {
+        width: 100%;
+        float: none;
+    }
+
+    .map-embed.right-align iframe,
+    .map-embed.left-align iframe {
+        height: 300px;
+    }
+}
