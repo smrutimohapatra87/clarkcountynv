@@ -107,7 +107,7 @@ function tConv24(time24) {
   return ts;
 }
 
-function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) {
+function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore, textColor) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE',
     'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
   let eventDate = startTime.getDate();
@@ -131,8 +131,11 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) 
 
   const modal = document.querySelector('.event-modal');
   modal.querySelector('.event-modal-date').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-date').style.color = textColor;
   modal.querySelector('.event-modal-time').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-time').style.color = textColor;
   modal.querySelector('.event-modal-footer button.close').style.backgroundColor = backgroundColor;
+  modal.querySelector('.event-modal-footer button.close').style.color = textColor;
   modal.querySelector('.event-modal-footer a').style.backgroundColor = backgroundColor;
   modal.querySelector('.event-modal-footer').classList.add('off');
   modal.querySelector('.event-modal-date p:first-child').textContent = `${eventDate}`;
@@ -143,6 +146,7 @@ function popupEvent(url, startTime, endTime, allDay, backgroundColor, readMore) 
   const readMoreAEl = modal.querySelector('.event-modal-footer a.footer-readmore');
   if (readMoreAEl) {
     if (readMore.length > 1) {
+      readMoreAEl.style.color = textColor;
       let newReadMoreUrl = readMore;
       const currentReadMoreUrl = new URL(readMore, window.location.origin);
       if (EDS_DOMAINS.some((domain) => currentReadMoreUrl.origin.includes(domain))) {
@@ -460,7 +464,7 @@ function createCalendar() {
           window.history.pushState({}, '', url);
         }
         // eslint-disable-next-line max-len
-        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore);
+        popupEvent(info.event.url, info.event.start, info.event.end, info.event.allDay, info.event.backgroundColor, info.event.extendedProps.readMore, info.event.textColor);
       }
       // Check the height of the event iframe & then enable / disable event footer display
       const eventIframe = document.querySelector('#event-iframe');
