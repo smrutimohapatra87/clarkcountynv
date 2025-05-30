@@ -468,17 +468,20 @@ function createCalendar() {
       }
       // Check the height of the event iframe & then enable / disable event footer display
       const eventIframe = document.querySelector('#event-iframe');
-      const waitForMyIframeToload = () => (new Promise((resolve) => {
-        eventIframe.addEventListener('load', () => resolve());
-      }));
-      await waitForMyIframeToload();
-      const iframeHeight = eventIframe.contentWindow.document.body.scrollHeight;
-      // Check the height of modal height
-      const modal = document.querySelector('.event-modal');
-      const modalHeight = modal.offsetHeight;
-      if (iframeHeight < modalHeight) {
-        modal.querySelector('.event-modal-footer').classList.remove('off');
-      }
+      eventIframe.addEventListener('load', () => {
+        // Wait 1 second after the iframe loads
+        setTimeout(() => {
+          try {
+            const { scrollHeight } = eventIframe.contentWindow.document.body;
+            const modal = document.querySelector('.event-modal');
+            if (scrollHeight < 750) {
+              modal.querySelector('.event-modal-footer').classList.remove('off');
+            }
+          } catch (e) {
+            console.log('Unable to access iframe content (possible cross-origin issue)', e);
+          }
+        }, 1000); // 1000 ms = 1 second
+      });
     },
   });
   /* The Below code is for when the URL is loaded with a specific date */

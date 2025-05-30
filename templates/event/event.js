@@ -81,9 +81,11 @@ export default async function decorate(doc) {
       const nearTop = scrollY <= 100;
       const nearBottom = (viewportHeight + scrollY) >= (pageHeight - BOTTOM_THRESHOLD);
 
-      if (nearTop) {
+      if (nearTop && !nearBottom) {
         newState = { eventtop: 'on', eventfooter: 'off' };
-      } else if (nearBottom) {
+      } else if (nearTop && nearBottom) {
+        newState = { eventtop: 'on', eventfooter: 'on' };
+      } else if (!nearTop && nearBottom) {
         newState = { eventtop: 'off', eventfooter: 'on' };
       } else {
         newState = { eventtop: 'off', eventfooter: 'off' };
