@@ -47,7 +47,7 @@ export default async function decorate(block) {
   // Search bar (new)
   const searchDiv = document.createElement('div');
   searchDiv.className = 'tablelist-search';
-  searchDiv.innerHTML = `<input type="search" placeholder="Search..." id="tablelist-search-input" />`;
+  searchDiv.innerHTML = '<input type="search" placeholder="Search..." id="tablelist-search-input" />';
 
   controlsDiv.appendChild(filterDiv);
   controlsDiv.appendChild(searchDiv);
@@ -84,7 +84,7 @@ export default async function decorate(block) {
     table.append(tbody);
 
     // Filter rows by search
-    let filteredRows = allRows.filter((row, idx) => {
+    const filteredRows = allRows.filter((row, idx) => {
       if (header && idx === 0) return true;
       return row.textContent.toLowerCase().includes(currentSearch);
     });
@@ -149,7 +149,7 @@ export default async function decorate(block) {
       prevBtn.disabled = currentPage === 1;
       prevBtn.onclick = () => {
         if (currentPage > 1) {
-          currentPage--;
+          currentPage -= 1;
           renderTable();
         }
       };
@@ -164,7 +164,7 @@ export default async function decorate(block) {
       nextBtn.disabled = currentPage === totalPages;
       nextBtn.onclick = () => {
         if (currentPage < totalPages) {
-          currentPage++;
+          currentPage += 1;
           renderTable();
         }
       };
