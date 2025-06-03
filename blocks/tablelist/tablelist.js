@@ -28,7 +28,11 @@ export default async function decorate(block) {
   const header = !block.classList.contains('no-header');
   const maxColumns = getMaxColumns(block);
 
-  // Create filter control
+  // Create controls container
+  const controlsDiv = document.createElement('div');
+  controlsDiv.className = 'tablelist-controls';
+
+  // Row selector (existing)
   const filterDiv = document.createElement('div');
   filterDiv.className = 'table-row-filter';
   filterDiv.innerHTML = `
@@ -40,6 +44,15 @@ export default async function decorate(block) {
     </select>
   `;
 
+  // Search bar (new)
+  const searchDiv = document.createElement('div');
+  searchDiv.className = 'tablelist-search';
+  searchDiv.innerHTML = `<input type="search" placeholder="Search..." id="tablelist-search-input" />`;
+
+  controlsDiv.appendChild(filterDiv);
+  controlsDiv.appendChild(searchDiv);
+  block.appendChild(controlsDiv);
+
   // Create a container for the table
   let tableContainer = block.querySelector('.table-container');
   if (!tableContainer) {
@@ -48,9 +61,21 @@ export default async function decorate(block) {
     block.appendChild(tableContainer);
   }
 
-  // Render table with given number of rows
-  function renderTable(rowCount) {
+  // Pagination controls container
+  let paginationDiv = block.querySelector('.tablelist-pagination');
+  if (!paginationDiv) {
+    paginationDiv = document.createElement('div');
+    paginationDiv.className = 'tablelist-pagination';
+    block.appendChild(paginationDiv);
+  }
+
+  let currentSearch = '';
+  let currentRowCount = 10;
+  let currentPage = 1;
+
+  function renderTable() {
     tableContainer.innerHTML = '';
+    paginationDiv.innerHTML = '';
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const tbody = document.createElement('tbody');
@@ -58,7 +83,25 @@ export default async function decorate(block) {
     if (header) table.append(thead);
     table.append(tbody);
 
-    const rowsToShow = header ? allRows.slice(0, 1 + rowCount) : allRows.slice(0, rowCount);
+    // Filter rows by search
+    let filteredRows = allRows.filter((row, idx) => {
+      if (header && idx === 0) return true;
+      return row.textContent.toLowerCase().includes(currentSearch);
+    });
+
+    // Pagination logic
+    const dataRows = header ? filteredRows.slice(1) : filteredRows;
+    const totalRows = dataRows.length;
+    const totalPages = Math.max(1, Math.ceil(totalRows / currentRowCount));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const startIdx = (currentPage - 1) * currentRowCount;
+    const endIdx = startIdx + currentRowCount;
+    const pageRows = dataRows.slice(startIdx, endIdx);
+
+    const rowsToShow = header
+      ? [filteredRows[0], ...pageRows]
+      : pageRows;
 
     rowsToShow.forEach((child, i) => {
       // Skip filter and container nodes
@@ -98,16 +141,51 @@ export default async function decorate(block) {
     });
 
     tableContainer.append(table);
+
+    // Pagination controls
+    if (totalPages > 1) {
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = '<<Previous';
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      };
+      paginationDiv.appendChild(prevBtn);
+
+      const pageInfo = document.createElement('span');
+      pageInfo.textContent = ` Page ${currentPage} of ${totalPages} `;
+      paginationDiv.appendChild(pageInfo);
+
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = 'Next>>';
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      };
+      paginationDiv.appendChild(nextBtn);
+    }
   }
 
-  // Insert filter control at the top of the block
-  block.insertBefore(filterDiv, block.firstChild);
-
   // Initial render
-  renderTable(10);
+  renderTable();
 
   // Listen for row count changes
   filterDiv.querySelector('#row-selector').addEventListener('change', (e) => {
-    renderTable(Number(e.target.value));
+    currentRowCount = Number(e.target.value);
+    currentPage = 1;
+    renderTable();
+  });
+
+  // Listen for search input
+  searchDiv.querySelector('#tablelist-search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.toLowerCase();
+    currentPage = 1;
+    renderTable();
   });
 }

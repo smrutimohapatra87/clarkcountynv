@@ -52,3 +52,34 @@
   padding: 10px;
 }
 
+/* Display the table in center of the page */
+.tablelist.block table {
+  margin: 20px auto;
+}
+
+/* Container for filter and search controls */
+.tablelist-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Style for the search bar */
+.tablelist-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.tablelist-search input[type="search"] {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: 1px solid #e9eaec;
+  border-radius: 4px;
+  outline: none;
+  font-family: sans-serif;
+  color: #333;
+  background: #fff;
+  width: 400px; /* Add or adjust this line for a wider input */
+}
