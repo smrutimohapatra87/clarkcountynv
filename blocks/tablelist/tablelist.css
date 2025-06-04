@@ -44,17 +44,23 @@
 
 
 /* bordered variant */
+
+.tablelist table {
+  border-collapse: collapse;
+}
+
 .tablelist table th,
 .tablelist table td {
   border: 1px solid #dadada;
   font-size: medium;
-  text-align: center;
-  padding: 10px;
+  text-align: left;
+  padding: 5px;
 }
 
 /* Display the table in center of the page */
 .tablelist.block table {
-  margin: 20px auto;
+  width: 100%;
+  margin: 20px 0; 
 }
 
 /* Container for filter and search controls */
@@ -82,4 +88,57 @@
   color: #333;
   background: #fff;
   width: 400px; /* Add or adjust this line for a wider input */
+}
+
+/* Pagination styling for tablelist */
+.tablelist-pagination-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 4px;
+  row-gap: 12px;
+  padding: 0;
+}
+
+.tablelist-pagination-list li {
+  display: flex;
+  align-items: center;
+  margin: 0 2px;
+}
+
+.tablelist-pagination-list li button {
+  padding: 6px 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  font-size: 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tablelist-pagination-list li button.active,
+.tablelist-pagination-list li button:disabled {
+  background: var(--default-button, #0072ce);
+  color: #fff;
+  border-color: var(--default-button, #0072ce);
+  font-weight: bold;
+  cursor: default;
+}
+
+.tablelist-pagination-list li button:hover:not(:is(:disabled, .active)) {
+  background: var(--default-button, #0072ce);
+  color: #fff;
+  border-color: var(--default-button, #0072ce);
+}
+
+.tablelist-pagination-list li span,
+.tablelist-pagination-list li.dots {
+  padding: 0 8px;
+  color: #888;
+  font-size: 16px;
+  user-select: none;
 }

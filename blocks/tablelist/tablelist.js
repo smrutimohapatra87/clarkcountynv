@@ -36,7 +36,7 @@ export default async function decorate(block) {
   const filterDiv = document.createElement('div');
   filterDiv.className = 'table-row-filter';
   filterDiv.innerHTML = `
-    <label for="row-selector">Rows per page:</label>
+    <label for="row-selector">Show:</label>
     <select id="row-selector">
       <option value="5">5</option>
       <option value="10" selected>10</option>
@@ -47,8 +47,7 @@ export default async function decorate(block) {
   // Search bar (new)
   const searchDiv = document.createElement('div');
   searchDiv.className = 'tablelist-search';
-  searchDiv.innerHTML = '<input type="search" placeholder="Search..." id="tablelist-search-input" />';
-
+  searchDiv.innerHTML = '<label for="tablelist-search-input">Search:</label> <input type="search" id="tablelist-search-input" />';
   controlsDiv.appendChild(filterDiv);
   controlsDiv.appendChild(searchDiv);
   block.appendChild(controlsDiv);
@@ -143,9 +142,15 @@ export default async function decorate(block) {
     tableContainer.append(table);
 
     // Pagination controls
+    paginationDiv.innerHTML = '';
     if (totalPages > 1) {
+      const ul = document.createElement('ul');
+      ul.className = 'tablelist-pagination-list';
+
+      // Previous button
+      const prevLi = document.createElement('li');
       const prevBtn = document.createElement('button');
-      prevBtn.textContent = '<<Previous';
+      prevBtn.textContent = '<';
       prevBtn.disabled = currentPage === 1;
       prevBtn.onclick = () => {
         if (currentPage > 1) {
@@ -153,14 +158,84 @@ export default async function decorate(block) {
           renderTable();
         }
       };
-      paginationDiv.appendChild(prevBtn);
+      prevLi.appendChild(prevBtn);
+      ul.appendChild(prevLi);
 
-      const pageInfo = document.createElement('span');
-      pageInfo.textContent = ` Page ${currentPage} of ${totalPages} `;
-      paginationDiv.appendChild(pageInfo);
+      // Page 1
+      const firstLi = document.createElement('li');
+      const firstBtn = document.createElement('button');
+      firstBtn.textContent = '1';
+      firstBtn.disabled = currentPage === 1;
+      if (currentPage !== 1) {
+        firstBtn.onclick = () => {
+          currentPage = 1;
+          renderTable();
+        };
+      } else {
+        firstBtn.classList.add('active');
+      }
+      firstLi.appendChild(firstBtn);
+      ul.appendChild(firstLi);
 
+      // Page 2 (if exists)
+      if (totalPages > 1) {
+        const secondLi = document.createElement('li');
+        const secondBtn = document.createElement('button');
+        secondBtn.textContent = '2';
+        secondBtn.disabled = currentPage === 2;
+        if (currentPage !== 2) {
+          secondBtn.onclick = () => {
+            currentPage = 2;
+            renderTable();
+          };
+        } else {
+          secondBtn.classList.add('active');
+        }
+        secondLi.appendChild(secondBtn);
+        ul.appendChild(secondLi);
+      }
+
+      // If more than 3 pages, handle ellipsis and current page
+      if (totalPages > 3) {
+        // If currentPage is not 1, 2, or last, show it before ellipsis
+        if (currentPage !== 1 && currentPage !== 2 && currentPage !== totalPages) {
+          const currLi = document.createElement('li');
+          const currBtn = document.createElement('button');
+          currBtn.textContent = currentPage;
+          currBtn.classList.add('active');
+          currBtn.disabled = true;
+          currLi.appendChild(currBtn);
+          ul.appendChild(currLi);
+        }
+
+        // Ellipsis
+        const dotsLi = document.createElement('li');
+        dotsLi.textContent = '...';
+        ul.appendChild(dotsLi);
+      }
+
+      // Last page (if more than 2 pages)
+      if (totalPages > 2) {
+        const lastLi = document.createElement('li');
+        const lastBtn = document.createElement('button');
+        lastBtn.textContent = totalPages;
+        lastBtn.disabled = currentPage === totalPages;
+        if (currentPage !== totalPages) {
+          lastBtn.onclick = () => {
+            currentPage = totalPages;
+            renderTable();
+          };
+        } else {
+          lastBtn.classList.add('active');
+        }
+        lastLi.appendChild(lastBtn);
+        ul.appendChild(lastLi);
+      }
+
+      // Next button
+      const nextLi = document.createElement('li');
       const nextBtn = document.createElement('button');
-      nextBtn.textContent = 'Next>>';
+      nextBtn.textContent = '>';
       nextBtn.disabled = currentPage === totalPages;
       nextBtn.onclick = () => {
         if (currentPage < totalPages) {
@@ -168,10 +243,12 @@ export default async function decorate(block) {
           renderTable();
         }
       };
-      paginationDiv.appendChild(nextBtn);
+      nextLi.appendChild(nextBtn);
+      ul.appendChild(nextLi);
+
+      paginationDiv.appendChild(ul);
     }
   }
-
   // Initial render
   renderTable();
 
