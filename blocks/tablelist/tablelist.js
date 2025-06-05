@@ -218,16 +218,23 @@ export default async function decorate(block) {
       if (totalPages > 2) {
         const lastLi = document.createElement('li');
         const lastBtn = document.createElement('button');
+        lastBtn.type = 'button'; // Prevent form submission
         lastBtn.textContent = totalPages;
         lastBtn.disabled = currentPage === totalPages;
+
         if (currentPage !== totalPages) {
-          lastBtn.onclick = () => {
+          lastBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const tableTop = block.getBoundingClientRect().top + window.scrollY;
             currentPage = totalPages;
             renderTable();
+            window.scrollTo(0, tableTop);
           };
         } else {
           lastBtn.classList.add('active');
         }
+
         lastLi.appendChild(lastBtn);
         ul.appendChild(lastLi);
       }
@@ -235,12 +242,17 @@ export default async function decorate(block) {
       // Next button
       const nextLi = document.createElement('li');
       const nextBtn = document.createElement('button');
+      nextBtn.type = 'button'; // Prevent form submission
       nextBtn.textContent = '>';
       nextBtn.disabled = currentPage === totalPages;
-      nextBtn.onclick = () => {
+      nextBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (currentPage < totalPages) {
+          const tableTop = block.getBoundingClientRect().top + window.scrollY;
           currentPage += 1;
           renderTable();
+          window.scrollTo(0, tableTop);
         }
       };
       nextLi.appendChild(nextBtn);

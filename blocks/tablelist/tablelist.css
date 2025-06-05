@@ -94,51 +94,62 @@
 .tablelist-pagination-list {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 50px;
+  margin-bottom: 100px;
   list-style: none;
   flex-wrap: wrap;
-  gap: 4px;
-  row-gap: 12px;
-  padding: 0;
+  gap: 1px;
+  row-gap: 20px;
 }
 
 .tablelist-pagination-list li {
   display: flex;
   align-items: center;
-  margin: 0 2px;
+  color: var(--default-button);
+}
+
+.tablelist-pagination-list .notvisible {
+  display: none;
 }
 
 .tablelist-pagination-list li button {
-  padding: 6px 14px;
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #333;
-  font-size: 15px;
-  border-radius: 3px;
+  border-right: 1px solid #eee;
+  padding: 7px 20px;
+  color: var(--default-button);
+  background: transparent;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  border: none;
 }
 
-.tablelist-pagination-list li button.active,
-.tablelist-pagination-list li button:disabled {
-  background: var(--default-button, #0072ce);
+.tablelist-pagination-list li:nth-of-type(2) button {
+  border-left: 1px solid #eee;
+}
+
+.tablelist-pagination-list li.page {
+  background-color: #6c757d;
+  background-repeat: no-repeat;
+  background-position: center;
+  mask: url('/icons/search-arrow.svg') no-repeat center;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('/icons/search-arrow.svg') no-repeat center;
+  
+}
+
+.tablelist-pagination-list li.prev.page {
+  transform: scaleX(-1);
+}
+
+.tablelist-pagination-list li.page.disabled {
+  background-color: #bcbcbc;
+}
+
+.tablelist-pagination-list li button:hover:not(:is(:disabled)),
+.tablelist-pagination-list li button.active {
+  background-color: var(--default-button);
+  border-color: var(--default-button);
   color: #fff;
-  border-color: var(--default-button, #0072ce);
-  font-weight: bold;
-  cursor: default;
 }
 
-.tablelist-pagination-list li button:hover:not(:is(:disabled, .active)) {
-  background: var(--default-button, #0072ce);
-  color: #fff;
-  border-color: var(--default-button, #0072ce);
-}
-
-.tablelist-pagination-list li span,
-.tablelist-pagination-list li.dots {
-  padding: 0 8px;
-  color: #888;
-  font-size: 16px;
-  user-select: none;
+.tablelist-pagination-list li.page.disabled button:hover {
+  background-color: inherit;
 }
