@@ -149,3 +149,7 @@ main .mainmenu .section.rightsection.googleform .block.embed iframe {
 .embed.style-height-1200 {
     height: 1200px;
 }
+
+.embed-wrapper + div {
+    position: relative;
+}

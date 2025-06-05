@@ -10,10 +10,6 @@ body.calendar .event-modal .event-modal-footer a {
     line-height: 1 !important;
 }
 
-body.calendar div.event-modal a:any-link {
-    color: white;
-}
-
 body.calendar .off {
     opacity: 0;
 }
@@ -223,7 +219,6 @@ body.calendar .event-modal .event-modal-date {
 }
 
 body.calendar .event-modal .event-modal-date p {
-    color: white;
     z-index: 1;
     padding: 0;
     margin: 0;
@@ -232,7 +227,6 @@ body.calendar .event-modal .event-modal-date p {
 }
 
 body.calendar .event-modal .event-modal-time p {
-    color: white;
     z-index: 1;
     padding: 0 .6vw;
     margin: 0;

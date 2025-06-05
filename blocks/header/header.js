@@ -41,8 +41,9 @@ class Accordion {
     // Store if the element is expanding
     this.isExpanding = false;
     // Detect user clicks on the summary element
+    this.arrowSelector = this.summary.querySelector('.markerdiv');
     if (this.content) {
-      this.summary.addEventListener('click', (e) => this.onClick(e));
+      this.arrowSelector.addEventListener('click', (e) => this.onClick(e));
     }
   }
 
@@ -445,7 +446,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('role', drop.querySelector('a').textContent);
+        drop.setAttribute('role', 'none');
         drop.setAttribute('tabindex', 0);
         drop.addEventListener('focus', focusNavSection);
       }
@@ -593,6 +594,7 @@ function decorateNavItem(parent, navSectionSearchItem) {
 
 function buildNavSections(navSections) {
   if (navSections) {
+    navSections.setAttribute('role', 'navigation');
     const navSectionSearchItem = navSections.children[0]?.children[1];
     if (isDesktop.matches) {
       navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
