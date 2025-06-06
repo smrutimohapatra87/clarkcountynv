@@ -208,14 +208,6 @@ main .mainmenu .leftsection > .default-content-wrapper:has(p.active) + .accordio
     padding-bottom: 5px;
 }
 
-.default-no-padding-bottom .default-content-wrapper {
-    padding-bottom: unset !important;
-}
-
-.default-no-padding-top .default-content-wrapper {
-    padding-top: unset !important;
-}
-
 .image-right .default-content-wrapper img:first-of-type {
         float: right;
         width: 40%;

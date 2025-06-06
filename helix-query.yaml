@@ -84,6 +84,7 @@ indices:
       - /calendar/cjcc/*
       - /calendar/mojave-max-and-dcp-outreach-events-volunteer-opportunities/*
       - /calendar/featured-events/*
+      - /modals/sample*
     target: /query-index.json
     properties:
       title:
