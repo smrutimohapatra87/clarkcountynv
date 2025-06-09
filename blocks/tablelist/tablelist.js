@@ -161,84 +161,36 @@ export default async function decorate(block) {
       prevLi.appendChild(prevBtn);
       ul.appendChild(prevLi);
 
-      // Page 1
-      const firstLi = document.createElement('li');
-      const firstBtn = document.createElement('button');
-      firstBtn.textContent = '1';
-      firstBtn.disabled = currentPage === 1;
-      if (currentPage !== 1) {
-        firstBtn.onclick = () => {
-          currentPage = 1;
-          renderTable();
-        };
-      } else {
-        firstBtn.classList.add('active');
-      }
-      firstLi.appendChild(firstBtn);
-      ul.appendChild(firstLi);
+      // Create page buttons
+      for (let i = 1; i <= totalPages; i += 1) {
+        const pageLi = document.createElement('li');
+        const pageBtn = document.createElement('button');
 
-      // Page 2 (if exists)
-      if (totalPages > 1) {
-        const secondLi = document.createElement('li');
-        const secondBtn = document.createElement('button');
-        secondBtn.textContent = '2';
-        secondBtn.disabled = currentPage === 2;
-        if (currentPage !== 2) {
-          secondBtn.onclick = () => {
-            currentPage = 2;
-            renderTable();
-          };
+        // Set button attributes
+        pageBtn.type = 'button';
+        pageBtn.textContent = i;
+        pageBtn.disabled = currentPage === i;
+
+        // Handle active state and click events
+        if (currentPage === i) {
+          pageBtn.classList.add('active');
         } else {
-          secondBtn.classList.add('active');
-        }
-        secondLi.appendChild(secondBtn);
-        ul.appendChild(secondLi);
-      }
-
-      // If more than 3 pages, handle ellipsis and current page
-      if (totalPages > 3) {
-        // If currentPage is not 1, 2, or last, show it before ellipsis
-        if (currentPage !== 1 && currentPage !== 2 && currentPage !== totalPages) {
-          const currLi = document.createElement('li');
-          const currBtn = document.createElement('button');
-          currBtn.textContent = currentPage;
-          currBtn.classList.add('active');
-          currBtn.disabled = true;
-          currLi.appendChild(currBtn);
-          ul.appendChild(currLi);
-        }
-
-        // Ellipsis
-        const dotsLi = document.createElement('li');
-        dotsLi.textContent = '...';
-        ul.appendChild(dotsLi);
-      }
-
-      // Last page (if more than 2 pages)
-      if (totalPages > 2) {
-        const lastLi = document.createElement('li');
-        const lastBtn = document.createElement('button');
-        lastBtn.type = 'button'; // Prevent form submission
-        lastBtn.textContent = totalPages;
-        lastBtn.disabled = currentPage === totalPages;
-
-        if (currentPage !== totalPages) {
-          lastBtn.onclick = (e) => {
+          pageBtn.classList.remove('active');
+          // eslint-disable-next-line no-loop-func
+          pageBtn.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
             const tableTop = block.getBoundingClientRect().top + window.scrollY;
-            currentPage = totalPages;
+            currentPage = i;
             renderTable();
             window.scrollTo(0, tableTop);
           };
-        } else {
-          lastBtn.classList.add('active');
         }
 
-        lastLi.appendChild(lastBtn);
-        ul.appendChild(lastLi);
+        // Add to DOM
+        pageLi.appendChild(pageBtn);
+        ul.appendChild(pageLi);
       }
-
       // Next button
       const nextLi = document.createElement('li');
       const nextBtn = document.createElement('button');

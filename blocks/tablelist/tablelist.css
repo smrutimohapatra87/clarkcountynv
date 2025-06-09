@@ -118,11 +118,7 @@
   color: var(--default-button);
   background: transparent;
   cursor: pointer;
-  border: none;
-}
-
-.tablelist-pagination-list li:nth-of-type(2) button {
-  border-left: 1px solid #eee;
+  border: right;
 }
 
 .tablelist-pagination-list li.page {
