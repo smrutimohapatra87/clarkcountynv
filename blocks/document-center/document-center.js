@@ -152,51 +152,52 @@ export default function decorate(block) {
     const documentsList = documents.children[0];
     const singleLevelList = ul(); // Create a single ul for all single-level items
 
-    // Process each top-level list item
-    [...documentsList.children].forEach((listItem) => {
-      // Check if item is an empty heading (text without link and no children)
-      const isEmptyHeading = !listItem.querySelector('a') && !listItem.querySelector('ul') && listItem.textContent.trim();
-      const hasNestedList = listItem.querySelector('ul');
+    if (documentsList) {
+      [...documentsList.children].forEach((listItem) => {
+        // Check if item is an empty heading (text without link and no children)
+        const isEmptyHeading = !listItem.querySelector('a') && !listItem.querySelector('ul') && listItem.textContent.trim();
+        const hasNestedList = listItem.querySelector('ul');
 
-      if (hasNestedList || isEmptyHeading) {
-        // If we have accumulated any single-level items, add them to container
-        if (singleLevelList.children.length > 0) {
-          contentContainer.append(singleLevelList.cloneNode(true));
-          singleLevelList.innerHTML = ''; // Clear the list for next group
-        }
+        if (hasNestedList || isEmptyHeading) {
+          // If we have accumulated any single-level items, add them to container
+          if (singleLevelList.children.length > 0) {
+            contentContainer.append(singleLevelList.cloneNode(true));
+            singleLevelList.innerHTML = ''; // Clear the list for next group
+          }
 
-        // Handle multi-level item or empty heading
-        const sectionTitle = listItem.firstChild.textContent.trim();
-        if (!sectionTitle) return;
+          // Handle multi-level item or empty heading
+          const sectionTitle = listItem.firstChild.textContent.trim();
+          if (!sectionTitle) return;
 
-        const nestedList = listItem.querySelector('ul');
-        const fileLinks = nestedList ? nestedList.querySelectorAll('a') : [];
-        const numOfDocs = fileLinks.length;
+          const nestedList = listItem.querySelector('ul');
+          const fileLinks = nestedList ? nestedList.querySelectorAll('a') : [];
+          const numOfDocs = fileLinks.length;
 
-        const sectionSummary = summary(
-          { class: 'accordion-item-label-inner' },
-          p(sectionTitle),
-          small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`),
-        );
+          const sectionSummary = summary(
+            { class: 'accordion-item-label-inner' },
+            p(sectionTitle),
+            small({ class: 'doc-center-counter-inner' }, `${numOfDocs} documents`),
+          );
 
-        if (nestedList) {
+          if (nestedList) {
+            customizeFileLinks(fileLinks);
+          }
+
+          const subId = createHashId(sectionTitle);
+          const subDetailsEl = details(
+            { class: 'accordion-item-inner', id: subId },
+            sectionSummary,
+            nestedList ? div({ class: 'content' }, nestedList) : div({ class: 'content' }), // Empty content div for empty headings
+          );
+          contentContainer.append(subDetailsEl);
+        } else {
+          // Handle single-level item
+          const fileLinks = listItem.querySelectorAll('a');
           customizeFileLinks(fileLinks);
+          singleLevelList.append(listItem);
         }
-
-        const subId = createHashId(sectionTitle);
-        const subDetailsEl = details(
-          { class: 'accordion-item-inner', id: subId },
-          sectionSummary,
-          nestedList ? div({ class: 'content' }, nestedList) : div({ class: 'content' }), // Empty content div for empty headings
-        );
-        contentContainer.append(subDetailsEl);
-      } else {
-        // Handle single-level item
-        const fileLinks = listItem.querySelectorAll('a');
-        customizeFileLinks(fileLinks);
-        singleLevelList.append(listItem);
-      }
-    });
+      });
+    }
 
     // Add any remaining single-level items
     if (singleLevelList.children.length > 0) {
