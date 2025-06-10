@@ -1,0 +1,157 @@
+
+.tablelist.block label {
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: .5rem;
+    line-height: 1.7;
+    font-family: var(--heading-font-family);
+}
+
+.tablelist.block #row-selector {
+    margin-bottom: 20px;
+    border: 1px solid #e9eaec;
+    padding: 10px 14px;
+    outline: none;
+    font-size: 13px;
+    font-family: sans-serif;
+    color: #777;
+    display: inline-block;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
+    word-wrap: normal;
+    text-transform: none;
+}
+
+
+
+@media (width >= 600px) {
+  .tablelist.block table {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+@media (width >= 900px) {
+  .tablelist.block table {
+    font-size: var(--body-font-size-m);
+  }
+}
+
+.tablelist table th {
+    font-weight: 700;
+  }
+  
+
+
+/* bordered variant */
+
+.tablelist table {
+  border-collapse: collapse;
+}
+
+.tablelist table th,
+.tablelist table td {
+  border: 1px solid #dadada;
+  font-size: 18px;
+  font-family: var(--body-font-family);
+  text-align: left;
+  padding: 5px;
+}
+
+/* Display the table in center of the page */
+.tablelist.block table {
+  width: 100%;
+  margin: 20px 0; 
+}
+
+/* Container for filter and search controls */
+.tablelist-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Style for the search bar */
+.tablelist-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.tablelist-search input[type="search"] {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: 1px solid #e9eaec;
+  border-radius: 4px;
+  outline: none;
+  font-family: sans-serif;
+  color: #333;
+  background: #fff;
+  width: 400px; /* Add or adjust this line for a wider input */
+}
+
+/* Pagination styling for tablelist */
+.tablelist-pagination-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 1px;
+  row-gap: 20px;
+}
+
+.tablelist-pagination-list li {
+  display: flex;
+  align-items: center;
+  color: var(--default-button);
+}
+
+.tablelist-pagination-list .notvisible {
+  display: none;
+}
+
+.tablelist-pagination-list li button {
+  padding: 7px 20px;
+  color: var(--default-button);
+  background: transparent;
+  cursor: pointer;
+  border: right;
+  font-size: 18px;
+}
+
+.tablelist-pagination-list li.page {
+  background-color: #6c757d;
+  background-repeat: no-repeat;
+  background-position: center;
+  mask: url('/icons/search-arrow.svg') no-repeat center;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('/icons/search-arrow.svg') no-repeat center;
+  
+}
+
+.tablelist-pagination-list li.prev.page {
+  transform: scaleX(-1);
+}
+
+.tablelist-pagination-list li.page.disabled {
+  background-color: #bcbcbc;
+}
+
+.tablelist-pagination-list li:not(:last-child) button {
+  border-right: 1px solid #eee;
+}
+
+.tablelist-pagination-list li button:hover:not(:is(:disabled)),
+.tablelist-pagination-list li button.active {
+  background-color: var(--default-button);
+  border-color: var(--default-button);
+  color: #fff;
+}
+
+.tablelist-pagination-list li.page.disabled button:hover {
+  background-color: inherit;
+}
+
