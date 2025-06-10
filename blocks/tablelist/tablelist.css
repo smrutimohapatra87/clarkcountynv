@@ -52,7 +52,8 @@
 .tablelist table th,
 .tablelist table td {
   border: 1px solid #dadada;
-  font-size: medium;
+  font-size: 18px;
+  font-family: var(--body-font-family);
   text-align: left;
   padding: 5px;
 }
@@ -113,12 +114,12 @@
 }
 
 .tablelist-pagination-list li button {
-  border-right: 1px solid #eee;
   padding: 7px 20px;
   color: var(--default-button);
   background: transparent;
   cursor: pointer;
   border: right;
+  font-size: 18px;
 }
 
 .tablelist-pagination-list li.page {
@@ -139,6 +140,10 @@
   background-color: #bcbcbc;
 }
 
+.tablelist-pagination-list li:not(:last-child) button {
+  border-right: 1px solid #eee;
+}
+
 .tablelist-pagination-list li button:hover:not(:is(:disabled)),
 .tablelist-pagination-list li button.active {
   background-color: var(--default-button);
@@ -149,3 +154,4 @@
 .tablelist-pagination-list li.page.disabled button:hover {
   background-color: inherit;
 }
+
