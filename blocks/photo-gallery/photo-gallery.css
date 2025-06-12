@@ -45,6 +45,7 @@
 }
 
 /* Modal styles */
+/* stylelint-disable no-descending-specificity */
 .image-modal-overlay {
     position: fixed;
     inset: 0;
@@ -249,6 +250,21 @@
                     align-items: center;
                     gap: 5px;
 
+                        .play-button,
+                        .slide-nav {
+                            border: none;
+                            color: transparent;
+                            cursor: pointer;
+                            padding: 0;
+                            background: url("/icons/sprite.png") no-repeat;
+                            opacity: 0.8;
+                            transition: opacity 0.3s ease;
+
+                            &:hover {
+                                opacity: 1;
+                            }
+                        }
+
                         .play-button {
                             height: 30px;
                             width: 30px;
@@ -270,21 +286,6 @@
 
                             &.next {
                                 background-position: -82px -3px;
-                            }
-                        }
-
-                        .play-button,
-                        .slide-nav {
-                            border: none;
-                            color: transparent;
-                            cursor: pointer;
-                            padding: 0;
-                            background: url("/icons/sprite.png") no-repeat;
-                            opacity: 0.8;
-                            transition: opacity 0.3s ease;
-
-                            &:hover {
-                                opacity: 1;
                             }
                         }
                 }
@@ -367,7 +368,6 @@
     margin: 0 10px;
 }
 
-/* stylelint-disable no-descending-specificity */
 .image-modal-content.expanded {
     padding: 10px;
     max-width: 95vw;
