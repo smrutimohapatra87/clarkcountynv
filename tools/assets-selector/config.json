@@ -5,6 +5,12 @@
         "value": "Video"
       }
     ],
+    "copyMode": [
+          {
+            "mimeType": "image/*",
+            "value": "reference"
+          }
+          ],
     "headerStyle": [
       {
         "mimeType": "video/*",
