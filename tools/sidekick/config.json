@@ -7,6 +7,29 @@
         "environments": ["dev", "edit", "preview"],
         "url": "/tools/sidekick/library.html",
         "includePaths": ["**.docx**"]
-      }
+      },
+      {
+        "id": "asset-library",
+        "title": "AEM Assets Library New",
+        "environments": [
+            "edit",
+            "prod",
+            "dev"
+        ],
+        "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?rail=false",
+        "isPalette": true,
+        "passConfig": true,
+        "includePaths": [
+          "**.docx**"
+         ],
+        "copyMode": [
+          {
+            "mimeType": "image/*",
+            "value": "reference"
+          }
+          ],
+        "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:800px; height: calc(100vh - 60px)"
+    }
+
     ]
   }
